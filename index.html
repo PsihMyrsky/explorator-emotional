@@ -49,41 +49,40 @@
         .hero h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px 0; background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { color: var(--text-muted); margin: 0 0 30px 0; font-size: 1rem; }
         
-        /* Roata pe ecran normal */
-        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; }
-        svg { width: 100%; height: auto; display: block; transform: rotate(-90deg); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
+        /* Cadru Roată pe ecran principal */
+        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        
+        /* Adăugare cursor special de rotație */
+        svg { width: 100%; height: auto; display: block; will-change: transform; cursor: ew-resize; transform-origin: center center; }
         
         .wheel-group { cursor: pointer; }
         .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
-        path { stroke: var(--bg-main); stroke-width: 1.5px; opacity: 0.88; transition: all 0.2s ease; }
+        path { stroke: var(--bg-main); stroke-width: 1.5px; opacity: 0.88; transition: opacity 0.2s ease; }
         
         .wheel-text { fill: #fff; font-size: 9px; font-weight: 600; pointer-events: none !important; text-anchor: middle; dominant-baseline: middle; user-select: none; }
         .wheel-text.core-text { font-size: 11px; font-weight: 700; }
         .wheel-text.hidden-layer { display: none; }
 
         .center-circle { fill: var(--bg-card); stroke: var(--border); stroke-width: 2px; pointer-events: none; }
-        .center-text { fill: var(--text-main); font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; transform: rotate(90deg); pointer-events: none; }
+        .center-text { fill: var(--text-main); font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
         
         .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
         .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
 
-        /* MODALUL INTEGRAL CU SUPORT PINCH-TO-ZOOM ȘI TRAGERE (PAN) */
+        /* MODALUL DE ZOOM AVANSAT */
         .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
         
         .modal-header { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(21, 29, 48, 0.8); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(10px); margin-bottom: 10px; z-index: 10001; }
-        .modal-title { margin: 0; color: #fff; font-size: 1rem; font-weight: 600; }
+        .modal-title { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 500; text-align: left; }
         .modal-controls { display: flex; gap: 8px; }
         .control-btn { background: var(--bg-main); border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: 500; }
         .control-btn:hover { background: var(--accent); border-color: var(--accent); }
         
-        /* Zona de gesturi o facem să ocupe tot spațiul rămas */
-        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; cursor: grab; }
-        .modal-viewport:active { cursor: grabbing; }
+        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; }
         
-        /* Elementul pe care se aplică zoom-ul și pan-ul */
-        #modalWheelContainer { width: 100%; max-width: 650px; height: auto; transform-origin: center center; position: absolute; will-change: transform; transition: transform 0.05s linear; }
-        #modalWheelContainer svg { transform: rotate(-90deg); }
+        /* Containerul de zoom conține elementul rotativ */
+        #modalWheelContainer { width: 100%; max-width: 620px; height: auto; transform-origin: center center; position: absolute; will-change: transform; display: flex; align-items: center; justify-content: center; }
         
         .wheel-modal .hidden-layer { display: block !important; }
         .wheel-modal .wheel-text { font-size: 10px; }
@@ -131,20 +130,6 @@
             .data-zone { height: auto; padding: 20px; }
             svg { max-width: 360px; }
             .ifs-container { grid-template-columns: 1fr; }
-            .modal-content { height: 90vh; display: flex; flex-direction: column; padding: 15px; }
-        }
-
-        @media print {
-            .app-nav, .wheel-modal, .zoom-hint { display: none !important; }
-            #modTeorie { display: none !important; }
-            #modNavigator { display: block !important; }
-            body { background: white !important; color: black !important; } 
-            .app-container { display: block !important; }
-            .visual-zone, .btn-export, .pill-grid, textarea { display: none !important; } 
-            .print-text-block { display: block !important; color: black !important; background: #f3f4f6 !important; border: 1px solid #ccc !important; }
-            .data-zone { height: auto !important; padding: 0 !important; overflow: visible !important; }
-            .section { display: block !important; opacity: 1 !important; background: white !important; border: 1px solid #ccc !important; color: black !important; page-break-inside: avoid; }
-            .ifs-box, .coping-card { background: #f3f4f6 !important; color: black !important; border: 1px solid #ccc !important; }
         }
     </style>
 </head>
@@ -217,9 +202,9 @@
 
     <div id="wheelModal" class="wheel-modal">
         <div class="modal-header">
-            <h2 class="modal-title">🧭 Zoom tactil (Pinch) sau Trage de roată pentru citire</h2>
+            <h2 class="modal-title">🔄 Învarte cu un deget pentru citire orizontală<br>🔍 Folosește două degete (Pinch) pentru zoom</h2>
             <div class="modal-controls">
-                <button id="resetModalBtn" class="control-btn">Centrare</button>
+                <button id="resetModalBtn" class="control-btn">Resetare</button>
                 <button id="closeModalBtn" class="control-btn" style="background:var(--accent);">Închide ✕</button>
             </div>
         </div>
@@ -238,11 +223,11 @@
             <div class="components-grid">
                 <div class="comp-card">
                     <h3><span>💭</span> Gândurile</h3>
-                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens. Se manifestă ca discurs interior adesea însoțit de reprezentări/imagini la care participă sensations și emoțiile.</p>
+                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens.</p>
                 </div>
                 <div class="comp-card">
                     <h3><span>🎭</span> Emoțiile</h3>
-                    <p>Emoțiile - Reacții de regulă automate, în primul rând fiziologice la evenimentele externe şi mentale, interne. Emoțiile semnalează nevoile fundamentale înnăscute ale omului, de îndeplinirea cărora depinde supraviețuirea şi sănătatea fizică şi psihologică. Nevoile sunt semnalate de emoții.</p>
+                    <p>Emoțiile - Reacții de regulă automate, în primul rând fiziologice la evenimentele externe şi mentale, interne. Emoțiile semnalează nevoile fundamentale înnăscute ale omului.</p>
                 </div>
                 <div class="comp-card">
                     <h3><span>👁️</span> Senzațiile</h3>
@@ -263,7 +248,7 @@
     </div>
 
 <script>
-// Logică navigare tabs
+// Toggle Module
 document.getElementById('btnTabNavigator').addEventListener('click', function() { executeTabSwitch('btnTabNavigator', 'modNavigator'); });
 document.getElementById('btnTabTeorie').addEventListener('click', function() { executeTabSwitch('btnTabTeorie', 'modTeorie'); });
 
@@ -273,7 +258,6 @@ function executeTabSwitch(btnId, tabId) {
     document.getElementById(btnId).classList.add('active'); document.getElementById(tabId).classList.add('active');
 }
 
-// Baza de date a celor 96 de emotii
 const db = {
     "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
     "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
@@ -287,226 +271,10 @@ const db = {
 
 function renderWheels() {
     var coreKeys = Object.keys(db);
-    var htmlNormal = '<svg viewBox="0 0 500 500">';
-    var htmlModal = '<svg viewBox="0 0 500 500">';
-    
+    var htmlNormal = '<svg viewBox="0 0 500 500" id="mainSvg">';
+    var htmlModal = '<svg viewBox="0 0 500 500" id="modalSvg">';
     var r0 = 55; var r1 = 110; var r2 = 175; var r3 = 245;
     var aCore = 360 / coreKeys.length;
     
     coreKeys.forEach(function(coreName, i) {
-        var core = db[coreName];
-        var sAngleCore = i * aCore; var eAngleCore = (i + 1) * aCore;
-        var subKeys = Object.keys(core.subs);
-        var aSub = aCore / subKeys.length;
-        
-        htmlNormal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName, false);
-        htmlModal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName, true);
-        
-        subKeys.forEach(function(secName, j) {
-            var sAngleSec = sAngleCore + (j * aSub); var eAngleSec = sAngleCore + ((j + 1) * aSub);
-            var tertList = core.subs[secName];
-            var aTert = aSub / tertList.length;
-            
-            htmlNormal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, core.color, secName, 'sec', coreName, false);
-            htmlModal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, core.color, secName, 'sec', coreName, true);
-            
-            tertList.forEach(function(tertName, k) {
-                var sAngleTert = sAngleSec + (k * aTert); var eAngleTert = sAngleSec + ((k + 1) * aTert);
-                
-                htmlNormal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, core.color, tertName, 'tert', coreName, false);
-                htmlModal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, core.color, tertName, 'tert', coreName, true);
-            });
-        });
-    });
-    
-    var centerNormal = '<circle cx="250" cy="250" r="'+r0+'" class="center-circle" /><text x="250" y="250" class="center-text">EMOȚII</text></svg>';
-    document.getElementById('wheelContainer').innerHTML = htmlNormal + centerNormal;
-    document.getElementById('modalWheelContainer').innerHTML = htmlModal + centerNormal;
-}
-
-function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isModal) {
-    var toRad = Math.PI / 180;
-    var midRad = ((sDeg + eDeg) / 2) * toRad;
-    
-    var x1_out = cx + rOut * Math.cos(sDeg * toRad); var y1_out = cy + rOut * Math.sin(sDeg * toRad);
-    var x2_out = cx + rOut * Math.cos(eDeg * toRad); var y2_out = cy + rOut * Math.sin(eDeg * toRad);
-    var x1_in = cx + rIn * Math.cos(eDeg * toRad); var y1_in = cy + rIn * Math.sin(eDeg * toRad);
-    var x2_in = cx + rIn * Math.cos(sDeg * toRad); var y2_in = cy + rIn * Math.sin(sDeg * toRad);
-    var largeArc = (eDeg - sDeg) > 180 ? 1 : 0;
-    
-    var d = "M " + x1_out + " " + y1_out + " A " + rOut + " " + rOut + " 0 " + largeArc + " 1 " + x2_out + " " + y2_out + " L " + x1_in + " " + y1_in + " A " + rIn + " " + rIn + " 0 " + largeArc + " 0 " + x2_in + " " + y2_in + " Z";
-    var opacity = type === 'core' ? 1 : (type === 'sec' ? 0.75 : 0.5);
-    
-    var rMid = (rIn + rOut) / 2;
-    var tx = cx + rMid * Math.cos(midRad);
-    var ty = cy + rMid * Math.sin(midRad);
-    
-    var textAngle = (sDeg + eDeg) / 2;
-    if (textAngle > 90 && textAngle < 270) { textAngle -= 180; }
-    
-    var textClass = "wheel-text " + type + "-text";
-    if (type === 'tert' && !isModal) { textClass += " hidden-layer"; }
-
-    var slicePath = "<path d='" + d + "' fill='" + fill + "' opacity='" + opacity + "'></path>";
-    var sliceText = "<text x='" + tx + "' y='" + ty + "' transform='rotate(" + textAngle + "," + tx + "," + ty + ")' class='" + textClass + "'>" + name + "</text>";
-    
-    return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
-}
-
-// MANAGEMENT STARĂ ZOOM ȘI DRAG (PAN) PENTRU TELEFON ȘI TABLETĂ
-var modal = document.getElementById('wheelModal');
-var viewport = document.getElementById('modalViewport');
-var targetContainer = document.getElementById('modalWheelContainer');
-
-var scale = 1, lastScale = 1;
-var posX = 0, posY = 0, lastPosX = 0, lastPosY = 0;
-var isDragging = false;
-var startX, startY;
-var touchStartDist = 0;
-
-document.getElementById('openModalBtn').addEventListener('click', openModal);
-document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-document.getElementById('resetModalBtn').addEventListener('click', resetZoom);
-
-function openModal() { modal.classList.add('open'); resetZoom(); }
-function closeModal() { modal.classList.remove('open'); }
-function resetZoom() { scale = 1; posX = 0; posY = 0; updateTransform(); }
-function updateTransform() { targetContainer.style.transform = "translate(" + posX + "px, " + posY + "px) scale(" + scale + ")"; }
-
-// 1. SUPORT ZOOM DINAMIC (MOUSE WHEEL pe Desktop)
-viewport.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    var zoomFactor = 0.1;
-    if (e.deltaY < 0) { scale += zoomFactor; } else { scale -= zoomFactor; }
-    scale = Math.min(Math.max(0.8, scale), 5); // Limite mărire: între 0.8x și 5x
-    updateTransform();
-}, { passive: false });
-
-// 2. SUPORT TRAGERE (DRAG MOUSE pe Desktop)
-viewport.addEventListener('mousedown', function(e) {
-    if(e.target.closest('.modal-controls') || e.target.closest('#closeModalBtn')) return;
-    isDragging = true; startX = e.clientX - posX; startY = e.clientY - posY;
-});
-window.addEventListener('mousemove', function(e) {
-    if (!isDragging) return;
-    posX = e.clientX - startX; posY = e.clientY - startY;
-    updateTransform();
-});
-window.addEventListener('mouseup', function() { isDragging = false; });
-
-// 3. SUPORT SENZORIAL AVANSAT (TOUCH: PINCH-TO-ZOOM ȘI DRAG pe Mobil/Tabletă)
-viewport.addEventListener('touchstart', function(e) {
-    if (e.touches.length === 1) {
-        // Mișcare cu un singur deget (Pan)
-        isDragging = true;
-        startX = e.touches[0].clientX - posX;
-        startY = e.touches[0].clientY - posY;
-    } else if (e.touches.length === 2) {
-        // Zoom cu două degete (Pinch)
-        isDragging = false;
-        touchStartDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-        lastScale = scale;
-    }
-});
-
-viewport.addEventListener('touchmove', function(e) {
-    e.preventDefault(); // Oprește scroll-ul nativ al paginii când tragi de roată
-    if (isDragging && e.touches.length === 1) {
-        posX = e.touches[0].clientX - startX;
-        posY = e.touches[0].clientY - startY;
-        updateTransform();
-    } else if (e.touches.length === 2) {
-        var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-        scale = lastScale * (dist / touchStartDist);
-        scale = Math.min(Math.max(0.8, scale), 5);
-        updateTransform();
-    }
-}, { passive: false });
-
-viewport.addEventListener('touchend', function(e) {
-    isDragging = false;
-    if (e.touches.length === 1) {
-        startX = e.touches[0].clientX - posX;
-        startY = e.touches[0].clientY - posY;
-        isDragging = true;
-    }
-});
-
-var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
-
-function handleGlobalClick(e) {
-    var group = e.target.closest('.wheel-group');
-    if (group) {
-        var name = group.getAttribute('data-name');
-        var type = group.getAttribute('data-type');
-        var parentCore = group.getAttribute('data-core');
-        
-        currentSelection.emotion = name; currentSelection.type = type; currentSelection.parentCore = parentCore;
-        currentSelection.body = ""; currentSelection.need = "";
-        
-        document.getElementById('sidePanel').style.display = 'block';
-        var disp = document.getElementById('currentEmotionDisplay');
-        disp.innerText = name; disp.style.color = db[parentCore].color;
-        document.getElementById('currentTypeDisplay').innerText = type.toUpperCase() + " ➔ Rădăcină: " + parentCore;
-        
-        var coreData = db[parentCore];
-        document.getElementById('somaticGrid').innerHTML = coreData.somatic.map(function(s) { return "<div class='pill body-pill' data-value='" + s + "'>" + s + "</div>"; }).join('');
-        document.getElementById('needsGrid').innerHTML = coreData.needs.map(function(n) { return "<div class='pill need-pill' data-value='" + n + "'>" + n + "</div>"; }).join('');
-        
-        document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
-        document.getElementById('ifsChildText').innerText = coreData.ifs.child;
-        
-        showSection('secSomatic'); showSection('secNeeds'); showSection('secIFS'); showSection('secReflection');
-        document.getElementById('secCoping').classList.remove('active');
-        document.getElementById('btnExport').style.display = 'block';
-        
-        closeModal();
-        if(window.innerWidth <= 1024) { document.getElementById('secSomatic').scrollIntoView({ behavior: 'smooth' }); }
-    }
-}
-
-document.getElementById('wheelContainer').addEventListener('click', handleGlobalClick);
-document.getElementById('modalWheelContainer').addEventListener('click', handleGlobalClick);
-
-document.getElementById('somaticGrid').addEventListener('click', function(e) {
-    if(e.target && e.target.classList.contains('body-pill')) {
-        var pills = document.getElementsByClassName('body-pill'); for(var i=0; i<pills.length; i++) { pills[i].classList.remove('selected'); }
-        e.target.classList.add('selected'); currentSelection.body = e.target.getAttribute('data-value'); triggerCopingEngine();
-    }
-});
-
-document.getElementById('needsGrid').addEventListener('click', function(e) {
-    if(e.target && e.target.classList.contains('need-pill')) {
-        var pills = document.getElementsByClassName('need-pill'); for(var i=0; i<pills.length; i++) { pills[i].classList.remove('selected'); }
-        e.target.classList.add('selected'); currentSelection.need = e.target.getAttribute('data-value'); triggerCopingEngine();
-    }
-});
-
-function triggerCopingEngine() {
-    if (!currentSelection.need) return;
-    var coreData = db[currentSelection.parentCore]; var specialCoping = "";
-    for (var key in coreData.coping) { if (currentSelection.need.indexOf(key) !== -1) { specialCoping = coreData.coping[key]; break; } }
-    var finalCoping = specialCoping || coreData.coping["default"];
-    document.getElementById('copingOutput').innerHTML = "<div class='coping-card'><div class='coping-item'><span>🎯</span><div><strong>Intervenție strategică [" + currentSelection.emotion + "]:</strong><br>" + finalCoping + "</div></div></div>";
-    showSection('secCoping');
-}
-
-function showSection(id) { document.getElementById(id).classList.add('active'); }
-
-document.getElementById('btnExport').addEventListener('click', function() {
-    document.getElementById('printBlock1').innerText = document.getElementById('journalInput1').value || "(Nespecificat)";
-    document.getElementById('printBlock2').innerText = document.getElementById('journalInput2').value || "(Nespecificat)";
-    var hero = document.getElementById('mainHero'); var visual = document.querySelector('.visual-zone'); var grids = document.querySelectorAll('.pill-grid'); 
-    if (visual) visual.style.display = 'none'; if (hero) hero.style.display = 'none'; 
-    if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'none'; } } 
-    window.print();
-    setTimeout(function() { 
-        if (visual) visual.style.display = 'flex'; if (hero) hero.style.display = 'block'; 
-        if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'flex'; } } 
-    }, 1200);
-});
-
-window.onload = function() { renderWheels(); };
-</script>
-</body>
-</html>
+        var core = db[coreName]; var sAngleCore = i * aCore; var eAngleCore = (i +
