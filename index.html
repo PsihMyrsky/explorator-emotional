@@ -6,7 +6,7 @@
     <title>Sistem Clinic Integrat: Navigator & Dinamica Minții</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2 family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #0b0f19; --bg-card: #151d30; --bg-card-hover: #1e2942;
@@ -49,7 +49,7 @@
         .hero h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px 0; background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { color: var(--text-muted); margin: 0 0 30px 0; font-size: 1rem; }
         
-        /* Roata SVG Optimizată Complet Inline */
+        /* Roata pe ecran normal */
         #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; }
         svg { width: 100%; height: auto; display: block; transform: rotate(-90deg); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
         
@@ -57,7 +57,6 @@
         .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
         path { stroke: var(--bg-main); stroke-width: 1.5px; opacity: 0.88; transition: all 0.2s ease; }
         
-        /* Protecție absolută anti-blocare click-uri pe text */
         .wheel-text { fill: #fff; font-size: 9px; font-weight: 600; pointer-events: none !important; text-anchor: middle; dominant-baseline: middle; user-select: none; }
         .wheel-text.core-text { font-size: 11px; font-weight: 700; }
         .wheel-text.hidden-layer { display: none; }
@@ -68,12 +67,23 @@
         .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
         .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
 
-        /* INTERFAȚĂ MODALĂ (POP-UP DETALIAT) */
-        .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.98); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+        /* MODALUL INTEGRAL CU SUPORT PINCH-TO-ZOOM ȘI TRAGERE (PAN) */
+        .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
-        .modal-content { width: 100%; max-width: 740px; position: relative; background: #0e1626; padding: 30px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
-        .modal-close { position: absolute; top: 20px; right: 20px; background: var(--bg-card); border: 1px solid var(--border); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none; }
-        .modal-close:hover { background: var(--accent); border-color: var(--accent); }
+        
+        .modal-header { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(21, 29, 48, 0.8); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(10px); margin-bottom: 10px; z-index: 10001; }
+        .modal-title { margin: 0; color: #fff; font-size: 1rem; font-weight: 600; }
+        .modal-controls { display: flex; gap: 8px; }
+        .control-btn { background: var(--bg-main); border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: 500; }
+        .control-btn:hover { background: var(--accent); border-color: var(--accent); }
+        
+        /* Zona de gesturi o facem să ocupe tot spațiul rămas */
+        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; cursor: grab; }
+        .modal-viewport:active { cursor: grabbing; }
+        
+        /* Elementul pe care se aplică zoom-ul și pan-ul */
+        #modalWheelContainer { width: 100%; max-width: 650px; height: auto; transform-origin: center center; position: absolute; will-change: transform; transition: transform 0.05s linear; }
+        #modalWheelContainer svg { transform: rotate(-90deg); }
         
         .wheel-modal .hidden-layer { display: block !important; }
         .wheel-modal .wheel-text { font-size: 10px; }
@@ -121,6 +131,7 @@
             .data-zone { height: auto; padding: 20px; }
             svg { max-width: 360px; }
             .ifs-container { grid-template-columns: 1fr; }
+            .modal-content { height: 90vh; display: flex; flex-direction: column; padding: 15px; }
         }
 
         @media print {
@@ -148,7 +159,7 @@
         <div class="app-container">
             <div class="visual-zone">
                 <div id="wheelContainer"></div>
-                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Zoom / Vezi toate cele 96 de emoții detaliat</div>
+                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Zoom Interactiv / Vezi toate cele 96 de emoții</div>
                 <div id="sidePanel" class="selection-panel">
                     <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Focus Curent</span>
                     <h2 id="currentEmotionDisplay" style="margin: 3px 0 0 0; font-size: 1.5rem;">-</h2>
@@ -205,9 +216,14 @@
     </div>
 
     <div id="wheelModal" class="wheel-modal">
-        <div class="modal-content">
-            <button id="closeModalBtn" class="modal-close">✕</button>
-            <h2 style="text-align:center; margin-top:0; color:#fff; font-size:1.2rem; margin-bottom:15px;">Hartă de Înaltă Rezoluție (96 Emoții Extins)</h2>
+        <div class="modal-header">
+            <h2 class="modal-title">🧭 Zoom tactil (Pinch) sau Trage de roată pentru citire</h2>
+            <div class="modal-controls">
+                <button id="resetModalBtn" class="control-btn">Centrare</button>
+                <button id="closeModalBtn" class="control-btn" style="background:var(--accent);">Închide ✕</button>
+            </div>
+        </div>
+        <div class="modal-viewport" id="modalViewport">
             <div id="modalWheelContainer"></div>
         </div>
     </div>
@@ -222,7 +238,7 @@
             <div class="components-grid">
                 <div class="comp-card">
                     <h3><span>💭</span> Gândurile</h3>
-                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens. Se manifestă ca discurs interior adesea însoțit de reprezentări/imagini la care participă senzațiile şi emoțiile.</p>
+                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens. Se manifestă ca discurs interior adesea însoțit de reprezentări/imagini la care participă sensations și emoțiile.</p>
                 </div>
                 <div class="comp-card">
                     <h3><span>🎭</span> Emoțiile</h3>
@@ -247,7 +263,7 @@
     </div>
 
 <script>
-// Schimbare tab-uri nativă securizată
+// Logică navigare tabs
 document.getElementById('btnTabNavigator').addEventListener('click', function() { executeTabSwitch('btnTabNavigator', 'modNavigator'); });
 document.getElementById('btnTabTeorie').addEventListener('click', function() { executeTabSwitch('btnTabTeorie', 'modTeorie'); });
 
@@ -261,7 +277,7 @@ function executeTabSwitch(btnId, tabId) {
 const db = {
     "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
     "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
-    "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea nedreptății"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
+    "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
     "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
     "Iubire": { color: "#ec4899", somatic: ["Căldură cardiacă", "Siguranță viscerală", "Deschidere posturală"], needs: ["Intimitate emoțională", "Aparținere", "Atingere sigură"], ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea pură." }, coping: { "default": "Transmite mental sau fizic un gând de compasiune profundă." }, subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } },
     "Surpriză": { color: "#3b82f6", somatic: ["Inspir blocat", "Ochi deschiși", "Orientare rapidă"], needs: ["Orientare cognitivă", "Procesare", "Actualizarea hărții"], ifs: { protector: "Oprește execuția curentă pentru a evalua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, coping: { "default": "Resetează reflexul de orientare prin expir prelungit." }, subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } },
@@ -269,7 +285,6 @@ const db = {
     "Dezgust": { color: "#14b8a6", somatic: ["Greață gastrică", "Tensiune nazolabială", "Retragere"], needs: ["Distanțare", "Protejarea integrității", "Curățarea spațiului"], ifs: { protector: "Filtru drastic de respingere a toxicității din jur.", child: "Amintirea timpurie a unui mediu invaziv resimțit ca toxic." }, coping: { "default": "Distanțare fizică imediată și spălarea mâinilor/feței." }, subs: { "Scârbit": ["Dezgustat", "Repulsat", "Contaminat", "Blocat"], "Aversiune": ["Antipatie", "Retras", "Intolerant", "Ostil"], "Aprehensiv": ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } }
 };
 
-// MOTOR GEOMETRIC NATIV — CALCULEAZĂ ROATA ȘI O REZOLVĂ TRIDIMENSIONAL ÎN SITES
 function renderWheels() {
     var coreKeys = Object.keys(db);
     var htmlNormal = '<svg viewBox="0 0 500 500">';
@@ -338,16 +353,87 @@ function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isMo
     return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
 }
 
+// MANAGEMENT STARĂ ZOOM ȘI DRAG (PAN) PENTRU TELEFON ȘI TABLETĂ
 var modal = document.getElementById('wheelModal');
+var viewport = document.getElementById('modalViewport');
+var targetContainer = document.getElementById('modalWheelContainer');
+
+var scale = 1, lastScale = 1;
+var posX = 0, posY = 0, lastPosX = 0, lastPosY = 0;
+var isDragging = false;
+var startX, startY;
+var touchStartDist = 0;
+
 document.getElementById('openModalBtn').addEventListener('click', openModal);
 document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+document.getElementById('resetModalBtn').addEventListener('click', resetZoom);
 
-function openModal() { modal.classList.add('open'); }
+function openModal() { modal.classList.add('open'); resetZoom(); }
 function closeModal() { modal.classList.remove('open'); }
+function resetZoom() { scale = 1; posX = 0; posY = 0; updateTransform(); }
+function updateTransform() { targetContainer.style.transform = "translate(" + posX + "px, " + posY + "px) scale(" + scale + ")"; }
+
+// 1. SUPORT ZOOM DINAMIC (MOUSE WHEEL pe Desktop)
+viewport.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var zoomFactor = 0.1;
+    if (e.deltaY < 0) { scale += zoomFactor; } else { scale -= zoomFactor; }
+    scale = Math.min(Math.max(0.8, scale), 5); // Limite mărire: între 0.8x și 5x
+    updateTransform();
+}, { passive: false });
+
+// 2. SUPORT TRAGERE (DRAG MOUSE pe Desktop)
+viewport.addEventListener('mousedown', function(e) {
+    if(e.target.closest('.modal-controls') || e.target.closest('#closeModalBtn')) return;
+    isDragging = true; startX = e.clientX - posX; startY = e.clientY - posY;
+});
+window.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    posX = e.clientX - startX; posY = e.clientY - startY;
+    updateTransform();
+});
+window.addEventListener('mouseup', function() { isDragging = false; });
+
+// 3. SUPORT SENZORIAL AVANSAT (TOUCH: PINCH-TO-ZOOM ȘI DRAG pe Mobil/Tabletă)
+viewport.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+        // Mișcare cu un singur deget (Pan)
+        isDragging = true;
+        startX = e.touches[0].clientX - posX;
+        startY = e.touches[0].clientY - posY;
+    } else if (e.touches.length === 2) {
+        // Zoom cu două degete (Pinch)
+        isDragging = false;
+        touchStartDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        lastScale = scale;
+    }
+});
+
+viewport.addEventListener('touchmove', function(e) {
+    e.preventDefault(); // Oprește scroll-ul nativ al paginii când tragi de roată
+    if (isDragging && e.touches.length === 1) {
+        posX = e.touches[0].clientX - startX;
+        posY = e.touches[0].clientY - startY;
+        updateTransform();
+    } else if (e.touches.length === 2) {
+        var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        scale = lastScale * (dist / touchStartDist);
+        scale = Math.min(Math.max(0.8, scale), 5);
+        updateTransform();
+    }
+}, { passive: false });
+
+viewport.addEventListener('touchend', function(e) {
+    isDragging = false;
+    if (e.touches.length === 1) {
+        startX = e.touches[0].clientX - posX;
+        startY = e.touches[0].clientY - posY;
+        isDragging = true;
+    }
+});
 
 var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
 
-// LOGICĂ SECURIZATĂ ANTI-ISOLATION: Prinde evenimentul indiferent pe ce element interior s-a dat click
 function handleGlobalClick(e) {
     var group = e.target.closest('.wheel-group');
     if (group) {
