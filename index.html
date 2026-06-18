@@ -49,9 +49,10 @@
         .hero h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px 0; background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { color: var(--text-muted); margin: 0 0 30px 0; font-size: 1rem; }
         
-        /* Cadrul Roții principale */
-        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; display: flex; justify-content: center; align-items: center; touch-action: none; }
-        #mainSvg { width: 100%; height: auto; display: block; will-change: transform; cursor: ew-resize; transform: rotate(-90deg); transform-origin: center center; }
+        /* Cadrul Roții principale fixat pe axă */
+        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; display: flex; justify-content: center; align-items: center; touch-action: none; user-select: none; }
+        #mainSvg { width: 100%; height: auto; display: block; will-change: transform; cursor: grab; transform-origin: center center; transform: rotate(0deg); }
+        #mainSvg:active { cursor: grabbing; }
         
         .wheel-group { cursor: pointer; }
         .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
@@ -67,7 +68,7 @@
         .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
         .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
 
-        /* MODAL DE ZOOM OPTIMIZAT CU BUTOANE DE CONTROL */
+        /* MODAL DE ZOOM RECONSTRUIT PENTRU ROTAȚIE PERFECTĂ PE AXĂ */
         .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
         
@@ -78,10 +79,11 @@
         .control-btn { background: var(--bg-main); border: 1px solid var(--border); color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: all 0.2s; }
         .control-btn:hover { background: var(--bg-card-hover); border-color: var(--accent); }
         
-        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; background: #080c14; }
+        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; background: #080c14; touch-action: none; }
         
         #modalWheelContainer { width: 100%; max-width: 580px; height: auto; transform-origin: center center; position: absolute; will-change: transform; display: flex; align-items: center; justify-content: center; }
-        #modalSvg { width: 100%; height: auto; display: block; transform-origin: center center; will-change: transform; transition: transform 0.2s ease; transform: rotate(-90deg); }
+        #modalSvg { width: 100%; height: auto; display: block; transform-origin: center center; will-change: transform; cursor: grab; transform: rotate(0deg); }
+        #modalSvg:active { cursor: grabbing; }
 
         .wheel-modal .hidden-layer { display: block !important; }
         .wheel-modal .wheel-text { font-size: 10px; }
@@ -135,7 +137,7 @@
         <div class="app-container">
             <div class="visual-zone">
                 <div id="wheelContainer"></div>
-                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Deschide Panoul de Zoom & Rotație</div>
+                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Panou de Zoom & Rotație Fină</div>
                 <div id="sidePanel" class="selection-panel">
                     <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Focus Curent</span>
                     <h2 id="currentEmotionDisplay" style="margin: 3px 0 0 0; font-size: 1.5rem;">-</h2>
@@ -194,15 +196,15 @@
     <div id="wheelModal" class="wheel-modal">
         <div class="modal-header">
             <div class="modal-top-row">
-                <h2 class="modal-title">🧭 Hartă Clinică (96 Emoții)</h2>
+                <h2 class="modal-title">🧭 Hartă Clinică Pro (96 Emoții)</h2>
                 <button id="closeModalBtn" class="control-btn" style="background:#ef4444; border-color:#ef4444;">Închide ✕</button>
             </div>
             <div class="modal-actions-row">
-                <button id="rotateLeftBtn" class="control-btn">↩ Rotire Stânga</button>
-                <button id="rotateRightBtn" class="control-btn">Rotire Dreapta ↪</button>
+                <button id="rotateLeftBtn" class="control-btn">↺ Stânga</button>
+                <button id="rotateRightBtn" class="control-btn">Dreapta ↻</button>
                 <button id="zoomInBtn" class="control-btn">➕ Mărește</button>
                 <button id="zoomOutBtn" class="control-btn">➖ Micșorează</button>
-                <button id="resetModalBtn" class="control-btn" style="border-color:var(--accent);">Resetare</button>
+                <button id="resetModalBtn" class="control-btn" style="border-color:var(--accent);">Centrare</button>
             </div>
         </div>
         <div class="modal-viewport" id="modalViewport">
@@ -251,7 +253,7 @@ const db = {
     "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
     "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
     "Iubire": { color: "#ec4899", somatic: ["Căldură cardiacă", "Siguranță viscerală", "Deschidere posturală"], needs: ["Intimitate emoțională", "Aparținere", "Atingere sigură"], ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea pură." }, coping: { "default": "Transmite mental un gând de compasiune profundă." }, subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } },
-    "Surpriză": { color: "#3b82f6", somatic: ["Inspir blocat", "Ochi deschiși", "Orientare rapidă"], needs: ["Orientare cognitivă", "Procesare", "Actualizarea hărții"], ifs: { protector: "Oprește execuția curentă pentru a evaluua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, coping: { "default": "Resetează reflexul de orientare prin expir prelungit." }, subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } },
+    "Surpriză": { color: "#3b82f6", somatic: ["Inspir blocat", "Ochi deschiși", "Orientare rapidă"], needs: ["Orientare cognitivă", "Procesare", "Actualizarea hărții"], ifs: { protector: "Oprește execuția curentă pentru a evalua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, coping: { "default": "Resetează reflexul de orientare prin expir prelungit." }, subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } },
     "Rușine": { color: "#f59e0b", somatic: ["Prăbușire posturală", "Privire jos", "Roșeață cutanată"], needs: ["Reacceptare", "Autocompasiune", "Validarea demnității"], ifs: { protector: "Critic interior sever activat pentru conformare socială.", child: "Partea profund ascunsă care poartă credința 'eu sunt greșit'." }, coping: { "default": "Diferențiere: 'Am făcut o greșeală, dar nu SUNT o greșeală'." }, subs: { "Rușinat": ["Inadecvat", "Mortificat", "Inferior", "Expus"], "Vinovat": ["Regrete", "Remușcat", "Autocritic", "Penitent"], "Umilit": ["Disprețuit", "Micșorat", "Degradat", "Anulat"] } },
     "Dezgust": { color: "#14b8a6", somatic: ["Greață gastrică", "Tensiune nazolabială", "Retragere"], needs: ["Distanțare", "Protejarea integrității", "Curățarea spațiului"], ifs: { protector: "Filtru drastic de respingere a toxicității din jur.", child: "Amintirea timpurie a unui mediu invaziv resimțit ca toxic." }, coping: { "default": "Distanțare fizică imediată și spălarea mâinilor/feței." }, subs: { "Scârbit": ["Dezgustat", "Repulsat", "Contaminat", "Blocat"], "Aversiune": ["Antipatie", "Retras", "Intolerant", "Ostil"], "Aprehensiv": ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } }
 };
@@ -289,7 +291,9 @@ function renderWheels() {
     document.getElementById('wheelContainer').innerHTML = htmlNormal + centerNormal;
     document.getElementById('modalWheelContainer').innerHTML = htmlModal + centerNormal;
     
-    setupLinearRotation();
+    // Inițializare motor trigonometric axial
+    setupAxialRotation(document.getElementById('mainSvg'), 'main');
+    setupAxialRotation(document.getElementById('modalSvg'), 'modal');
 }
 
 function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isModal) {
@@ -316,105 +320,116 @@ function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isMo
     return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
 }
 
-// ================= MOTOR LINIAR DE ROTAȚIE ULTRA-STABIL (FĂRĂ ERORI DE COORDONATE) =================
-var mainRotationValue = -90;
+// ================= MOTOR TRIGONOMETRIC INTEGRAL DE ROTAȚIE PE AXA CENTRALĂ VIRTUALĂ =================
+var rotations = { main: 0, modal: 0 };
 
-function setupLinearRotation() {
-    var svg = document.getElementById('mainSvg');
+function setupAxialRotation(svgElement, typeKey) {
     var isRotating = false;
-    var startX = 0;
-    var initialRotation = 0;
-    var totalDelta = 0;
+    var startAngle = 0;
+    var totalMovementAngle = 0;
 
-    // Prinde începutul apăsării pe Desktop
-    svg.addEventListener('mousedown', function(e) {
-        if(e.target.closest('.center-circle') || e.target.closest('.center-text')) return;
-        isRotating = true;
-        startX = e.clientX;
-        initialRotation = mainRotationValue;
-        totalDelta = 0;
-    });
-
-    // Prinde începutul apăsării pe Mobil
-    svg.addEventListener('touchstart', function(e) {
-        isRotating = true;
-        startX = e.touches[0].clientX;
-        initialRotation = mainRotationValue;
-        totalDelta = 0;
-    }, { passive: true });
-
-    // Urmărește mișcarea stânga-dreapta pe Desktop
-    window.addEventListener('mousemove', function(e) {
-        if (!isRotating) return;
-        var deltaX = e.clientX - startX;
-        totalDelta = Math.abs(deltaX);
-        mainRotationValue = initialRotation + (deltaX * 0.5); // 0.5 controlează sensibilitatea vitezei de rotație
-        svg.style.transform = "rotate(" + mainRotationValue + "deg)";
-    });
-
-    // Urmărește mișcarea stânga-dreapta pe Mobil
-    window.addEventListener('touchmove', function(e) {
-        if (!isRotating) return;
-        var deltaX = e.touches[0].clientX - startX;
-        totalDelta = Math.abs(deltaX);
-        mainRotationValue = initialRotation + (deltaX * 0.6);
-        svg.style.transform = "rotate(" + mainRotationValue + "deg)";
-    });
-
-    // Finalizare mișcare
-    function endRotation() {
-        isRotating = false;
-        // Dacă degetul s-a mișcat mai mult de 8 pixeli, blocăm click-ul accidental pe emoție
-        svg.setAttribute('data-moved', totalDelta > 8 ? 'true' : 'false');
+    // Determină centrul geometric real (x, y) raportat la viewport în milisecunda acțiunii
+    function getCenter() {
+        var rect = svgElement.getBoundingClientRect();
+        return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        };
     }
 
-    window.addEventListener('mouseup', endRotation);
-    window.addEventListener('touchend', endRotation);
+    function calculateAngle(clientX, clientY) {
+        var center = getCenter();
+        // Atan2 returnează unghiul matematic pur în jurul punctului central fixat
+        return Math.atan2(clientY - center.y, clientX - center.x) * (180 / Math.PI);
+    }
+
+    function onStart(clientX, clientY) {
+        if (e.target && (e.target.closest('.center-circle') || e.target.closest('.center-text'))) return;
+        isRotating = true;
+        totalMovementAngle = 0;
+        var currentClickAngle = calculateAngle(clientX, clientY);
+        startAngle = currentClickAngle - rotations[typeKey];
+    }
+
+    function onMove(clientX, clientY) {
+        if (!isRotating) return;
+        var currentMoveAngle = calculateAngle(clientX, clientY);
+        var deltaAngle = currentMoveAngle - startAngle;
+        
+        // Înregistrează deplasarea unghiulară pentru a bloca click-ul accidental la învârtire rapidă
+        totalMovementAngle += Math.abs(deltaAngle - rotations[typeKey]);
+        rotations[typeKey] = deltaAngle;
+        
+        if (typeKey === 'main') {
+            svgElement.style.transform = "rotate(" + deltaAngle + "deg)";
+        } else {
+            // Pentru modal, rotim doar elementul SVG interior, lăsând containerul extern pentru Pan/Zoom
+            svgElement.style.transform = "rotate(" + deltaAngle + "deg)";
+        }
+    }
+
+    svgElement.addEventListener('mousedown', function(e) { onStart(e.clientX, e.clientY); });
+    svgElement.addEventListener('touchstart', function(e) { if(e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+
+    window.addEventListener('mousemove', function(e) { onMove(e.clientX, e.clientY); });
+    window.addEventListener('touchmove', function(e) { if(e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+
+    function onEnd() {
+        if (!isRotating) return;
+        isRotating = false;
+        svgElement.setAttribute('data-moved', totalMovementAngle > 6 ? 'true' : 'false');
+    }
+    window.addEventListener('mouseup', onEnd);
+    window.addEventListener('touchend', onEnd);
 }
 
-// ================= CONTROALE PAN EXCLUSIV ȘI BUTOANE ÎN MODAL =================
+// ================= CONTROALE PAN EXCLUSIV ȘI BUTOANE ÎN INTERIORUL MODALULUI =================
 var modal = document.getElementById('wheelModal');
 var viewport = document.getElementById('modalViewport');
 var targetContainer = document.getElementById('modalWheelContainer');
 
-var scale = 1, posX = 0, posY = 0, modalRotation = -90;
+var scale = 1, posX = 0, posY = 0;
 var isPanActive = false, pStartX, pStartY;
 
 document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetAllModal(); });
 document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
 document.getElementById('resetModalBtn').addEventListener('click', resetAllModal);
 
-document.getElementById('rotateLeftBtn').addEventListener('click', function() { modalRotation -= 30; applyModalTransforms(); });
-document.getElementById('rotateRightBtn').addEventListener('click', function() { modalRotation += 30; applyModalTransforms(); });
+document.getElementById('rotateLeftBtn').addEventListener('click', function() { rotations.modal -= 30; applyModalTransforms(); });
+document.getElementById('rotateRightBtn').addEventListener('click', function() { rotations.modal += 30; applyModalTransforms(); });
 document.getElementById('zoomInBtn').addEventListener('click', function() { scale = Math.min(scale + 0.4, 5); applyModalTransforms(); });
 document.getElementById('zoomOutBtn').addEventListener('click', function() { scale = Math.max(scale - 0.4, 0.7); applyModalTransforms(); });
 
-function resetAllModal() { scale = 1; posX = 0; posY = 0; modalRotation = -90; applyModalTransforms(); }
+function resetAllModal() { 
+    scale = 1; posX = 0; posY = 0; rotations.modal = 0; 
+    applyModalTransforms(); 
+}
 
 function applyModalTransforms() {
     targetContainer.style.transform = "translate(" + posX + "px, " + posY + "px) scale(" + scale + ")";
     var mSvg = document.getElementById('modalSvg');
-    if(mSvg) { mSvg.style.transform = "rotate(" + modalRotation + "deg)"; }
+    if(mSvg) { mSvg.style.transform = "rotate(" + rotations.modal + "deg)"; }
 }
 
-// Mutare (Pan) în modal
-viewport.addEventListener('mousedown', function(e) { isPanActive = true; pStartX = e.clientX - posX; pStartY = e.clientY - posY; });
+// Mișcare liberă de translatare (Pan) exclusiv pe fundalul Viewport-ului (Nu pe disc)
+viewport.addEventListener('mousedown', function(e) { if(e.target.closest('#modalSvg')) return; isPanActive = true; pStartX = e.clientX - posX; pStartY = e.clientY - posY; });
 window.addEventListener('mousemove', function(e) { if (isPanActive) { posX = e.clientX - pStartX; posY = e.clientY - pStartY; applyModalTransforms(); } });
 window.addEventListener('mouseup', function() { isPanActive = false; });
 
-viewport.addEventListener('touchstart', function(e) { isPanActive = true; pStartX = e.touches[0].clientX - posX; pStartY = e.touches[0].clientY - posY; });
-viewport.addEventListener('touchmove', function(e) { if (isPanActive) { posX = e.touches[0].clientX - pStartX; posY = e.touches[0].clientY - pStartY; applyModalTransforms(); } });
+viewport.addEventListener('touchstart', function(e) { if(e.target.closest('#modalSvg') || e.touches.length > 1) return; isPanActive = true; pStartX = e.touches[0].clientX - posX; pStartY = e.touches[0].clientY - posY; }, { passive: true });
+viewport.addEventListener('touchmove', function(e) { if (isPanActive && e.touches.length === 1) { posX = e.touches[0].clientX - pStartX; posY = e.touches[0].clientY - pStartY; applyModalTransforms(); } }, { passive: true });
 viewport.addEventListener('touchend', function() { isPanActive = false; });
 
-// GESTIUNE SELECȚIE CLINICĂ
+
+// GESTIUNE SELECȚIE CLINICĂ FĂRĂ RESTRICȚII
 var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
 
 function handleGlobalClick(e) {
     var group = e.target.closest('.wheel-group');
     if (group) {
         var svg = group.closest('svg');
-        // Dacă s-a rotat activ roata pe ecranul principal, ignorăm click-ul accidental
-        if(svg && svg.id === 'mainSvg' && svg.getAttribute('data-moved') === 'true') { return; }
+        // Dacă s-a rotat activ discul, oprim selecția accidentală la ridicarea degetului
+        if(svg && svg.getAttribute('data-moved') === 'true') { return; }
         
         var name = group.getAttribute('data-name'); var type = group.getAttribute('data-type'); var parentCore = group.getAttribute('data-core');
         currentSelection.emotion = name; currentSelection.type = type; currentSelection.parentCore = parentCore;
