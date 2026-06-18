@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sistem Clinic Integrat: Navigator & Dinamica Minții</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2 family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0b0f19; --bg-card: #151d30; --bg-card-hover: #1e2942;
+            --border: #243252; --text-main: #f3f4f6; --text-muted: #9ca3af; --accent: #6366f1;
+            --accent-light: rgba(99, 102, 241, 0.1);
+        }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body { 
+            background: var(--bg-main); color: var(--text-main); margin: 0; padding: 0; 
+            -webkit-tap-highlight-color: transparent; -webkit-overflow-scrolling: touch;
+        }
+
+        /* Navigare */
+        .app-nav {
+            display: flex; justify-content: center; background: var(--bg-card);
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 10px 0;
+        }
+        .nav-btn {
+            background: transparent; color: var(--text-muted); border: none; padding: 12px 24px;
+            font-size: 1rem; font-weight: 600; cursor: pointer; border-radius: 12px; margin: 0 5px; outline: none;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover { color: #fff; background: var(--bg-card-hover); }
+        .nav-btn.active { color: #fff; background: var(--accent); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Container principal */
+        .app-container { display: grid; grid-template-columns: 1fr 1.2fr; min-height: calc(100vh - 65px); }
+        
+        .visual-zone { 
+            background: radial-gradient(circle at center, #111827 0%, var(--bg-main) 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 30px; border-right: 1px solid var(--border); position: sticky; top: 65px; height: calc(100vh - 65px);
+        }
+        .data-zone { padding: 40px; overflow-y: auto; height: calc(100vh - 65px); }
+        
+        .hero h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px 0; background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-muted); margin: 0 0 30px 0; font-size: 1rem; }
+        
+        /* Roata SVG Optimizată Complet Inline */
+        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; }
+        svg { width: 100%; height: auto; display: block; transform: rotate(-90deg); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
+        
+        .wheel-group { cursor: pointer; }
+        .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
+        path { stroke: var(--bg-main); stroke-width: 1.5px; opacity: 0.88; transition: all 0.2s ease; }
+        
+        /* Protecție absolută anti-blocare click-uri pe text */
+        .wheel-text { fill: #fff; font-size: 9px; font-weight: 600; pointer-events: none !important; text-anchor: middle; dominant-baseline: middle; user-select: none; }
+        .wheel-text.core-text { font-size: 11px; font-weight: 700; }
+        .wheel-text.hidden-layer { display: none; }
+
+        .center-circle { fill: var(--bg-card); stroke: var(--border); stroke-width: 2px; pointer-events: none; }
+        .center-text { fill: var(--text-main); font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; transform: rotate(90deg); pointer-events: none; }
+        
+        .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+        .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
+
+        /* INTERFAȚĂ MODALĂ (POP-UP DETALIAT) */
+        .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.98); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+        .wheel-modal.open { display: flex; }
+        .modal-content { width: 100%; max-width: 740px; position: relative; background: #0e1626; padding: 30px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: var(--bg-card); border: 1px solid var(--border); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none; }
+        .modal-close:hover { background: var(--accent); border-color: var(--accent); }
+        
+        .wheel-modal .hidden-layer { display: block !important; }
+        .wheel-modal .wheel-text { font-size: 10px; }
+        .wheel-modal .wheel-text.core-text { font-size: 13px; }
+
+        /* Secțiuni active */
+        .section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 20px; display: none; opacity: 0; transform: translateY(10px); transition: all 0.2s ease; }
+        .section.active { display: block; opacity: 1; transform: translateY(0); }
+        .section h2 { font-size: 1.25rem; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        
+        .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .pill { background: #1e2942; border: 1px solid var(--border); padding: 12px 20px; border-radius: 99px; font-size: 0.9rem; cursor: pointer; color: var(--text-main); user-select: none; }
+        .pill.selected { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 12px rgba(99, 102, 241, 0.4); }
+        
+        .coping-card { background: #1a243d; border-left: 5px solid var(--accent); padding: 18px; border-radius: 12px; margin-top: 12px; }
+        .coping-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; color: #e5e7eb; }
+        .ifs-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .ifs-box { background: #172033; border: 1px solid var(--border); padding: 18px; border-radius: 14px; }
+        .ifs-box.protector h3 { color: #f59e0b; margin-top: 0; font-size: 1rem; }
+        .ifs-box.child h3 { color: #ec4899; margin-top: 0; font-size: 1rem; }
+        
+        textarea { width: 100%; background: #1a243d; border: 1px solid var(--border); border-radius: 12px; color: white; padding: 12px; font-size: 1rem; resize: none; outline: none; }
+        .print-text-block { display: none; background: #1a243d; padding: 12px; border-radius: 12px; border: 1px solid var(--border); white-space: pre-wrap; color: white; min-height: 50px; }
+        .selection-panel { margin-top: 20px; text-align: center; width: 100%; max-width: 360px; background: var(--bg-card); padding: 15px; border-radius: 16px; border: 1px solid var(--border); display: none; }
+        .btn-export { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 16px 24px; border-radius: 14px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 15px; display: none; outline: none; }
+
+        /* Teorie */
+        .theory-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .comp-card { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
+        .comp-card h3 { margin-top: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .comp-card p { font-size: 0.95rem; color: #d1d5db; margin: 0; text-align: justify; line-height: 1.6; }
+        .nevoi-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 15px; }
+        summary { padding: 12px 0; font-weight: 600; cursor: pointer; color: #fff; outline: none; }
+        summary::marker { color: var(--accent); }
+        .nevoi-content { padding: 10px 0 15px 0; border-top: 1px dashed var(--border); color: #d1d5db; font-size: 0.95rem; line-height: 1.6; }
+        .nevoi-number { color: var(--accent); font-weight: 700; margin-right: 8px; }
+        .blockquote-box { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 25px; border-radius: 0 16px 16px 0; margin-bottom: 40px; }
+        .blockquote-box p { margin: 0 0 15px 0; font-size: 1rem; color: #e5e7eb; line-height: 1.6; }
+
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 1fr; }
+            .visual-zone { height: auto; position: relative; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); top: 0; }
+            .data-zone { height: auto; padding: 20px; }
+            svg { max-width: 360px; }
+            .ifs-container { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .app-nav, .wheel-modal, .zoom-hint { display: none !important; }
+            #modTeorie { display: none !important; }
+            #modNavigator { display: block !important; }
+            body { background: white !important; color: black !important; } 
+            .app-container { display: block !important; }
+            .visual-zone, .btn-export, .pill-grid, textarea { display: none !important; } 
+            .print-text-block { display: block !important; color: black !important; background: #f3f4f6 !important; border: 1px solid #ccc !important; }
+            .data-zone { height: auto !important; padding: 0 !important; overflow: visible !important; }
+            .section { display: block !important; opacity: 1 !important; background: white !important; border: 1px solid #ccc !important; color: black !important; page-break-inside: avoid; }
+            .ifs-box, .coping-card { background: #f3f4f6 !important; color: black !important; border: 1px solid #ccc !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="app-nav">
+        <button id="btnTabNavigator" class="nav-btn active">🧭 Diagnostic Interactiv</button>
+        <button id="btnTabTeorie" class="nav-btn">🧠 Dinamica Minții (Teorie)</button>
+    </nav>
+
+    <div id="modNavigator" class="tab-content active">
+        <div class="app-container">
+            <div class="visual-zone">
+                <div id="wheelContainer"></div>
+                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Zoom / Vezi toate cele 96 de emoții detaliat</div>
+                <div id="sidePanel" class="selection-panel">
+                    <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Focus Curent</span>
+                    <h2 id="currentEmotionDisplay" style="margin: 3px 0 0 0; font-size: 1.5rem;">-</h2>
+                    <p id="currentTypeDisplay" style="margin: 3px 0 0 0; font-size: 0.8rem; color: var(--accent);"></p>
+                </div>
+            </div>
+            
+            <div class="data-zone">
+                <div class="hero" id="mainHero">
+                    <h1>Diagnostic de Profunzime</h1>
+                    <p>Cartografiere somatică, IFS și intervenție contextuală bazată pe Solms (2018).</p>
+                </div>
+                <div id="secSomatic" class="section">
+                    <h2><span style="color:#3b82f6">☉</span> 2. Amprenta Somatică (În Corp)</h2>
+                    <div id="somaticGrid" class="pill-grid"></div>
+                </div>
+                <div id="secNeeds" class="section">
+                    <h2><span style="color:#10b981">⚖</span> 3. Nevoia Subiacentă</h2>
+                    <div id="needsGrid" class="pill-grid"></div>
+                </div>
+                <div id="secCoping" class="section">
+                    <h2><span style="color:#8b5cf6">🛡</span> 4. Strategie de Coping Personalizată</h2>
+                    <div id="copingOutput"></div>
+                </div>
+                <div id="secIFS" class="section">
+                    <h2><span style="color:#ec4899">🧬</span> 5. Arhitectura Internă (Abordare IFS)</h2>
+                    <div class="ifs-container">
+                        <div class="ifs-box protector">
+                            <h3>🛡️ Partea Protectoare</h3>
+                            <p id="ifsProtectorText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
+                        </div>
+                        <div class="ifs-box child">
+                            <h3>👶 Copilul Interior Vulnerabil</h3>
+                            <p id="ifsChildText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="secReflection" class="section">
+                    <h2><span style="color:#f59e0b">📝</span> 6. Jurnal de Integrare Terapeutică</h2>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display:block; margin-bottom:8px; font-weight:500; font-size:0.95rem;">Ce încearcă această emoție să protejeze sau să comunice?</label>
+                        <textarea id="journalInput1" rows="3"></textarea>
+                        <div id="printBlock1" class="print-text-block"></div>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:8px; font-weight:500; font-size:0.95rem;">Care este acțiunea minimă utilă pe care o poți face azi?</label>
+                        <textarea id="journalInput2" rows="2"></textarea>
+                        <div id="printBlock2" class="print-text-block"></div>
+                    </div>
+                </div>
+                <button id="btnExport" class="btn-export">📥 Exportă Fisa Clinică (PDF)</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="wheelModal" class="wheel-modal">
+        <div class="modal-content">
+            <button id="closeModalBtn" class="modal-close">✕</button>
+            <h2 style="text-align:center; margin-top:0; color:#fff; font-size:1.2rem; margin-bottom:15px;">Hartă de Înaltă Rezoluție (96 Emoții Extins)</h2>
+            <div id="modalWheelContainer"></div>
+        </div>
+    </div>
+
+    <div id="modTeorie" class="tab-content">
+        <div class="theory-container">
+            <div class="hero">
+                <h1>Dinamica Minții: Nevoi, Emoții și Gânduri</h1>
+                <p>Sinteză bazată pe Mark Solms (2018) — The scientific standing of psychoanalysis</p>
+            </div>
+            <h2><span>🧠</span> 1. Componentele Sistemului Psihic</h2>
+            <div class="components-grid">
+                <div class="comp-card">
+                    <h3><span>💭</span> Gândurile</h3>
+                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens. Se manifestă ca discurs interior adesea însoțit de reprezentări/imagini la care participă senzațiile şi emoțiile.</p>
+                </div>
+                <div class="comp-card">
+                    <h3><span>🎭</span> Emoțiile</h3>
+                    <p>Emoțiile - Reacții de regulă automate, în primul rând fiziologice la evenimentele externe şi mentale, interne. Emoțiile semnalează nevoile fundamentale înnăscute ale omului, de îndeplinirea cărora depinde supraviețuirea şi sănătatea fizică şi psihologică. Nevoile sunt semnalate de emoții.</p>
+                </div>
+                <div class="comp-card">
+                    <h3><span>👁️</span> Senzațiile</h3>
+                    <p>Senzațiile - Experiențe produse prin stimularea organelor de simț şi prelucrarea cerebrală a informațiilor furnizate de acestea.</p>
+                </div>
+            </div>
+            <h2><span>⚖</span> 2. Cele 7 Nevoi Fundamentale ale Omului</h2>
+            <div class="nevoi-list">
+                <details><summary><span class="nevoi-number">1.</span> Nevoile biologice şi de a participa activ în mediu</summary><div class="nevoi-content">Nevoia de a interacționa cu mediul se resimte ca tendința de explorare, curiozitate, interes, mister.</div></details>
+                <details><summary><span class="nevoi-number">2.</span> Nevoia de a găsi un partener sexual</summary><div class="nevoi-content">Pentru satisfacerea instinctului corespunzător.</div></details>
+                <details><summary><span class="nevoi-number">3.</span> Nevoia de a scăpa din situații periculoase</summary><div class="nevoi-content">Se resimte ca frică. Anticiparea unui pericol de lungă durată se transformă în anxietate.</div></details>
+                <details><summary><span class="nevoi-number">4.</span> Nevoia de a înlătura obiectele frustrante sau periculoase</summary><div class="nevoi-content">Se aplică asupra obiectelor care stau în calea îndeplinirii nevoilor. Se resimte ca furie.</div></details>
+                <details><summary><span class="nevoi-number">5.</span> Nevoia de ataşament față de persoanele semnificative</summary><div class="nevoi-content">Nevoia de a primi şi oferi afecțiune. Separarea este semnalată de panică, iar pierderea definitivă prin tristețe și disperare.</div></details>
+                <details><summary><span class="nevoi-number">6.</span> Nevoia de îngrijire şi creştere a copiilor</summary><div class="nevoi-content">Instinctul matern şi patern.</div></details>
+                <details><summary><span class="nevoi-number">7.</span> Nevoia de a se juca ca liant social</summary><div class="nevoi-content">Funcționează ca bază a muncii, cooperării, formării ierarhiilor şi a grupurilor pentru îndeplinirea unui scop comun.</div></details>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Schimbare tab-uri nativă securizată
+document.getElementById('btnTabNavigator').addEventListener('click', function() { executeTabSwitch('btnTabNavigator', 'modNavigator'); });
+document.getElementById('btnTabTeorie').addEventListener('click', function() { executeTabSwitch('btnTabTeorie', 'modTeorie'); });
+
+function executeTabSwitch(btnId, tabId) {
+    var btns = document.getElementsByClassName('nav-btn'); for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+    var contents = document.getElementsByClassName('tab-content'); for (var j = 0; j < contents.length; j++) { contents[j].classList.remove('active'); }
+    document.getElementById(btnId).classList.add('active'); document.getElementById(tabId).classList.add('active');
+}
+
+// Baza de date a celor 96 de emotii
+const db = {
+    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
+    "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
+    "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea nedreptății"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
+    "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
+    "Iubire": { color: "#ec4899", somatic: ["Căldură cardiacă", "Siguranță viscerală", "Deschidere posturală"], needs: ["Intimitate emoțională", "Aparținere", "Atingere sigură"], ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea pură." }, coping: { "default": "Transmite mental sau fizic un gând de compasiune profundă." }, subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } },
+    "Surpriză": { color: "#3b82f6", somatic: ["Inspir blocat", "Ochi deschiși", "Orientare rapidă"], needs: ["Orientare cognitivă", "Procesare", "Actualizarea hărții"], ifs: { protector: "Oprește execuția curentă pentru a evalua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, coping: { "default": "Resetează reflexul de orientare prin expir prelungit." }, subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } },
+    "Rușine": { color: "#f59e0b", somatic: ["Prăbușire posturală", "Privire jos", "Roșeață cutanată"], needs: ["Reacceptare", "Autocompasiune", "Validarea demnității"], ifs: { protector: "Critic interior sever activat pentru conformare socială.", child: "Partea profund ascunsă care poartă credința 'eu sunt greșit'." }, coping: { "default": "Diferențiere: 'Am făcut o greșeală, dar nu SUNT o greșeală'." }, subs: { "Rușinat": ["Inadecvat", "Mortificat", "Inferior", "Expus"], "Vinovat": ["Regrete", "Remușcat", "Autocritic", "Penitent"], "Umilit": ["Disprețuit", "Micșorat", "Degradat", "Anulat"] } },
+    "Dezgust": { color: "#14b8a6", somatic: ["Greață gastrică", "Tensiune nazolabială", "Retragere"], needs: ["Distanțare", "Protejarea integrității", "Curățarea spațiului"], ifs: { protector: "Filtru drastic de respingere a toxicității din jur.", child: "Amintirea timpurie a unui mediu invaziv resimțit ca toxic." }, coping: { "default": "Distanțare fizică imediată și spălarea mâinilor/feței." }, subs: { "Scârbit": ["Dezgustat", "Repulsat", "Contaminat", "Blocat"], "Aversiune": ["Antipatie", "Retras", "Intolerant", "Ostil"], "Aprehensiv": ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } }
+};
+
+// MOTOR GEOMETRIC NATIV — CALCULEAZĂ ROATA ȘI O REZOLVĂ TRIDIMENSIONAL ÎN SITES
+function renderWheels() {
+    var coreKeys = Object.keys(db);
+    var htmlNormal = '<svg viewBox="0 0 500 500">';
+    var htmlModal = '<svg viewBox="0 0 500 500">';
+    
+    var r0 = 55; var r1 = 110; var r2 = 175; var r3 = 245;
+    var aCore = 360 / coreKeys.length;
+    
+    coreKeys.forEach(function(coreName, i) {
+        var core = db[coreName];
+        var sAngleCore = i * aCore; var eAngleCore = (i + 1) * aCore;
+        var subKeys = Object.keys(core.subs);
+        var aSub = aCore / subKeys.length;
+        
+        htmlNormal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName, false);
+        htmlModal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName, true);
+        
+        subKeys.forEach(function(secName, j) {
+            var sAngleSec = sAngleCore + (j * aSub); var eAngleSec = sAngleCore + ((j + 1) * aSub);
+            var tertList = core.subs[secName];
+            var aTert = aSub / tertList.length;
+            
+            htmlNormal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, core.color, secName, 'sec', coreName, false);
+            htmlModal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, core.color, secName, 'sec', coreName, true);
+            
+            tertList.forEach(function(tertName, k) {
+                var sAngleTert = sAngleSec + (k * aTert); var eAngleTert = sAngleSec + ((k + 1) * aTert);
+                
+                htmlNormal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, core.color, tertName, 'tert', coreName, false);
+                htmlModal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, core.color, tertName, 'tert', coreName, true);
+            });
+        });
+    });
+    
+    var centerNormal = '<circle cx="250" cy="250" r="'+r0+'" class="center-circle" /><text x="250" y="250" class="center-text">EMOȚII</text></svg>';
+    document.getElementById('wheelContainer').innerHTML = htmlNormal + centerNormal;
+    document.getElementById('modalWheelContainer').innerHTML = htmlModal + centerNormal;
+}
+
+function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isModal) {
+    var toRad = Math.PI / 180;
+    var midRad = ((sDeg + eDeg) / 2) * toRad;
+    
+    var x1_out = cx + rOut * Math.cos(sDeg * toRad); var y1_out = cy + rOut * Math.sin(sDeg * toRad);
+    var x2_out = cx + rOut * Math.cos(eDeg * toRad); var y2_out = cy + rOut * Math.sin(eDeg * toRad);
+    var x1_in = cx + rIn * Math.cos(eDeg * toRad); var y1_in = cy + rIn * Math.sin(eDeg * toRad);
+    var x2_in = cx + rIn * Math.cos(sDeg * toRad); var y2_in = cy + rIn * Math.sin(sDeg * toRad);
+    var largeArc = (eDeg - sDeg) > 180 ? 1 : 0;
+    
+    var d = "M " + x1_out + " " + y1_out + " A " + rOut + " " + rOut + " 0 " + largeArc + " 1 " + x2_out + " " + y2_out + " L " + x1_in + " " + y1_in + " A " + rIn + " " + rIn + " 0 " + largeArc + " 0 " + x2_in + " " + y2_in + " Z";
+    var opacity = type === 'core' ? 1 : (type === 'sec' ? 0.75 : 0.5);
+    
+    var rMid = (rIn + rOut) / 2;
+    var tx = cx + rMid * Math.cos(midRad);
+    var ty = cy + rMid * Math.sin(midRad);
+    
+    var textAngle = (sDeg + eDeg) / 2;
+    if (textAngle > 90 && textAngle < 270) { textAngle -= 180; }
+    
+    var textClass = "wheel-text " + type + "-text";
+    if (type === 'tert' && !isModal) { textClass += " hidden-layer"; }
+
+    var slicePath = "<path d='" + d + "' fill='" + fill + "' opacity='" + opacity + "'></path>";
+    var sliceText = "<text x='" + tx + "' y='" + ty + "' transform='rotate(" + textAngle + "," + tx + "," + ty + ")' class='" + textClass + "'>" + name + "</text>";
+    
+    return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
+}
+
+var modal = document.getElementById('wheelModal');
+document.getElementById('openModalBtn').addEventListener('click', openModal);
+document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+
+function openModal() { modal.classList.add('open'); }
+function closeModal() { modal.classList.remove('open'); }
+
+var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
+
+// LOGICĂ SECURIZATĂ ANTI-ISOLATION: Prinde evenimentul indiferent pe ce element interior s-a dat click
+function handleGlobalClick(e) {
+    var group = e.target.closest('.wheel-group');
+    if (group) {
+        var name = group.getAttribute('data-name');
+        var type = group.getAttribute('data-type');
+        var parentCore = group.getAttribute('data-core');
+        
+        currentSelection.emotion = name; currentSelection.type = type; currentSelection.parentCore = parentCore;
+        currentSelection.body = ""; currentSelection.need = "";
+        
+        document.getElementById('sidePanel').style.display = 'block';
+        var disp = document.getElementById('currentEmotionDisplay');
+        disp.innerText = name; disp.style.color = db[parentCore].color;
+        document.getElementById('currentTypeDisplay').innerText = type.toUpperCase() + " ➔ Rădăcină: " + parentCore;
+        
+        var coreData = db[parentCore];
+        document.getElementById('somaticGrid').innerHTML = coreData.somatic.map(function(s) { return "<div class='pill body-pill' data-value='" + s + "'>" + s + "</div>"; }).join('');
+        document.getElementById('needsGrid').innerHTML = coreData.needs.map(function(n) { return "<div class='pill need-pill' data-value='" + n + "'>" + n + "</div>"; }).join('');
+        
+        document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
+        document.getElementById('ifsChildText').innerText = coreData.ifs.child;
+        
+        showSection('secSomatic'); showSection('secNeeds'); showSection('secIFS'); showSection('secReflection');
+        document.getElementById('secCoping').classList.remove('active');
+        document.getElementById('btnExport').style.display = 'block';
+        
+        closeModal();
+        if(window.innerWidth <= 1024) { document.getElementById('secSomatic').scrollIntoView({ behavior: 'smooth' }); }
+    }
+}
+
+document.getElementById('wheelContainer').addEventListener('click', handleGlobalClick);
+document.getElementById('modalWheelContainer').addEventListener('click', handleGlobalClick);
+
+document.getElementById('somaticGrid').addEventListener('click', function(e) {
+    if(e.target && e.target.classList.contains('body-pill')) {
+        var pills = document.getElementsByClassName('body-pill'); for(var i=0; i<pills.length; i++) { pills[i].classList.remove('selected'); }
+        e.target.classList.add('selected'); currentSelection.body = e.target.getAttribute('data-value'); triggerCopingEngine();
+    }
+});
+
+document.getElementById('needsGrid').addEventListener('click', function(e) {
+    if(e.target && e.target.classList.contains('need-pill')) {
+        var pills = document.getElementsByClassName('need-pill'); for(var i=0; i<pills.length; i++) { pills[i].classList.remove('selected'); }
+        e.target.classList.add('selected'); currentSelection.need = e.target.getAttribute('data-value'); triggerCopingEngine();
+    }
+});
+
+function triggerCopingEngine() {
+    if (!currentSelection.need) return;
+    var coreData = db[currentSelection.parentCore]; var specialCoping = "";
+    for (var key in coreData.coping) { if (currentSelection.need.indexOf(key) !== -1) { specialCoping = coreData.coping[key]; break; } }
+    var finalCoping = specialCoping || coreData.coping["default"];
+    document.getElementById('copingOutput').innerHTML = "<div class='coping-card'><div class='coping-item'><span>🎯</span><div><strong>Intervenție strategică [" + currentSelection.emotion + "]:</strong><br>" + finalCoping + "</div></div></div>";
+    showSection('secCoping');
+}
+
+function showSection(id) { document.getElementById(id).classList.add('active'); }
+
+document.getElementById('btnExport').addEventListener('click', function() {
+    document.getElementById('printBlock1').innerText = document.getElementById('journalInput1').value || "(Nespecificat)";
+    document.getElementById('printBlock2').innerText = document.getElementById('journalInput2').value || "(Nespecificat)";
+    var hero = document.getElementById('mainHero'); var visual = document.querySelector('.visual-zone'); var grids = document.querySelectorAll('.pill-grid'); 
+    if (visual) visual.style.display = 'none'; if (hero) hero.style.display = 'none'; 
+    if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'none'; } } 
+    window.print();
+    setTimeout(function() { 
+        if (visual) visual.style.display = 'flex'; if (hero) hero.style.display = 'block'; 
+        if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'flex'; } } 
+    }, 1200);
+});
+
+window.onload = function() { renderWheels(); };
+</script>
+</body>
+</html>
