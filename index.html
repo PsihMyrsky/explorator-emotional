@@ -49,11 +49,9 @@
         .hero h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px 0; background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { color: var(--text-muted); margin: 0 0 30px 0; font-size: 1rem; }
         
-        /* Cadru Roată pe ecran principal */
-        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        
-        /* Adăugare cursor special de rotație */
-        svg { width: 100%; height: auto; display: block; will-change: transform; cursor: ew-resize; transform-origin: center center; }
+        /* Cadrul Roții principale */
+        #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; display: flex; justify-content: center; align-items: center; touch-action: none; }
+        #mainSvg { width: 100%; height: auto; display: block; will-change: transform; cursor: ew-resize; transform-origin: center center; }
         
         .wheel-group { cursor: pointer; }
         .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
@@ -69,21 +67,23 @@
         .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
         .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
 
-        /* MODALUL DE ZOOM AVANSAT */
+        /* MODAL DE ZOOM OPTIMIZAT CU BUTOANE DE CONTROL */
         .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
         
-        .modal-header { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(21, 29, 48, 0.8); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(10px); margin-bottom: 10px; z-index: 10001; }
-        .modal-title { margin: 0; color: #fff; font-size: 0.85rem; font-weight: 500; text-align: left; }
-        .modal-controls { display: flex; gap: 8px; }
-        .control-btn { background: var(--bg-main); border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: 500; }
-        .control-btn:hover { background: var(--accent); border-color: var(--accent); }
+        .modal-header { width: 100%; max-width: 650px; display: flex; flex-direction: column; gap: 10px; padding: 15px; background: #151d30; border: 1px solid var(--border); border-radius: 20px; margin-bottom: 10px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .modal-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .modal-actions-row { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; justify-content: center; border-top: 1px solid var(--border); padding-top: 10px; }
         
-        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; }
+        .control-btn { background: var(--bg-main); border: 1px solid var(--border); color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .control-btn:hover { background: var(--bg-card-hover); border-color: var(--accent); }
         
-        /* Containerul de zoom conține elementul rotativ */
-        #modalWheelContainer { width: 100%; max-width: 620px; height: auto; transform-origin: center center; position: absolute; will-change: transform; display: flex; align-items: center; justify-content: center; }
+        .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; background: #080c14; }
         
+        #modalWheelContainer { width: 100%; max-width: 580px; height: auto; transform-origin: center center; position: absolute; will-change: transform; display: flex; align-items: center; justify-content: center; }
+        #modalSvg { width: 100%; height: auto; display: block; transform-origin: center center; will-change: transform; transition: transform 0.2s ease; cursor: grab; }
+        #modalSvg:active { cursor: grabbing; }
+
         .wheel-modal .hidden-layer { display: block !important; }
         .wheel-modal .wheel-text { font-size: 10px; }
         .wheel-modal .wheel-text.core-text { font-size: 13px; }
@@ -144,7 +144,7 @@
         <div class="app-container">
             <div class="visual-zone">
                 <div id="wheelContainer"></div>
-                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Zoom Interactiv / Vezi toate cele 96 de emoții</div>
+                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Deschide Panoul de Zoom & Rotație</div>
                 <div id="sidePanel" class="selection-panel">
                     <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Focus Curent</span>
                     <h2 id="currentEmotionDisplay" style="margin: 3px 0 0 0; font-size: 1.5rem;">-</h2>
@@ -174,107 +174,4 @@
                     <div class="ifs-container">
                         <div class="ifs-box protector">
                             <h3>🛡️ Partea Protectoare</h3>
-                            <p id="ifsProtectorText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
-                        </div>
-                        <div class="ifs-box child">
-                            <h3>👶 Copilul Interior Vulnerabil</h3>
-                            <p id="ifsChildText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
-                        </div>
-                    </div>
-                </div>
-                <div id="secReflection" class="section">
-                    <h2><span style="color:#f59e0b">📝</span> 6. Jurnal de Integrare Terapeutică</h2>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display:block; margin-bottom:8px; font-weight:500; font-size:0.95rem;">Ce încearcă această emoție să protejeze sau să comunice?</label>
-                        <textarea id="journalInput1" rows="3"></textarea>
-                        <div id="printBlock1" class="print-text-block"></div>
-                    </div>
-                    <div>
-                        <label style="display:block; margin-bottom:8px; font-weight:500; font-size:0.95rem;">Care este acțiunea minimă utilă pe care o poți face azi?</label>
-                        <textarea id="journalInput2" rows="2"></textarea>
-                        <div id="printBlock2" class="print-text-block"></div>
-                    </div>
-                </div>
-                <button id="btnExport" class="btn-export">📥 Exportă Fisa Clinică (PDF)</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="wheelModal" class="wheel-modal">
-        <div class="modal-header">
-            <h2 class="modal-title">🔄 Învarte cu un deget pentru citire orizontală<br>🔍 Folosește două degete (Pinch) pentru zoom</h2>
-            <div class="modal-controls">
-                <button id="resetModalBtn" class="control-btn">Resetare</button>
-                <button id="closeModalBtn" class="control-btn" style="background:var(--accent);">Închide ✕</button>
-            </div>
-        </div>
-        <div class="modal-viewport" id="modalViewport">
-            <div id="modalWheelContainer"></div>
-        </div>
-    </div>
-
-    <div id="modTeorie" class="tab-content">
-        <div class="theory-container">
-            <div class="hero">
-                <h1>Dinamica Minții: Nevoi, Emoții și Gânduri</h1>
-                <p>Sinteză bazată pe Mark Solms (2018) — The scientific standing of psychoanalysis</p>
-            </div>
-            <h2><span>🧠</span> 1. Componentele Sistemului Psihic</h2>
-            <div class="components-grid">
-                <div class="comp-card">
-                    <h3><span>💭</span> Gândurile</h3>
-                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens.</p>
-                </div>
-                <div class="comp-card">
-                    <h3><span>🎭</span> Emoțiile</h3>
-                    <p>Emoțiile - Reacții de regulă automate, în primul rând fiziologice la evenimentele externe şi mentale, interne. Emoțiile semnalează nevoile fundamentale înnăscute ale omului.</p>
-                </div>
-                <div class="comp-card">
-                    <h3><span>👁️</span> Senzațiile</h3>
-                    <p>Senzațiile - Experiențe produse prin stimularea organelor de simț şi prelucrarea cerebrală a informațiilor furnizate de acestea.</p>
-                </div>
-            </div>
-            <h2><span>⚖</span> 2. Cele 7 Nevoi Fundamentale ale Omului</h2>
-            <div class="nevoi-list">
-                <details><summary><span class="nevoi-number">1.</span> Nevoile biologice şi de a participa activ în mediu</summary><div class="nevoi-content">Nevoia de a interacționa cu mediul se resimte ca tendința de explorare, curiozitate, interes, mister.</div></details>
-                <details><summary><span class="nevoi-number">2.</span> Nevoia de a găsi un partener sexual</summary><div class="nevoi-content">Pentru satisfacerea instinctului corespunzător.</div></details>
-                <details><summary><span class="nevoi-number">3.</span> Nevoia de a scăpa din situații periculoase</summary><div class="nevoi-content">Se resimte ca frică. Anticiparea unui pericol de lungă durată se transformă în anxietate.</div></details>
-                <details><summary><span class="nevoi-number">4.</span> Nevoia de a înlătura obiectele frustrante sau periculoase</summary><div class="nevoi-content">Se aplică asupra obiectelor care stau în calea îndeplinirii nevoilor. Se resimte ca furie.</div></details>
-                <details><summary><span class="nevoi-number">5.</span> Nevoia de ataşament față de persoanele semnificative</summary><div class="nevoi-content">Nevoia de a primi şi oferi afecțiune. Separarea este semnalată de panică, iar pierderea definitivă prin tristețe și disperare.</div></details>
-                <details><summary><span class="nevoi-number">6.</span> Nevoia de îngrijire şi creştere a copiilor</summary><div class="nevoi-content">Instinctul matern şi patern.</div></details>
-                <details><summary><span class="nevoi-number">7.</span> Nevoia de a se juca ca liant social</summary><div class="nevoi-content">Funcționează ca bază a muncii, cooperării, formării ierarhiilor şi a grupurilor pentru îndeplinirea unui scop comun.</div></details>
-            </div>
-        </div>
-    </div>
-
-<script>
-// Toggle Module
-document.getElementById('btnTabNavigator').addEventListener('click', function() { executeTabSwitch('btnTabNavigator', 'modNavigator'); });
-document.getElementById('btnTabTeorie').addEventListener('click', function() { executeTabSwitch('btnTabTeorie', 'modTeorie'); });
-
-function executeTabSwitch(btnId, tabId) {
-    var btns = document.getElementsByClassName('nav-btn'); for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
-    var contents = document.getElementsByClassName('tab-content'); for (var j = 0; j < contents.length; j++) { contents[j].classList.remove('active'); }
-    document.getElementById(btnId).classList.add('active'); document.getElementById(tabId).classList.add('active');
-}
-
-const db = {
-    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
-    "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
-    "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
-    "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
-    "Iubire": { color: "#ec4899", somatic: ["Căldură cardiacă", "Siguranță viscerală", "Deschidere posturală"], needs: ["Intimitate emoțională", "Aparținere", "Atingere sigură"], ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea pură." }, coping: { "default": "Transmite mental sau fizic un gând de compasiune profundă." }, subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } },
-    "Surpriză": { color: "#3b82f6", somatic: ["Inspir blocat", "Ochi deschiși", "Orientare rapidă"], needs: ["Orientare cognitivă", "Procesare", "Actualizarea hărții"], ifs: { protector: "Oprește execuția curentă pentru a evalua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, coping: { "default": "Resetează reflexul de orientare prin expir prelungit." }, subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } },
-    "Rușine": { color: "#f59e0b", somatic: ["Prăbușire posturală", "Privire jos", "Roșeață cutanată"], needs: ["Reacceptare", "Autocompasiune", "Validarea demnității"], ifs: { protector: "Critic interior sever activat pentru conformare socială.", child: "Partea profund ascunsă care poartă credința 'eu sunt greșit'." }, coping: { "default": "Diferențiere: 'Am făcut o greșeală, dar nu SUNT o greșeală'." }, subs: { "Rușinat": ["Inadecvat", "Mortificat", "Inferior", "Expus"], "Vinovat": ["Regrete", "Remușcat", "Autocritic", "Penitent"], "Umilit": ["Disprețuit", "Micșorat", "Degradat", "Anulat"] } },
-    "Dezgust": { color: "#14b8a6", somatic: ["Greață gastrică", "Tensiune nazolabială", "Retragere"], needs: ["Distanțare", "Protejarea integrității", "Curățarea spațiului"], ifs: { protector: "Filtru drastic de respingere a toxicității din jur.", child: "Amintirea timpurie a unui mediu invaziv resimțit ca toxic." }, coping: { "default": "Distanțare fizică imediată și spălarea mâinilor/feței." }, subs: { "Scârbit": ["Dezgustat", "Repulsat", "Contaminat", "Blocat"], "Aversiune": ["Antipatie", "Retras", "Intolerant", "Ostil"], "Aprehensiv": ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } }
-};
-
-function renderWheels() {
-    var coreKeys = Object.keys(db);
-    var htmlNormal = '<svg viewBox="0 0 500 500" id="mainSvg">';
-    var htmlModal = '<svg viewBox="0 0 500 500" id="modalSvg">';
-    var r0 = 55; var r1 = 110; var r2 = 175; var r3 = 245;
-    var aCore = 360 / coreKeys.length;
-    
-    coreKeys.forEach(function(coreName, i) {
-        var core = db[coreName]; var sAngleCore = i * aCore; var eAngleCore = (i +
+                            <p id="ifsProtectorText" style="font-size: 0.9rem; line-height: 1.5; color: #d
