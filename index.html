@@ -51,7 +51,7 @@
         
         /* Cadrul Roții principale */
         #wheelContainer { width: 100%; max-width: 440px; margin: 0 auto; position: relative; display: flex; justify-content: center; align-items: center; touch-action: none; }
-        #mainSvg { width: 100%; height: auto; display: block; will-change: transform; cursor: ew-resize; transform-origin: center center; }
+        #mainSvg { width: 100%; height: auto; display: block; will-change: transform; cursor: ew-resize; transform: rotate(-90deg); transform-origin: center center; }
         
         .wheel-group { cursor: pointer; }
         .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
@@ -81,8 +81,7 @@
         .modal-viewport { width: 100%; flex-grow: 1; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.5); display: flex; align-items: center; justify-content: center; background: #080c14; }
         
         #modalWheelContainer { width: 100%; max-width: 580px; height: auto; transform-origin: center center; position: absolute; will-change: transform; display: flex; align-items: center; justify-content: center; }
-        #modalSvg { width: 100%; height: auto; display: block; transform-origin: center center; will-change: transform; transition: transform 0.2s ease; cursor: grab; }
-        #modalSvg:active { cursor: grabbing; }
+        #modalSvg { width: 100%; height: auto; display: block; transform-origin: center center; will-change: transform; transition: transform 0.2s ease; transform: rotate(-90deg); }
 
         .wheel-modal .hidden-layer { display: block !important; }
         .wheel-modal .wheel-text { font-size: 10px; }
@@ -115,14 +114,6 @@
         .comp-card { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
         .comp-card h3 { margin-top: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
         .comp-card p { font-size: 0.95rem; color: #d1d5db; margin: 0; text-align: justify; line-height: 1.6; }
-        .nevoi-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
-        details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 15px; }
-        summary { padding: 12px 0; font-weight: 600; cursor: pointer; color: #fff; outline: none; }
-        summary::marker { color: var(--accent); }
-        .nevoi-content { padding: 10px 0 15px 0; border-top: 1px dashed var(--border); color: #d1d5db; font-size: 0.95rem; line-height: 1.6; }
-        .nevoi-number { color: var(--accent); font-weight: 700; margin-right: 8px; }
-        .blockquote-box { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 25px; border-radius: 0 16px 16px 0; margin-bottom: 40px; }
-        .blockquote-box p { margin: 0 0 15px 0; font-size: 1rem; color: #e5e7eb; line-height: 1.6; }
 
         @media (max-width: 1024px) {
             .app-container { grid-template-columns: 1fr; }
@@ -174,4 +165,323 @@
                     <div class="ifs-container">
                         <div class="ifs-box protector">
                             <h3>🛡️ Partea Protectoare</h3>
-                            <p id="ifsProtectorText" style="font-size: 0.9rem; line-height: 1.5; color: #d
+                            <p id="ifsProtectorText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
+                        </div>
+                        <div class="ifs-box child">
+                            <h3>👶 Copilul Interior Vulnerabil</h3>
+                            <p id="ifsChildText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="secReflection" class="section">
+                    <h2><span style="color:#f59e0b">📝</span> 6. Jurnal de Integrare Terapeutică</h2>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display:block; margin-bottom:8px; font-weight:500; font-size:0.95rem;">Ce încearcă această emoție să protejeze sau să comunice?</label>
+                        <textarea id="journalInput1" rows="3"></textarea>
+                        <div id="printBlock1" class="print-text-block"></div>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:8px; font-weight:500; font-size:0.95rem;">Care este acțiunea minimă utilă pe care o poți face azi?</label>
+                        <textarea id="journalInput2" rows="2"></textarea>
+                        <div id="printBlock2" class="print-text-block"></div>
+                    </div>
+                </div>
+                <button id="btnExport" class="btn-export">📥 Exportă Fisa Clinică (PDF)</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="wheelModal" class="wheel-modal">
+        <div class="modal-header">
+            <div class="modal-top-row">
+                <h2 class="modal-title">🧭 Hartă Clinică (96 Emoții)</h2>
+                <button id="closeModalBtn" class="control-btn" style="background:#ef4444; border-color:#ef4444;">Închide ✕</button>
+            </div>
+            <div class="modal-actions-row">
+                <button id="rotateLeftBtn" class="control-btn">↩ Rotire Stânga</button>
+                <button id="rotateRightBtn" class="control-btn">Rotire Dreapta ↪</button>
+                <button id="zoomInBtn" class="control-btn">➕ Mărește</button>
+                <button id="zoomOutBtn" class="control-btn">➖ Micșorează</button>
+                <button id="resetModalBtn" class="control-btn" style="border-color:var(--accent);">Resetare</button>
+            </div>
+        </div>
+        <div class="modal-viewport" id="modalViewport">
+            <div id="modalWheelContainer"></div>
+        </div>
+    </div>
+
+    <div id="modTeorie" class="tab-content">
+        <div class="theory-container">
+            <div class="hero">
+                <h1>Dinamica Minții: Nevoi, Emoții și Gânduri</h1>
+                <p>Sinteză bazată pe Mark Solms (2018) — The scientific standing of psychoanalysis</p>
+            </div>
+            <h2><span>🧠</span> 1. Componentele Sistemului Psihic</h2>
+            <div class="components-grid">
+                <div class="comp-card">
+                    <h3><span>💭</span> Gândurile</h3>
+                    <p>Gândurile - procese complexe neuropsihologice percepute sub forma ideilor, convingerilor, opiniilor, interpretărilor, prin care persoana încearcă să înțeleagă și să-şi explice experiențele proprii sau ale celorlalți, să descopere sens.</p>
+                </div>
+                <div class="comp-card">
+                    <h3><span>🎭</span> Emoțiile</h3>
+                    <p>Emoțiile - Reacții de regulă automate, în primul rând fiziologice la evenimentele externe şi mentale, interne. Emoțiile semnalează nevoile fundamentale înnăscute ale omului.</p>
+                </div>
+                <div class="comp-card">
+                    <h3><span>👁️</span> Senzațiile</h3>
+                    <p>Senzațiile - Experiențe produse prin stimularea organelor de simț şi prelucrarea cerebrală a informațiilor furnizate de acestea.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Logică navigare tabs
+document.getElementById('btnTabNavigator').addEventListener('click', function() { executeTabSwitch('btnTabNavigator', 'modNavigator'); });
+document.getElementById('btnTabTeorie').addEventListener('click', function() { executeTabSwitch('btnTabTeorie', 'modTeorie'); });
+
+function executeTabSwitch(btnId, tabId) {
+    var btns = document.getElementsByClassName('nav-btn'); for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+    var contents = document.getElementsByClassName('tab-content'); for (var j = 0; j < contents.length; j++) { contents[j].classList.remove('active'); }
+    document.getElementById(btnId).classList.add('active'); document.getElementById(tabId).classList.add('active');
+}
+
+const db = {
+    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
+    "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
+    "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
+    "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
+    "Iubire": { color: "#ec4899", somatic: ["Căldură cardiacă", "Siguranță viscerală", "Deschidere posturală"], needs: ["Intimitate emoțională", "Aparținere", "Atingere sigură"], ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea pură." }, coping: { "default": "Transmite mental un gând de compasiune profundă." }, subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } },
+    "Surpriză": { color: "#3b82f6", somatic: ["Inspir blocat", "Ochi deschiși", "Orientare rapidă"], needs: ["Orientare cognitivă", "Procesare", "Actualizarea hărții"], ifs: { protector: "Oprește execuția curentă pentru a evaluua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, coping: { "default": "Resetează reflexul de orientare prin expir prelungit." }, subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } },
+    "Rușine": { color: "#f59e0b", somatic: ["Prăbușire posturală", "Privire jos", "Roșeață cutanată"], needs: ["Reacceptare", "Autocompasiune", "Validarea demnității"], ifs: { protector: "Critic interior sever activat pentru conformare socială.", child: "Partea profund ascunsă care poartă credința 'eu sunt greșit'." }, coping: { "default": "Diferențiere: 'Am făcut o greșeală, dar nu SUNT o greșeală'." }, subs: { "Rușinat": ["Inadecvat", "Mortificat", "Inferior", "Expus"], "Vinovat": ["Regrete", "Remușcat", "Autocritic", "Penitent"], "Umilit": ["Disprețuit", "Micșorat", "Degradat", "Anulat"] } },
+    "Dezgust": { color: "#14b8a6", somatic: ["Greață gastrică", "Tensiune nazolabială", "Retragere"], needs: ["Distanțare", "Protejarea integrității", "Curățarea spațiului"], ifs: { protector: "Filtru drastic de respingere a toxicității din jur.", child: "Amintirea timpurie a unui mediu invaziv resimțit ca toxic." }, coping: { "default": "Distanțare fizică imediată și spălarea mâinilor/feței." }, subs: { "Scârbit": ["Dezgustat", "Repulsat", "Contaminat", "Blocat"], "Aversiune": ["Antipatie", "Retras", "Intolerant", "Ostil"], "Aprehensiv": ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } }
+};
+
+function renderWheels() {
+    var coreKeys = Object.keys(db);
+    var htmlNormal = '<svg viewBox="0 0 500 500" id="mainSvg">';
+    var htmlModal = '<svg viewBox="0 0 500 500" id="modalSvg">';
+    var r0 = 55; var r1 = 110; var r2 = 175; var r3 = 245;
+    var aCore = 360 / coreKeys.length;
+    
+    coreKeys.forEach(function(coreName, i) {
+        var core = db[coreName]; var sAngleCore = i * aCore; var eAngleCore = (i + 1) * aCore;
+        var subKeys = Object.keys(core.subs); var aSub = aCore / subKeys.length;
+        
+        htmlNormal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName, false);
+        htmlModal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName, true);
+        
+        subKeys.forEach(function(secName, j) {
+            var sAngleSec = sAngleCore + (j * aSub); var eAngleSec = sAngleCore + ((j + 1) * aSub);
+            var tertList = core.subs[secName]; var aTert = aSub / tertList.length;
+            
+            htmlNormal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, core.color, secName, 'sec', coreName, false);
+            htmlModal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, core.color, secName, 'sec', coreName, true);
+            
+            tertList.forEach(function(tertName, k) {
+                var sAngleTert = sAngleSec + (k * aTert); var eAngleTert = sAngleSec + ((k + 1) * aTert);
+                htmlNormal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, core.color, tertName, 'tert', coreName, false);
+                htmlModal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, core.color, tertName, 'tert', coreName, true);
+            });
+        });
+    });
+    
+    var centerNormal = '<circle cx="250" cy="250" r="'+r0+'" class="center-circle" /><text x="250" y="250" class="center-text">EMOȚII</text></svg>';
+    document.getElementById('wheelContainer').innerHTML = htmlNormal + centerNormal;
+    document.getElementById('modalWheelContainer').innerHTML = htmlModal + centerNormal;
+    
+    setupLinearRotation();
+}
+
+function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isModal) {
+    var toRad = Math.PI / 180; var midRad = ((sDeg + eDeg) / 2) * toRad;
+    var x1_out = cx + rOut * Math.cos(sDeg * toRad); var y1_out = cy + rOut * Math.sin(sDeg * toRad);
+    var x2_out = cx + rOut * Math.cos(eDeg * toRad); var y2_out = cy + rOut * Math.sin(eDeg * toRad);
+    var x1_in = cx + rIn * Math.cos(eDeg * toRad); var y1_in = cy + rIn * Math.sin(eDeg * toRad);
+    var x2_in = cx + rIn * Math.cos(sDeg * toRad); var y2_in = cy + rIn * Math.sin(sDeg * toRad);
+    var largeArc = (eDeg - sDeg) > 180 ? 1 : 0;
+    
+    var d = "M " + x1_out + " " + y1_out + " A " + rOut + " " + rOut + " 0 " + largeArc + " 1 " + x2_out + " " + y2_out + " L " + x1_in + " " + y1_in + " A " + rIn + " " + rIn + " 0 " + largeArc + " 0 " + x2_in + " " + y2_in + " Z";
+    var opacity = type === 'core' ? 1 : (type === 'sec' ? 0.75 : 0.5);
+    var rMid = (rIn + rOut) / 2; var tx = cx + rMid * Math.cos(midRad); var ty = cy + rMid * Math.sin(midRad);
+    
+    var textAngle = (sDeg + eDeg) / 2;
+    if (textAngle > 90 && textAngle < 270) { textAngle -= 180; }
+    
+    var textClass = "wheel-text " + type + "-text";
+    if (type === 'tert' && !isModal) { textClass += " hidden-layer"; }
+
+    var slicePath = "<path d='" + d + "' fill='" + fill + "' opacity='" + opacity + "'></path>";
+    var sliceText = "<text x='" + tx + "' y='" + ty + "' transform='rotate(" + textAngle + "," + tx + "," + ty + ")' class='" + textClass + "'>" + name + "</text>";
+    
+    return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
+}
+
+// ================= MOTOR LINIAR DE ROTAȚIE ULTRA-STABIL (FĂRĂ ERORI DE COORDONATE) =================
+var mainRotationValue = -90;
+
+function setupLinearRotation() {
+    var svg = document.getElementById('mainSvg');
+    var isRotating = false;
+    var startX = 0;
+    var initialRotation = 0;
+    var totalDelta = 0;
+
+    // Prinde începutul apăsării pe Desktop
+    svg.addEventListener('mousedown', function(e) {
+        if(e.target.closest('.center-circle') || e.target.closest('.center-text')) return;
+        isRotating = true;
+        startX = e.clientX;
+        initialRotation = mainRotationValue;
+        totalDelta = 0;
+    });
+
+    // Prinde începutul apăsării pe Mobil
+    svg.addEventListener('touchstart', function(e) {
+        isRotating = true;
+        startX = e.touches[0].clientX;
+        initialRotation = mainRotationValue;
+        totalDelta = 0;
+    }, { passive: true });
+
+    // Urmărește mișcarea stânga-dreapta pe Desktop
+    window.addEventListener('mousemove', function(e) {
+        if (!isRotating) return;
+        var deltaX = e.clientX - startX;
+        totalDelta = Math.abs(deltaX);
+        mainRotationValue = initialRotation + (deltaX * 0.5); // 0.5 controlează sensibilitatea vitezei de rotație
+        svg.style.transform = "rotate(" + mainRotationValue + "deg)";
+    });
+
+    // Urmărește mișcarea stânga-dreapta pe Mobil
+    window.addEventListener('touchmove', function(e) {
+        if (!isRotating) return;
+        var deltaX = e.touches[0].clientX - startX;
+        totalDelta = Math.abs(deltaX);
+        mainRotationValue = initialRotation + (deltaX * 0.6);
+        svg.style.transform = "rotate(" + mainRotationValue + "deg)";
+    });
+
+    // Finalizare mișcare
+    function endRotation() {
+        isRotating = false;
+        // Dacă degetul s-a mișcat mai mult de 8 pixeli, blocăm click-ul accidental pe emoție
+        svg.setAttribute('data-moved', totalDelta > 8 ? 'true' : 'false');
+    }
+
+    window.addEventListener('mouseup', endRotation);
+    window.addEventListener('touchend', endRotation);
+}
+
+// ================= CONTROALE PAN EXCLUSIV ȘI BUTOANE ÎN MODAL =================
+var modal = document.getElementById('wheelModal');
+var viewport = document.getElementById('modalViewport');
+var targetContainer = document.getElementById('modalWheelContainer');
+
+var scale = 1, posX = 0, posY = 0, modalRotation = -90;
+var isPanActive = false, pStartX, pStartY;
+
+document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetAllModal(); });
+document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
+document.getElementById('resetModalBtn').addEventListener('click', resetAllModal);
+
+document.getElementById('rotateLeftBtn').addEventListener('click', function() { modalRotation -= 30; applyModalTransforms(); });
+document.getElementById('rotateRightBtn').addEventListener('click', function() { modalRotation += 30; applyModalTransforms(); });
+document.getElementById('zoomInBtn').addEventListener('click', function() { scale = Math.min(scale + 0.4, 5); applyModalTransforms(); });
+document.getElementById('zoomOutBtn').addEventListener('click', function() { scale = Math.max(scale - 0.4, 0.7); applyModalTransforms(); });
+
+function resetAllModal() { scale = 1; posX = 0; posY = 0; modalRotation = -90; applyModalTransforms(); }
+
+function applyModalTransforms() {
+    targetContainer.style.transform = "translate(" + posX + "px, " + posY + "px) scale(" + scale + ")";
+    var mSvg = document.getElementById('modalSvg');
+    if(mSvg) { mSvg.style.transform = "rotate(" + modalRotation + "deg)"; }
+}
+
+// Mutare (Pan) în modal
+viewport.addEventListener('mousedown', function(e) { isPanActive = true; pStartX = e.clientX - posX; pStartY = e.clientY - posY; });
+window.addEventListener('mousemove', function(e) { if (isPanActive) { posX = e.clientX - pStartX; posY = e.clientY - pStartY; applyModalTransforms(); } });
+window.addEventListener('mouseup', function() { isPanActive = false; });
+
+viewport.addEventListener('touchstart', function(e) { isPanActive = true; pStartX = e.touches[0].clientX - posX; pStartY = e.touches[0].clientY - posY; });
+viewport.addEventListener('touchmove', function(e) { if (isPanActive) { posX = e.touches[0].clientX - pStartX; posY = e.touches[0].clientY - pStartY; applyModalTransforms(); } });
+viewport.addEventListener('touchend', function() { isPanActive = false; });
+
+// GESTIUNE SELECȚIE CLINICĂ
+var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
+
+function handleGlobalClick(e) {
+    var group = e.target.closest('.wheel-group');
+    if (group) {
+        var svg = group.closest('svg');
+        // Dacă s-a rotat activ roata pe ecranul principal, ignorăm click-ul accidental
+        if(svg && svg.id === 'mainSvg' && svg.getAttribute('data-moved') === 'true') { return; }
+        
+        var name = group.getAttribute('data-name'); var type = group.getAttribute('data-type'); var parentCore = group.getAttribute('data-core');
+        currentSelection.emotion = name; currentSelection.type = type; currentSelection.parentCore = parentCore;
+        
+        document.getElementById('sidePanel').style.display = 'block';
+        var disp = document.getElementById('currentEmotionDisplay');
+        disp.innerText = name; disp.style.color = db[parentCore].color;
+        document.getElementById('currentTypeDisplay').innerText = type.toUpperCase() + " ➔ Rădăcină: " + parentCore;
+        
+        var coreData = db[parentCore];
+        document.getElementById('somaticGrid').innerHTML = coreData.somatic.map(function(s) { return "<div class='pill body-pill' data-value='" + s + "'>" + s + "</div>"; }).join('');
+        document.getElementById('needsGrid').innerHTML = coreData.needs.map(function(n) { return "<div class='pill need-pill' data-value='" + n + "'>" + n + "</div>"; }).join('');
+        
+        document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
+        document.getElementById('ifsChildText').innerText = coreData.ifs.child;
+        
+        showSection('secSomatic'); showSection('secNeeds'); showSection('secIFS'); showSection('secReflection');
+        document.getElementById('secCoping').classList.remove('active');
+        document.getElementById('btnExport').style.display = 'block';
+        
+        closeModal();
+        if(window.innerWidth <= 1024) { document.getElementById('secSomatic').scrollIntoView({ behavior: 'smooth' }); }
+    }
+}
+
+document.getElementById('wheelContainer').addEventListener('click', handleGlobalClick);
+document.getElementById('modalWheelContainer').addEventListener('click', handleGlobalClick);
+
+document.getElementById('somaticGrid').addEventListener('click', function(e) {
+    if(e.target && e.target.classList.contains('body-pill')) {
+        var pills = document.getElementsByClassName('body-pill'); for(var i=0; i<pills.length; i++) { pills[i].classList.remove('selected'); }
+        e.target.classList.add('selected'); currentSelection.body = e.target.getAttribute('data-value'); triggerCopingEngine();
+    }
+});
+
+document.getElementById('needsGrid').addEventListener('click', function(e) {
+    if(e.target && e.target.classList.contains('need-pill')) {
+        var pills = document.getElementsByClassName('need-pill'); for(var i=0; i<pills.length; i++) { pills[i].classList.remove('selected'); }
+        e.target.classList.add('selected'); currentSelection.need = e.target.getAttribute('data-value'); triggerCopingEngine();
+    }
+});
+
+function triggerCopingEngine() {
+    if (!currentSelection.need) return;
+    var coreData = db[currentSelection.parentCore]; var specialCoping = "";
+    for (var key in coreData.coping) { if (currentSelection.need.indexOf(key) !== -1) { specialCoping = coreData.coping[key]; break; } }
+    var finalCoping = specialCoping || coreData.coping["default"];
+    document.getElementById('copingOutput').innerHTML = "<div class='coping-card'><div class='coping-item'><span>🎯</span><div><strong>Intervenție strategică [" + currentSelection.emotion + "]:</strong><br>" + finalCoping + "</div></div></div>";
+    showSection('secCoping');
+}
+
+function showSection(id) { document.getElementById(id).classList.add('active'); }
+
+document.getElementById('btnExport').addEventListener('click', function() {
+    document.getElementById('printBlock1').innerText = document.getElementById('journalInput1').value || "(Nespecificat)";
+    document.getElementById('printBlock2').innerText = document.getElementById('journalInput2').value || "(Nespecificat)";
+    var hero = document.getElementById('mainHero'); var visual = document.querySelector('.visual-zone'); var grids = document.querySelectorAll('.pill-grid'); 
+    if (visual) visual.style.display = 'none'; if (hero) hero.style.display = 'none'; 
+    if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'none'; } } 
+    window.print();
+    setTimeout(function() { 
+        if (visual) visual.style.display = 'flex'; if (hero) hero.style.display = 'block'; 
+        if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'flex'; } } 
+    }, 1200);
+});
+
+window.onload = function() { renderWheels(); };
+</script>
+</body>
+</html>
