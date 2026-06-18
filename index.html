@@ -69,7 +69,7 @@
         .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
         .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
 
-        /* MODAL DE ZOOM */
+        /* MODAL DE ZOOM PROFESIONAL UNIFICAT VIZIBIL */
         .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.99); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
         
@@ -82,7 +82,6 @@
         
         .modal-viewport { width: 100%; flex-grow: 1; max-width: 680px; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.4); background: #060912; touch-action: none; }
         
-        /* Containerul elastic pe care aplicam miscarile */
         #modalWheelContainer { width: 550px; height: 550px; position: absolute; top: calc(50% - 275px); left: calc(50% - 275px); will-change: transform; display: flex; align-items: center; justify-content: center; transform-origin: center center; }
         #modalSvg { width: 100%; height: 100%; display: block; transform-origin: center center; will-change: transform; }
 
@@ -165,7 +164,7 @@
                     <p>Cartografiere somatică, IFS și intervenție contextuală bazată pe Solms (2018).</p>
                 </div>
                 <div id="secSomatic" class="section">
-                    <h2><span style="color:#3b82f6">☉</span> 2. Amprenta Somatic & În Corp</h2>
+                    <h2><span style="color:#3b82f6">☉</span> 2. Amprenta Somatică (În Corp)</h2>
                     <div id="somaticGrid" class="pill-grid"></div>
                 </div>
                 <div id="secNeeds" class="section">
@@ -213,7 +212,7 @@
                 <h2 class="modal-title" id="modalInstructions">🧭 Hartă Clinică Pro (96 Emoții)</h2>
                 <button id="closeModalBtn" class="control-btn" style="background:#ef4444; border-color:#ef4444;">Închide ✕</button>
             </div>
-            <div class="modal-actions-row" id="modalButtonsRow">
+            <div class="modal-actions-row">
                 <button id="rotateLeftBtn" class="control-btn">↺ Rotire Stânga</button>
                 <button id="rotateRightBtn" class="control-btn">Rotire Dreapta ↻</button>
                 <button id="zoomInBtn" class="control-btn">➕ Mărește</button>
@@ -262,7 +261,7 @@ function executeTabSwitch(btnId, tabId) {
 }
 
 const db = {
-    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
+    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță physical", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
     "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
     "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
     "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
@@ -307,7 +306,7 @@ function renderWheels() {
     
     setupAxialRotation(document.getElementById('mainSvg'), 'main');
     setupAxialRotation(document.getElementById('modalSvg'), 'modal');
-    setupHybridModalEngine(); // Lansare motor hibrid inteligent
+    setupHybridModalEngine();
 }
 
 function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isModal) {
@@ -334,7 +333,7 @@ function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isMo
     return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
 }
 
-// ================= INSTALARE ROTIRE AXIALĂ PRIN EVENIMENT REZOLVAT (Math.atan2) =================
+// ================= ROTIRE AXIALĂ (TRIGONOMETRICĂ STRUCTURATĂ) =================
 var rotations = { main: 0, modal: 0 };
 
 function setupAxialRotation(svgElement, typeKey) {
@@ -357,21 +356,20 @@ function setupAxialRotation(svgElement, typeKey) {
         if (!isRotating) return;
         var deltaAngle = calculateAngle(e.clientX, e.clientY) - startAngle;
         totalMovementAngle += Math.abs(deltaAngle - rotations[typeKey]);
-        rotations[typeKey] = deltaAngle; applyRot(deltaAngle);
+        rotations[typeKey] = deltaAngle; svgElement.style.transform = "rotate(" + deltaAngle + "deg)";
     });
     window.addEventListener('touchmove', function(e) {
         if (!isRotating || e.touches.length > 1) return;
         var deltaAngle = calculateAngle(e.touches[0].clientX, e.touches[0].clientY) - startAngle;
         totalMovementAngle += Math.abs(deltaAngle - rotations[typeKey]);
-        rotations[typeKey] = deltaAngle; applyRot(deltaAngle);
+        rotations[typeKey] = deltaAngle; svgElement.style.transform = "rotate(" + deltaAngle + "deg)";
     }, { passive: true });
 
     function onEnd() { if (!isRotating) return; isRotating = false; svgElement.setAttribute('data-moved', totalMovementAngle > 5 ? 'true' : 'false'); }
     window.addEventListener('mouseup', onEnd); window.addEventListener('touchend', onEnd);
-    function applyRot(deg) { svgElement.style.transform = "rotate(" + deg + "deg)"; }
 }
 
-// ================= MOTOR HIBRID RESPONSIV (Arhitectură Matriceală Separata Desktop vs Mobil) =================
+// ================= MOTOR HIBRID RESPONSIV PAN, ZOOM ȘI CONTROALE PERMANENTE =================
 var modal = document.getElementById('wheelModal');
 var viewport = document.getElementById('modalViewport');
 var container = document.getElementById('modalWheelContainer');
@@ -379,12 +377,12 @@ var modalSvg = null;
 
 var scaleCurrent = 1, txCurrent = 0, tyCurrent = 0;
 var totalModalMovement = 0;
-var isMobileUser = false;
+var isMobileDevice = false;
 
 document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetHybridState(); });
 document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
 
-// BUTOANELE ACȚIONEAZĂ CA ACCESIBILITATE UNIFICATĂ
+// TOATE DISPOZITIVELE BENEFICIAZĂ DE CONTROALE DE BACKUP PENTRU PRECIZIE CLINICĂ VIZUALĂ
 document.getElementById('rotateLeftBtn').addEventListener('click', function() { rotations.modal -= 25; refreshModalTransformations(); });
 document.getElementById('rotateRightBtn').addEventListener('click', function() { rotations.modal += 25; refreshModalTransformations(); });
 document.getElementById('zoomInBtn').addEventListener('click', function() { scaleCurrent = Math.min(scaleCurrent + 0.4, 5); refreshModalTransformations(); });
@@ -398,28 +396,23 @@ function resetHybridState() {
 }
 
 function refreshModalTransformations() {
-    // Matricea de Pan & Zoom controlează containerul extern
     container.style.transform = "translate(" + txCurrent + "px, " + tyCurrent + "px) scale(" + scaleCurrent + ")";
-    // Axul de rotație controlează strict elementul grafic interior SVG (Fără decupare infinită)
     if(modalSvg) { modalSvg.style.transform = "rotate(" + rotations.modal + "deg)"; }
 }
 
 function setupHybridModalEngine() {
-    // Detecție inteligentă de mediu tactil (Touch vs Mouse)
-    isMobileUser = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     
-    var inst = document.getElementById('instructionsTitle');
-    if(!isMobileUser) {
-        // Ajustări interfață Desktop: Ascundem butoanele redundante de zoom și instrucțiunile mobile
-        document.getElementById('modalInstructions').innerHTML = "🧭 Hartă Clinică — Desktop<br><span style='font-size:0.75rem; color:var(--text-muted); font-weight:normal;'>Învârte roata cu mouse-ul. Zoom fluid cu rotița de la mouse (Scroll).</span>";
+    // Indiferent de ecran (Desktop/Mobil), butoanele râmân complet funcționale și active
+    if(!isMobileDevice) {
+        document.getElementById('modalInstructions').innerHTML = "🧭 Hartă Clinică Pro — Desktop<br><span style='font-size:0.75rem; color:var(--text-muted); font-weight:normal;'>Drag pe fundal = Mută imaginea. Scroll de mouse = Zoom fluid. Butoane = Rotație.</span>";
         setupDesktopViewportEngine();
     } else {
-        document.getElementById('modalInstructions').innerHTML = "👉 1 Deget = Învârte roata pe loc<br>✌️ 2 Degete = Pinch-to-Zoom & Mută imaginea (Pan)";
+        document.getElementById('modalInstructions').innerHTML = "👉 1 Deget = Învârte roata / Mută imaginea<br>✌️ 2 Degete = Pinch-to-Zoom & Pan simultan";
         setupMobileViewportEngine();
     }
 }
 
-// 💻 LOGICA DESKTOP (Scroll & Drag)
 function setupDesktopViewportEngine() {
     var isViewportDragging = false; var vStartX, vStartY;
     
@@ -430,7 +423,7 @@ function setupDesktopViewportEngine() {
     }, { passive: false });
 
     viewport.addEventListener('mousedown', function(e) {
-        if(e.target.closest('#modalSvg')) return; // Lasă rotația pe SVG
+        if(e.target.closest('#modalSvg')) return; 
         isViewportDragging = true; vStartX = e.clientX - txCurrent; vStartY = e.clientY - tyCurrent;
     });
     window.addEventListener('mousemove', function(e) {
@@ -439,7 +432,6 @@ function setupDesktopViewportEngine() {
     window.addEventListener('mouseup', function() { isViewportDragging = false; });
 }
 
-// 📱 LOGICA MOBIL (Pinch-to-Zoom Nativ pe Matrice & Spin)
 function setupMobileViewportEngine() {
     var isTouching = false; var startTouches = [];
     var startState = { scale: 1, tx: 0, ty: 0 };
@@ -447,13 +439,9 @@ function setupMobileViewportEngine() {
 
     viewport.addEventListener('touchstart', function(e) {
         if (e.touches.length === 1 && e.target.closest('#modalSvg')) {
-            // Un singur deget pe SVG înseamnă că acționează rotația axială (rezolvată de setupAxialRotation)
-            isTouching = false;
-            totalModalMovement = 0;
-            return;
+            isTouching = false; totalModalMovement = 0; return;
         }
-        isTouching = true;
-        totalModalMovement = 0;
+        isTouching = true; totalModalMovement = 0;
         startTouches = Array.from(e.touches);
         startState = { scale: scaleCurrent, tx: txCurrent, ty: tyCurrent };
         
@@ -469,16 +457,14 @@ function setupMobileViewportEngine() {
         var currentTouches = Array.from(e.touches);
         
         if (currentTouches.length === 2) {
-            e.preventDefault(); // Oprește mutarea paginii de fundal la zoom tactil
+            e.preventDefault();
             var dx = currentTouches[1].clientX - currentTouches[0].clientX;
             var dy = currentTouches[1].clientY - currentTouches[0].clientY;
             var currentDist = Math.hypot(dx, dy);
             
-            // Calcul zoom precis din degete
             var scaleRatio = currentDist / touchStartDist;
             scaleCurrent = Math.min(Math.max(0.6, startState.scale * scaleRatio), 5);
             
-            // Pan integrat simultan pe cele 2 puncte de sprijin
             var cxStart = (startTouches[0].clientX + startTouches[1].clientX) / 2;
             var cyStart = (startTouches[0].clientY + startTouches[1].clientY) / 2;
             var cxCurrent = (currentTouches[0].clientX + currentTouches[1].clientX) / 2;
@@ -489,7 +475,6 @@ function setupMobileViewportEngine() {
             totalModalMovement += 20;
             refreshModalTransformations();
         } else if (currentTouches.length === 1 && !e.target.closest('#modalSvg')) {
-            // Un singur deget în afara roții mută imaginea mărită (Pan curat)
             var txDelta = currentTouches[0].clientX - startTouches[0].clientX;
             var tyDelta = currentTouches[0].clientY - startTouches[0].clientY;
             txCurrent = startState.tx + txDelta;
