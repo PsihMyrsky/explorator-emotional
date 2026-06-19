@@ -69,7 +69,7 @@
         .zoom-hint { margin-top: 15px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
         .zoom-hint:hover { color: #fff; background: var(--bg-card-hover); }
 
-        /* MODAL DE ZOOM PROFESIONAL UNIFICAT VIZIBIL */
+        /* MODAL DE ZOOM PROFESIONAL UNIFICAT */
         .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.99); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
         
@@ -142,7 +142,7 @@
 <body>
 
     <nav class="app-nav">
-        <button id="btnTabNavigator" class="nav-btn active">🧭Explorare Interactivă </button>
+        <button id="btnTabNavigator" class="nav-btn active">🧭 Diagnostic Interactiv</button>
         <button id="btnTabTeorie" class="nav-btn">🧠 Dinamica Minții (Teorie)</button>
     </nav>
 
@@ -150,7 +150,7 @@
         <div class="app-container">
             <div class="visual-zone">
                 <div id="wheelContainer" class="wheel-wrapper"></div>
-                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Deschide Panoul de Zoom & Rotație Fină</div>
+                <div id="openModalBtn" class="zoom-hint"><span>🔍</span> Panou de Zoom & Rotație Fină</div>
                 <div id="sidePanel" class="selection-panel">
                     <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">Focus Curent</span>
                     <h2 id="currentEmotionDisplay" style="margin: 3px 0 0 0; font-size: 1.5rem;">-</h2>
@@ -160,21 +160,25 @@
             
             <div class="data-zone">
                 <div class="hero" id="mainHero">
-                    <h1>Explorare emoțională ghidată</h1>
-                    <p>Identifică emoția, înțelege nevoia și găsește o strategie utilă.</p>
+                    <h1>Explorare Emoțională Ghidată</h1>
+                    <p>Identifică emoția, înțelege nevoia și găsește o strategie pentru momentul prezent.</p>
                 </div>
+                
                 <div id="secSomatic" class="section">
                     <h2><span style="color:#3b82f6">☉</span> 2. Ce observi în corp?</h2>
                     <div id="somaticGrid" class="pill-grid"></div>
                 </div>
+                
                 <div id="secNeeds" class="section">
-                    <h2><span style="color:#10b981">⚖</span> 3.De ce ai putea avea nevoie acum?</h2>
+                    <h2><span style="color:#10b981">⚖</span> 3. De ce ai putea avea nevoie acum?</h2>
                     <div id="needsGrid" class="pill-grid"></div>
                 </div>
+                
                 <div id="secCoping" class="section">
                     <h2><span style="color:#8b5cf6">🛡</span> 4. Strategie de Coping Personalizată</h2>
                     <div id="copingOutput"></div>
                 </div>
+                
                 <div id="secIFS" class="section">
                     <h2><span style="color:#ec4899">🧬</span> 5. Ce se întâmplă în interiorul tău?</h2>
                     <div class="ifs-container">
@@ -183,21 +187,12 @@
                             <p id="ifsProtectorText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
                         </div>
                         <div class="ifs-box child">
-                            <h3>👶 Partea Vulnerabilă</h3>
+                            <h3>👶 Copilul Interior Vulnerabil</h3>
                             <p id="ifsChildText" style="font-size: 0.9rem; line-height: 1.5; color: #d1d5db; margin: 0;"></p>
                         </div>
                     </div>
                 </div>
-              <div class="coping-card">
-    <h3>⚠️ Ce să eviți momentan</h3>
-
-    <ul>
-        <li>Decizii impulsive.</li>
-        <li>Autocritică excesivă.</li>
-        <li>Izolare completă.</li>
-        <li>Compararea cu alte persoane.</li>
-    </ul>
-</div>
+                
                 <div id="secReflection" class="section">
                     <h2><span style="color:#f59e0b">📝</span> 6. Jurnal de Integrare Terapeutică</h2>
                     <div style="margin-bottom: 15px;">
@@ -271,8 +266,8 @@ function executeTabSwitch(btnId, tabId) {
 }
 
 const db = {
-    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță physical", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
-    "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Jalnic", "Chinuit"] } },
+    "Frică": { color: "#8b5cf6", somatic: ["Constricție toracică", "Palpitații", "Tremur", "Respirație scurtă"], needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], ifs: { protector: "Rulează scenarii catastrofice pentru a preveni surprizele neașteptate.", child: "Frica stocată a copilului care s-a simțit neajutorat." }, coping: { "Siguranță": "Tehnică de împământare 5-4-3-2-1 conștientă.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } },
+    "Tristețe": { color: "#6b7280", somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], needs: ["Consolare", "Spațiu de plâns", "Conectare sigură"], ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării somatice." }, subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Chinuit", "Jalnic"] } },
     "Furie": { color: "#ef4444", somatic: ["Căldură ascendentă", "Maxilar încleștat", "Pumnii strânși"], needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], ifs: { protector: "Acționează ca un scut agresiv pentru a proteja un exil rănit.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, coping: { "limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie prin exercițiu izometric intens (30s)." }, subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } },
     "Bucurie": { color: "#10b981", somatic: ["Expansiune toracică", "Relaxare facială", "Zâmbet spontan"], needs: ["Împărtășire", "Celebrare", "Joacă"], ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil de uimire pură." }, coping: { "default": "Ancorează somatic starea scanând vibrația din corp." }, subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } },
     "Iubire": { color: "#ec4899", somatic: ["Căldură cardiacă", "Siguranță viscerală", "Deschidere posturală"], needs: ["Intimitate emoțională", "Aparținere", "Atingere sigură"], ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea pură." }, coping: { "default": "Transmite mental un gând de compasiune profundă." }, subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } },
@@ -343,7 +338,6 @@ function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isMo
     return "<g class='wheel-group' data-name='" + name + "' data-type='" + type + "' data-core='" + core + "'>" + slicePath + sliceText + "</g>";
 }
 
-// ================= ROTIRE AXIALĂ (TRIGONOMETRICĂ STRUCTURATĂ) =================
 var rotations = { main: 0, modal: 0 };
 
 function setupAxialRotation(svgElement, typeKey) {
@@ -379,7 +373,6 @@ function setupAxialRotation(svgElement, typeKey) {
     window.addEventListener('mouseup', onEnd); window.addEventListener('touchend', onEnd);
 }
 
-// ================= MOTOR HIBRID RESPONSIV PAN, ZOOM ȘI CONTROALE PERMANENTE =================
 var modal = document.getElementById('wheelModal');
 var viewport = document.getElementById('modalViewport');
 var container = document.getElementById('modalWheelContainer');
@@ -392,7 +385,6 @@ var isMobileDevice = false;
 document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetHybridState(); });
 document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
 
-// TOATE DISPOZITIVELE BENEFICIAZĂ DE CONTROALE DE BACKUP PENTRU PRECIZIE CLINICĂ VIZUALĂ
 document.getElementById('rotateLeftBtn').addEventListener('click', function() { rotations.modal -= 25; refreshModalTransformations(); });
 document.getElementById('rotateRightBtn').addEventListener('click', function() { rotations.modal += 25; refreshModalTransformations(); });
 document.getElementById('zoomInBtn').addEventListener('click', function() { scaleCurrent = Math.min(scaleCurrent + 0.4, 5); refreshModalTransformations(); });
@@ -413,9 +405,8 @@ function refreshModalTransformations() {
 function setupHybridModalEngine() {
     isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     
-    // Indiferent de ecran (Desktop/Mobil), butoanele râmân complet funcționale și active
     if(!isMobileDevice) {
-        document.getElementById('modalInstructions').innerHTML = "🧭 Hartă Clinică Pro — Desktop<br><span style='font-size:0.75rem; color:var(--text-muted); font-weight:normal;'>Drag pe fundal = Mută imaginea. Scroll de mouse = Zoom fluid. Butoane = Rotație.</span>";
+        document.getElementById('modalInstructions').innerHTML = "🧭 Hartă Clinică Pro (96 Emoții)<br><span style='font-size:0.75rem; color:var(--text-muted); font-weight:normal;'>Drag pe fundal = Mută imaginea. Scroll de mouse = Zoom fluid. Butoane = Rotație.</span>";
         setupDesktopViewportEngine();
     } else {
         document.getElementById('modalInstructions').innerHTML = "👉 1 Deget = Învârte roata / Mută imaginea<br>✌️ 2 Degete = Pinch-to-Zoom & Pan simultan";
@@ -502,7 +493,6 @@ function setupMobileViewportEngine() {
     });
 }
 
-// GESTIUNE SELECȚIE CLINICĂ
 var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
 
 function handleGlobalClick(e) {
