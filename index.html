@@ -528,7 +528,11 @@ function handleGlobalClick(e) {
         document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
         document.getElementById('ifsChildText').innerText = coreData.ifs.child;
         
-        showSection('secSomatic'); showSection('secNeeds'); showSection('secIFS'); showSection('secReflection');
+      showSection('secSomatic'); 
+        showSection('secNeeds'); 
+        showSection('secIFS'); 
+        showSection('secAvoid'); // Linia nouă care activează secțiunea de avertismente
+        showSection('secReflection');
         document.getElementById('secCoping').classList.remove('active');
         document.getElementById('btnExport').style.display = 'block';
         
