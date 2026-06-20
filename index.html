@@ -59,9 +59,10 @@
         .wheel-group:hover path { opacity: 1 !important; filter: brightness(1.2); }
         path { stroke: var(--bg-main); stroke-width: 1.5px; opacity: 0.88; transition: opacity 0.2s ease; }
         
-        .wheel-text { fill: #fff; font-size: 9px; font-weight: 600; pointer-events: none !important; text-anchor: middle; dominant-baseline: middle; user-select: none; }
-        .wheel-text.core-text { font-size: 11px; font-weight: 700; }
-        .wheel-text.hidden-layer { display: none; }
+        .wheel-text { fill: #fff; font-size: 7px; font-weight: 600; pointer-events: none !important; text-anchor: middle; dominant-baseline: middle; user-select: none; }
+.wheel-text.core-text { font-size: 11px; font-weight: 700; }
+.wheel-text.sec-text { font-size: 9px; font-weight: 600; }
+        .wheel-text.hidden-layer { display: block !important; }
 
         .center-circle { fill: var(--bg-card); stroke: var(--border); stroke-width: 2px; pointer-events: none; }
         .center-text { fill: var(--text-main); font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
@@ -400,7 +401,7 @@ function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core, isMo
     if (textAngle > 90 && textAngle < 270) { textAngle -= 180; }
     
     var textClass = "wheel-text " + type + "-text";
-    if (type === 'tert' && !isModal) { textClass += " hidden-layer"; }
+    // if (type === 'tert' && !isModal) { textClass += " hidden-layer"; }
 
     var slicePath = "<path d='" + d + "' fill='" + fill + "' opacity='" + opacity + "'></path>";
     var sliceText = "<text x='" + tx + "' y='" + ty + "' transform='rotate(" + textAngle + "," + tx + "," + ty + ")' class='" + textClass + "'>" + name + "</text>";
