@@ -219,20 +219,13 @@
     </div>
 
     <div id="wheelModal" class="wheel-modal">
-        <div class="modal-header">
-            <div class="modal-top-row">
-                <h2 class="modal-title" id="modalInstructions">🧭 Harta Emoțiilor</h2>
-                <button id="closeModalBtn" class="control-btn" style="background:#ef4444; border-color:#ef4444;">Închide ✕</button>
+       <div id="wheelModal" class="wheel-modal">
+        <button id="closeModalBtn" style="position: absolute; top: 20px; right: 20px; background: rgba(239, 68, 68, 0.8); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10002; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">✕</button>
+        
+        <div id="modalVisualIndicators" style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; background: rgba(21, 29, 48, 0.75); padding: 10px 20px; border-radius: 99px; border: 1px solid rgba(36, 50, 82, 0.6); backdrop-filter: blur(8px); z-index: 10002; pointer-events: none; align-items: center;">
             </div>
-            <div class="modal-actions-row">
-                <button id="rotateLeftBtn" class="control-btn">↺ Rotire Stânga</button>
-                <button id="rotateRightBtn" class="control-btn">Rotire Dreapta ↻</button>
-                <button id="zoomInBtn" class="control-btn">➕ Mărește</button>
-                <button id="zoomOutBtn" class="control-btn">➖ Micșorează</button>
-                <button id="resetModalBtn" class="control-btn" style="border-color:var(--accent);">Centrare</button>
-            </div>
-        </div>
-        <div class="modal-viewport" id="modalViewport">
+
+        <div class="modal-viewport" id="modalViewport" style="max-width: 100%; width: 100vw; height: 100vh; border: none; border-radius: 0; background: #060912;">
             <div id="modalWheelContainer"></div>
         </div>
     </div>
@@ -512,14 +505,42 @@ function refreshModalTransformations() {
     if(modalSvg) { modalSvg.style.transform = "rotate(" + rotations.modal + "deg)"; }
 }
 
+// Eliminăm listenerii vechilor butoane care nu mai există în HTML
+document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetHybridState(); });
+document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
+
+function resetHybridState() {
+    scaleCurrent = 1; txCurrent = 0; tyCurrent = 0; rotations.modal = 0; totalModalMovement = 0;
+    modalSvg = document.getElementById('modalSvg');
+    refreshModalTransformations();
+}
+
+function refreshModalTransformations() {
+    container.style.transform = "translate(" + txCurrent + "px, " + tyCurrent + "px) scale(" + scaleCurrent + ")";
+    if(modalSvg) { modalSvg.style.transform = "rotate(" + rotations.modal + "deg)"; }
+}
+
 function setupHybridModalEngine() {
     isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    var indicatorContainer = document.getElementById('modalVisualIndicators');
     
     if(!isMobileDevice) {
-        document.getElementById('modalInstructions').innerHTML = "🧭 Hartă Clinică Pro (96 Emoții)<br><span style='font-size:0.75rem; color:var(--text-muted); font-weight:normal;'>Drag pe fundal = Mută imaginea. Scroll de mouse = Zoom fluid. Butoane = Rotație.</span>";
+        // Desktop Indicators (Simboluri: Drag/Mută | Scroll/Lupă | Dublu-Click/Recentrare)
+        indicatorContainer.innerHTML = `
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🖐️ Drag Roată</span>
+            <span style="color:#243252;">|</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🖱️ Scroll Zoom</span>
+            <span style="color:#243252;">|</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🔄 Double-Click Centrare</span>
+        `;
         setupDesktopViewportEngine();
     } else {
-        document.getElementById('modalInstructions').innerHTML = "👉 1 Deget = Învârte roata / Mută imaginea<br>✌️ 2 Degete = Pinch-to-Zoom & Pan simultan";
+        // Mobile Indicators (Simboluri: 1 Deget Rotire | 2 Degete Zoom)
+        indicatorContainer.innerHTML = `
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">☝️ 1 Deget: Învârte</span>
+            <span style="color:#243252;">|</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">✌️ 2 Degete: Zoom / Pan</span>
+        `;
         setupMobileViewportEngine();
     }
 }
@@ -527,12 +548,14 @@ function setupHybridModalEngine() {
 function setupDesktopViewportEngine() {
     var isViewportDragging = false; var vStartX, vStartY;
     
+    // Zoom fluid prin scroll de mouse
     viewport.addEventListener('wheel', function(e) {
         e.preventDefault();
         if (e.deltaY < 0) { scaleCurrent = Math.min(scaleCurrent + 0.15, 5); } else { scaleCurrent = Math.max(scaleCurrent - 0.15, 0.6); }
         refreshModalTransformations();
     }, { passive: false });
 
+    // Mutarea imaginii pe ecran (Pan) când se dă drag pe fundal (nu pe SVG)
     viewport.addEventListener('mousedown', function(e) {
         if(e.target.closest('#modalSvg')) return; 
         isViewportDragging = true; vStartX = e.clientX - txCurrent; vStartY = e.clientY - tyCurrent;
@@ -541,6 +564,11 @@ function setupDesktopViewportEngine() {
         if (isViewportDragging) { txCurrent = e.clientX - vStartX; tyCurrent = e.clientY - vStartY; refreshModalTransformations(); }
     });
     window.addEventListener('mouseup', function() { isViewportDragging = false; });
+    
+    // Recentrare automată la dublu click pe spațiul liber
+    viewport.addEventListener('dblclick', function(e) {
+        if(!e.target.closest('#modalSvg')) { resetHybridState(); }
+    });
 }
 
 function setupMobileViewportEngine() {
