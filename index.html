@@ -277,9 +277,14 @@ const db = {
         color: "#8b5cf6", 
         somatic: ["Constricție toracică", "Palpitații", "Tremurul corpului", "Respirație superficială/hiperventilație"], 
         needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], 
-        avoid: ["Consumul excesiv de știri sau social media.", "Luarea de decizii majore sub presiune.", "Cafeaua sau substanțele stimulante.", "Analiza mentală continuă a scenariilor (overthinking)."],
+        avoid: ["Consumul excesiv de știri sau ecrane.", "Luarea de decizii majore sub presiune.", "Cafeaua sau substanțele stimulante.", "Analiza mentală continuă a scenariilor (overthinking)."],
         ifs: { protector: "Rulează scenarii catastrofice pentru a preveni pericole neașteptate.", child: "Frica trăită a copilului care s-a simțit neajutorat." }, 
-        coping: { "Siguranță": " Suspin fiziologic: două inspirații rapide pe nas (una lungă, urmată imediat de încă una scurtă, de umplere), apoi scoate tot aerul pe gură printr-un oftat lung și leneș. Repetă de 3 ori.", "default": "Box Breathing: Inspiră 4s - Ține 4s - Expiră 4s." }, 
+        coping: { 
+            "default": "Respirația 4-7: Inspiră lin pe nas timp de 4 secunde, apoi expiră lung și rar pe gură (ca și cum ai sufla printr-un pai) timp de 7 secunde pentru activare parasimpatică.",
+            "Siguranță fizică": "Împământare proprioceptivă acută: Sprijină-ți spatele ferm de un perete rigid sau de spătarul scaunului. Apasă tălpile în podea și numește mental 3 obiecte grele și stabile din cameră (ex: dulapul, masa). Simte cum ești susținut(ă).",
+            "Predictibilitate": "Ancorare în realitatea imediată și control micro: Oprește scenariile de viitor. Notează pe o foaie sau spune cu voce tare: 'Unde mă aflu exact acum? Ce este 100% sigur și real în acest minut?' Redu focusul doar pe următoarele 5 minute.",
+            "Limite clare": "Delimitare de mediu / Spațiu protejat: Dacă ești copleșit(ă) de stimuli sau de cerințele altora, retrage-te fizic într-un spațiu mai mic (o cameră goală, o mașină). Închide ochii sau privește în jos și folosește brațele încrucișate la piept ca un scut somatic protector."
+        }, 
         subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } 
     },
     "Tristețe": { 
@@ -288,7 +293,12 @@ const db = {
         needs: ["Consolare", "Spațiu sigur emoțional pentru exprimare", "Conectare sigură"], 
         avoid: ["Izolarea completă de oamenii dragi.", "Autocritică excesivă ('de ce nu sunt mai puternic?').", "Refuzul de a plânge sau reprimarea stării corporale.", "Luarea de decizii definitive legate de relații."],
         ifs: { protector: "Reduce energia generală pentru a opri risipa de resurse.", child: "Durerea izolării sau a lipsei de validare timpurie." }, 
-        coping: { "Consolare": "Practică de autocompasiune cu palmele calde pe piept.", "default": "Alocă un interval delimitat exclusiv procesării/expresiei corporale." }, 
+        coping: { 
+            "default": "Procesare somatică delimitată: Alocă un interval de 10-15 minute în care doar să stai cu tristețea în corp, observând-o cu blândețe, fără să încerci să o repari sau să o gândești.",
+            "Consolare": "Autocompasiune fizică (Somatic self-soothing): Pune ambele palme calde pe centrul pieptului sau încrucișează brațele într-o auto-îmbrățișare strânsă. Inspiră blând și dă-ți voie să simți presiunea și căldura palmelor tale, oferindu-ți permisiunea de a simți durerea.",
+            "Spațiu sigur emoțional pentru exprimare": "Descărcare neurovegetativă (Plâns / Scris catartic): Permite-ți să plângi fără să te cenzurezi, lăsând corpul să tremure sau să ofteze dacă vrea. Dacă plânsul nu vine, scoate pe o foaie de hârtie fluxul brut al durerii, scriind tot ce simți, fără reguli.",
+            "Conectare sigură": "Co-reglare prin atașament: Identifică o persoană din viața ta care știi că poate fi un martor empatic. Trimite-i un mesaj simplu: 'Trec printr-un moment greu emoțional. Nu am nevoie de sfaturi sau soluții, aș vrea doar să știu că ești acolo.'"
+        }, 
         subs: { "Rănit": ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"], "Singuratic": ["Izolat", "Neglijat", "Anost", "Instabil"], "Disperat": ["Deprimat", "Lipsit de speranță", "Chinuit", "Jalnic"] } 
     },
     "Furie": { 
@@ -297,7 +307,12 @@ const db = {
         needs: ["Restabilirea limitelor", "Autonomie", "Corectarea unei nedreptăți"], 
         avoid: ["Trimiterea de mesaje, emailuri sau apeluri la cald.", "Confruntările verbale imediate.", "Ventilarea agresivă (lovit perne, trântit uși, urlat).", "Autocenzurarea sau negarea dreptului de a fi furios(ă)."],
         ifs: { protector: "Acționează ca un scut agresiv pentru a te proteja.", child: "Copilul redus la tăcere ale cărui limite au fost încălcate." }, 
-        coping: { "Limite": "Exprimare verbală asertivă curată și fermă.", "default": "Descărcare motorie în siguranță prin exercițiu izometric intens (30s), de exemplu: strânge pumnii și încordează tot corpul la maximum timp de 30 de secunde, apoi eliberează brusc" }, 
+        coping: { 
+            "default": "Consum metabolic izometric: Strânge pumnii și încordează voluntar toți mușchii corpului la maximum timp de 30 de secunde, împingând puternic picioarele în podea, apoi eliberează brusc pe un expir lung.",
+            "Restabilirea limitelor": "Script de asertivitate curată (fără atac): Așteaptă ca pulsul să scadă. Formulează în minte mesajul folosind tehnica 'Eu': 'Când s-a întâmplat X, eu m-am simțit Y. Pe viitor, am nevoie ca limita mea Z să fie respectată.' Nu acuza, doar delimitează.",
+            "Autonomie": "Redobândirea controlului personal: Furia îți spune că te simți blocat(ă) sau controlat(ă). Întoarce-te la tine: Ce depinde 100% de mine în această situație? Ce decizie pot lua chiar acum doar pentru spațiul meu personal? Fă un pas mic independent.",
+            "Corectarea unei nedreptăți": "Canalizare constructivă a energiei (Sublimare): Furia este combustibil pur. Nu o irosi în certuri sterile. Notează pe o foaie: Care este acțiunea concretă, strategică și matură pe care o pot face pentru a repara sau raporta această nedreptate? Planifică pașii liniar."
+        }, 
         subs: { "Frustrat": ["Iritat", "Deranjat", "Agitat", "Invidios"], "Exasperat": ["Înfuriat", "Plin de ură", "Ostil", "Nervos"], "Nedreptățit": ["Resentimentar", "Pizmaș", "Răzbunător", "Ofensat"] } 
     },
     "Bucurie": { 
@@ -306,7 +321,12 @@ const db = {
         needs: ["Împărtășire/comunicare", "Celebrare", "Joacă"], 
         avoid: ["Minimizarea sau ascunderea stării de teamă că 'va trece repede'.", "Promisiuni mari sau angajamente luate sub impulsul euforiei.", "Ignorarea semnalelor de oboseală sau supraîncărcare ale corpului."],
         ifs: { protector: "Permite destinderea dar monitorizează riscul de dezamăgire.", child: "Copilul liber, spontan și capabil of uimire autentică." }, 
-        coping: { "default": "Ancorează starea scanând senzațiile din corp." }, 
+        coping: { 
+            "default": "Savoring somatic: Scanează corpul și observă unde simți vibrația, ușurarea sau expansiunea bucuriei; respiră calm în acel spațiu ca să o ancorezi în memoria celulară.",
+            "Împărtășire/comunicare": "Amplificare prin rezonanță: Sună sau scrie unui prieten care știi că deține capacitatea de a celebra alături de tine. Împărtășește detaliul exact care te-a bucurat, permițându-ți să retrăiești starea în timp ce povestești.",
+            "Celebrare": "Marcare simbolică / Ancorare comportamentală: Fă un gest mic, dar asumat, care să onoreze acest moment bine: pune piesa ta preferată și dansează/fii spontan(ă), savurează ceva ce îți place sau oferă-ți un moment de recunoștință.",
+            "Joacă": "Activare SEEKING/PLAY liberă de scop: Dă-ți voie să fii complet ineficient(ă) pentru un scurt timp: explorează ceva din curiozitate pură, glumește, fii creativ(ă) cu materiale din jur sau implică-te într-o activitate fizică fără mize."
+        }, 
         subs: { "Mulțumit": ["Satisfăcut", "Pașnic", "Liniștit", "Calm"], "Recunoscător": ["Apreciat", "Împlinit", "Smerit", "Suficient"], "Entuziasmat": ["Optimist", "Voios", "Euforic", "Jubilant"] } 
     },
     "Iubire": { 
@@ -315,8 +335,13 @@ const db = {
         needs: ["Intimitate emoțională", "Aparținere", "Atingere securizantă"], 
         avoid: ["Ignorarea semnalelor de alarmă (red flags) din spatele idealizării.", "Abandonarea completă a propriilor limite sau nevoi somatice.", "Graba de a securiza relația din frica de abandon."],
         ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea necondiționată." }, 
-        coping: { "default": "Transmite mental un gând de compasiune profundă." }, 
-        subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrăgostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } 
+        coping: { 
+            "default": "Compasiune extinsă: Transmite mental un gând de bunătate profundă către tine și către cei din jur, observând senzația de deschidere caldă din zona pieptului.",
+            "Intimitate emoțională": "Auto-dezvăluire asumată și vulnerabilitate safe: Alege un moment liniștit pentru a exprima direct ceea ce prețuiești la cealaltă persoană. Folosește fraze simple: 'Mă simt în siguranță cu tine când...' sau 'Apreciez foarte mult la tine faptul că...'.",
+            "Aparținere": "Ancorare în rețeaua socială/trib: Amintește-ți că ești parte dintr-un întreg. Fă un gest mic de conectare cu comunitatea ta: trimite un mesaj de mulțumire unui coleg, implică-te într-o activitate de grup sau petrece timp într-un spațiu public.",
+            "Atingere securizantă": "Hrană tactilă (Co-reglare somatică): Dacă ești cu cineva drag, cere o îmbrățișare lungă și statică (minim 20 de secunde) pentru oxitocină. Dacă ești singur(ă), mângâie blând brațele sau oferă-ți un masaj ușor pe umeri și ceafă, simțind căldura."
+        }, 
+        subs: { "Apropiat": ["Conectat", "Afectuos", "Tandru", "Generos"], "Îndrogostit": ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"], "Compasiune": ["Empatic", "Săritor", "Uman", "Ocrotitor"] } 
     },
     "Surpriză": { 
         color: "#3b82f6", 
@@ -324,25 +349,40 @@ const db = {
         needs: ["Claritate/înțelegerea contextului", "Procesarea evenimentului", "Actualizare/Adaptarea la situație"], 
         avoid: ["Forțarea unei reacții sau acțiuni imediate înainte de a înțelege contextul.", "Trecerea directă la concluzii pripite.", "Ignorarea stării de șoc sau uimire a corpului."],
         ifs: { protector: "Oprește acțiunea curentă pentru a evalua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, 
-        coping: { "default": "Resetează reflexul de reorientare prin câteva expirații prelungite." }, 
+        coping: { 
+            "default": "Resetarea orientării prin expir: Resetează reflexul de alarmă cu 3-4 expirații lungi și eliberatoare pe gură, lăsând umerii și maxilarul să cadă complet moale.",
+            "Claritate/înțelegerea contextului": "Scanare lentă și colectare de date facts-only: Oprește-te din acțiune. Privește în jur și numește 3 lucruri concrete, evidente, din mediul tău direct. Pune-ți întrebarea: Ce s-a schimbat de fapt în mod real în acest moment? Separă faptele brute de poveste.",
+            "Procesarea evenimentului": "Containment / Pauză biologică obligatorie: Sistemul tău nervos a primit un volum mare de informație dintr-odată. Nu te grăbi să reacționezi. Spune-ți: 'Am voie să iau o pauză de 2 minute ca să înțeleg ce s-a întâmplat'. Stai pe scaun și simte gravitația.",
+            "Actualizare/Adaptarea la situație": "Flexibilitate orientată pe micro-pași: Harta ta mentală a fost contrazisă. Acceptă noul parametru fără să te lupți cu el: 'Ok, situația s-a schimbat în X. Care este primul pas extrem de mic și logic pe care îl pot face acum, în noua realitate?'"
+        }, 
         subs: { "Uluit": ["Perplex", "Impresionat", "Uimit", "Mut de uimire"], "Confuz": ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"], "Mirat": ["Curios", "Stimulat", "Interesat", "Intrigat"] } 
     },
     "Rușine": { 
         color: "#f59e0b", 
         somatic: ["Lăsarea umerilor/tendința de a te ascunde sau micșora", "Privire în jos", "Roșeață la nivelul feței"], 
         needs: ["Acceptare", "Autocompasiune", "Validarea valorii și a demnității personale"], 
-        avoid: ["Compararea propriei persoane cu standardele ideale ale celorlalți.", "Validarea vocii critice ca pe un adevăr absolut.", "Izolare și ascundere ('nimeni nu trebuie să afle defectul meu').", "Justificările defensive sau atacurile compensatorii asupra altora."],
+        avoid: ["Compararea propriei persoane cu standardele ideale ale celorlalți.", "Validarea vocii Criticilui Interior ca pe un adevăr absolut.", "Izolarea ascunsă ('nimeni nu trebuie să afle defectul meu').", "Justificările defensive sau atacurile compensatorii asupra altora."],
         ifs: { protector: "Critic interior sever activat pentru conformare socială sau pentru conformarea cu o imagine ideală de sine.", child: "Partea profund ascunsă care poartă credința 'eu sunt greșit/defect'." }, 
-        coping: { "default": "Diferențiere: 'Am făcut poate o greșeală, dar nu SUNT o greșeală. Oricine greșește uneori.'." }, 
+        coping: { 
+            "default": "Diferențiere cognitiv-somatică: Spune-ți blând și ferm în gând: 'Am făcut poate o greșeală, dar eu nu sunt o greșeală. Oricine greșește uneori. Este în regulă'.",
+            "Acceptare": "Expunere blândă a secretului într-un mediu safe: Rușinea crește în secret și izolare. Gândește-te la o singură persoană din viața ta care te iubește necondiționat și nu te judecă. Trimite-i un mesaj scurt sau povestește-i ce s-a întâmplat, experimentând curajul de a fi imperfect(ă).",
+            "Autocompasiune": "Îmblânzirea criticului / Îmbrățișarea părții vulnerabile: Cruță-te de judecată. Închide ochii, imaginează-ți că un prieten drag sau varianta ta adultă și înțeleaptă este lângă tine, punându-ți o mână blândă pe umăr. Lasă capul să se relaxeze și respiră profund în abdomen.",
+            "Validarea valorii și a demnității personale": "Redresare posturală și ancorare în fapte: Rușinea te prăbușește fizic. Îndreaptă lent spatele, ridică privirea din podea și deschide pieptul. Uită-te la mâinile tale și amintește-ți 2 lucruri bune, corecte sau valoroase pe care le-ai realizat în trecut."
+        }, 
         subs: { "Rușinat": ["Inadecvat", "Mortificat", "Inferior", "Expus"], "Vinovat": ["Regrete", "Remușcat", "Autocritic", "Penitent"], "Umilit": ["Disprețuit", "Micșorat", "Degradat", "Anulat"] } 
     },
     "Dezgust": { 
         color: "#14b8a6", 
         somatic: ["Senzație de greață", "Tensiuni/amorțeli la nivelul gurii și a nasului", "Retragere"], 
         needs: ["Distanțare", "Protejarea integrității corporale", "Curățarea spațiului personal"], 
-        avoid: ["Forțarea de a tolera un mediu, o persoană sau o discuție resimțită ca toxică.", "Raționalizare și auto-blam (sunt prea sensibil/ă) sau tolerarea nerespectării limitelor.", "Autocenzurarea instinctului visceral de respingere."],
+        avoid: ["Forțarea de a tolera un mediu, o persoană sau o discuție resimțită ca toxică.", "Să crezi că ești 'prea sensibil(ă)' sau că exagerezi atunci când simți repulsie.", "Autocenzurarea instinctului visceral de respingere."],
         ifs: { protector: "Filtru drastic de respingere a toxicității din jur.", child: "Amintirea timpurie a unui mediu invaziv resimțit ca toxic." }, 
-        coping: { "default": "Distanțare fizică imediată și spălarea mâinilor/feței." }, 
+        coping: { 
+            "default": "Distanțare și igienă somatică: Ieși imediat din mediul respectiv, mergi la baie, spală-ți fața și mâinile cu apă rece și scutură viguros brațele pentru a curăța simbolic încărcătura.",
+            "Distanțare": "Delimitare spațială și fizică asumată: Fă un pas în spate sau părăsește camera/discuția. Pune distanță fizică între tine și stimulul toxic. Spune ferm, dacă e cazul: 'Am nevoie să mă retrag din această interacțiune acum', fără justificări.",
+            "Protejarea integrității corporale": "Întărirea graniței imunitare/viscerale: Așază o mână pe stomac (zona plexului solar) și cealaltă pe piept. Respiră adânc în abdomen și simte rezistența corpului tău. Reamintește-ți: 'Eu decid ce las să intre în spațiul meu și ce nu'.",
+            "Curățarea spațiului personal": "Rânduirea activă a mediului (Decluttering corectiv): Acționează asupra spațiului tău direct pentru a recăpăta controlul: aerisește larg camera, aruncă lucrurile inutile, organizează-ți biroul sau curăță o suprafață. Acest gest transmite creierului un semnal clar de purificare."
+        }, 
         subs: { "Scârbit": ["Dezgustat", "Repulsat", "Contaminat", "Blocat"], "Aversiune": ["Antipatie", "Retras", "Intolerant", "Ostil"], "Aprehensiv": ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } 
     }
 };
@@ -574,30 +614,91 @@ function handleGlobalClick(e) {
         if(svg && svg.id === 'modalSvg' && svg.getAttribute('data-moved') === 'true') { return; }
         if(svg && svg.id === 'modalSvg' && totalModalMovement > 12) { return; }
         
-        var name = group.getAttribute('data-name'); var type = group.getAttribute('data-type'); var parentCore = group.getAttribute('data-core');
-        currentSelection.emotion = name; currentSelection.type = type; currentSelection.parentCore = parentCore;
+        var name = group.getAttribute('data-name'); 
+        var type = group.getAttribute('data-type'); 
+        var parentCore = group.getAttribute('data-core');
+        
+        currentSelection.emotion = name; 
+        currentSelection.type = type; 
+        currentSelection.parentCore = parentCore;
         
         document.getElementById('sidePanel').style.display = 'block';
         var disp = document.getElementById('currentEmotionDisplay');
-        disp.innerText = name; disp.style.color = db[parentCore].color;
+        disp.innerText = name; 
+        disp.style.color = db[parentCore].color;
         document.getElementById('currentTypeDisplay').innerText = type.toUpperCase() + " ➔ Rădăcină: " + parentCore;
         
         var coreData = db[parentCore];
         document.getElementById('somaticGrid').innerHTML = coreData.somatic.map(function(s) { return "<div class='pill body-pill' data-value='" + s + "'>" + s + "</div>"; }).join('');
         document.getElementById('needsGrid').innerHTML = coreData.needs.map(function(n) { return "<div class='pill need-pill' data-value='" + n + "'>" + n + "</div>"; }).join('');
         
-       
+        // Generăm dinamic lista de recomandări negative specifice acestei emoții
         document.getElementById('avoidList').innerHTML = coreData.avoid.map(function(item) { return "<li><strong>" + item + "</strong></li>"; }).join('');
         
         document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
         document.getElementById('ifsChildText').innerText = coreData.ifs.child;
         
-      showSection('secSomatic'); 
+        // Resetăm starea de nevoie selectată anterior și forțăm generarea coping-ului implicit (default)
+        currentSelection.need = ""; 
+        triggerCopingEngine(); 
+        
+        // Afișăm în mod fluid toate secțiunile de diagnoză și intervenție
+        showSection('secSomatic'); 
         showSection('secNeeds'); 
         showSection('secIFS'); 
-        showSection('secAvoid'); // Linia nouă care activează secțiunea de avertismente
+        showSection('secAvoid'); 
+        showSection('secCoping');
         showSection('secReflection');
-        document.getElementById('secCoping').classList.remove('active');
+        
+        document.getElementById('btnExport').style.display = 'block';
+        
+        closeModal();
+        if(window.innerWidth <= 1024) { document.getElementById('secSomatic').scrollIntoView({ behavior: 'smooth' }); }
+    }
+}function handleGlobalClick(e) {
+    var group = e.target.closest('.wheel-group');
+    if (group) {
+        var svg = group.closest('svg');
+        if(svg && svg.id === 'mainSvg' && svg.getAttribute('data-moved') === 'true') { return; }
+        if(svg && svg.id === 'modalSvg' && svg.getAttribute('data-moved') === 'true') { return; }
+        if(svg && svg.id === 'modalSvg' && totalModalMovement > 12) { return; }
+        
+        var name = group.getAttribute('data-name'); 
+        var type = group.getAttribute('data-type'); 
+        var parentCore = group.getAttribute('data-core');
+        
+        currentSelection.emotion = name; 
+        currentSelection.type = type; 
+        currentSelection.parentCore = parentCore;
+        
+        document.getElementById('sidePanel').style.display = 'block';
+        var disp = document.getElementById('currentEmotionDisplay');
+        disp.innerText = name; 
+        disp.style.color = db[parentCore].color;
+        document.getElementById('currentTypeDisplay').innerText = type.toUpperCase() + " ➔ Rădăcină: " + parentCore;
+        
+        var coreData = db[parentCore];
+        document.getElementById('somaticGrid').innerHTML = coreData.somatic.map(function(s) { return "<div class='pill body-pill' data-value='" + s + "'>" + s + "</div>"; }).join('');
+        document.getElementById('needsGrid').innerHTML = coreData.needs.map(function(n) { return "<div class='pill need-pill' data-value='" + n + "'>" + n + "</div>"; }).join('');
+        
+        // Generăm dinamic lista de recomandări negative specifice acestei emoții
+        document.getElementById('avoidList').innerHTML = coreData.avoid.map(function(item) { return "<li><strong>" + item + "</strong></li>"; }).join('');
+        
+        document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
+        document.getElementById('ifsChildText').innerText = coreData.ifs.child;
+        
+        // Resetăm starea de nevoie selectată anterior și forțăm generarea coping-ului implicit (default)
+        currentSelection.need = ""; 
+        triggerCopingEngine(); 
+        
+        // Afișăm în mod fluid toate secțiunile de diagnoză și intervenție
+        showSection('secSomatic'); 
+        showSection('secNeeds'); 
+        showSection('secIFS'); 
+        showSection('secAvoid'); 
+        showSection('secCoping');
+        showSection('secReflection');
+        
         document.getElementById('btnExport').style.display = 'block';
         
         closeModal();
@@ -623,14 +724,23 @@ document.getElementById('needsGrid').addEventListener('click', function(e) {
 });
 
 function triggerCopingEngine() {
-    if (!currentSelection.need) return;
-    var coreData = db[currentSelection.parentCore]; var specialCoping = "";
-    for (var key in coreData.coping) { if (currentSelection.need.indexOf(key) !== -1) { specialCoping = coreData.coping[key]; break; } }
-    var finalCoping = specialCoping || coreData.coping["default"];
-    document.getElementById('copingOutput').innerHTML = "<div class='coping-card'><div class='coping-item'><span>🎯</span><div><strong>Intervenție strategică [" + currentSelection.emotion + "]:</strong><br>" + finalCoping + "</div></div></div>";
-    showSection('secCoping');
-}
+    var coreData = db[parentCore]; 
+    if (!coreData) return;
 
+    var html = "<div class='coping-card'>";
+
+    if (currentSelection.need) {
+        // Căutăm exact strategia mapată pe textul nevoii selectate în obiectul coping al emoției respective
+        var specificCoping = coreData.coping[currentSelection.need] || coreData.coping["default"];
+        html += "<div class='coping-item'><span>🎯</span><div><strong>Intervenție specifică [" + currentSelection.need + "]:</strong><br>" + specificCoping + "</div></div>";
+    } else {
+        // Dacă nu e selectată nicio nevoie (la click pe roată), afișăm automat strategia implicită (default)
+        html += "<div class='coping-item'><span>🎯</span><div><strong>Strategie generală de reglare [" + currentSelection.emotion + "]:</strong><br>" + coreData.coping["default"] + "</div></div>";
+    }
+
+    html += "</div>";
+    document.getElementById('copingOutput').innerHTML = html;
+}
 function showSection(id) { document.getElementById(id).classList.add('active'); }
 
 document.getElementById('btnExport').addEventListener('click', function() {
