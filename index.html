@@ -74,14 +74,7 @@
         .wheel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 19, 0.99); z-index: 9999; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; }
         .wheel-modal.open { display: flex; }
         
-        .modal-header { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 10px; padding: 15px; background: #151d30; border: 1px solid var(--border); border-radius: 20px; margin-bottom: 10px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .modal-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .modal-actions-row { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; justify-content: center; border-top: 1px solid var(--border); padding-top: 10px; }
-        
-        .control-btn { background: var(--bg-main); border: 1px solid var(--border); color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: all 0.2s; outline: none; }
-        .control-btn:hover { background: var(--bg-card-hover); border-color: var(--accent); }
-        
-        .modal-viewport { width: 100%; flex-grow: 1; max-width: 680px; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(36, 50, 82, 0.4); background: #060912; touch-action: none; }
+        .modal-viewport { width: 100%; flex-grow: 1; max-width: 100%; position: relative; overflow: hidden; border: none; background: #060912; touch-action: none; }
         
         #modalWheelContainer { width: 550px; height: 550px; position: absolute; top: calc(50% - 275px); left: calc(50% - 275px); will-change: transform; display: flex; align-items: center; justify-content: center; transform-origin: center center; }
         #modalSvg { width: 100%; height: 100%; display: block; transform-origin: center center; will-change: transform; }
@@ -219,13 +212,12 @@
     </div>
 
     <div id="wheelModal" class="wheel-modal">
-       <div id="wheelModal" class="wheel-modal">
         <button id="closeModalBtn" style="position: absolute; top: 20px; right: 20px; background: rgba(239, 68, 68, 0.8); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10002; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">✕</button>
         
-        <div id="modalVisualIndicators" style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; background: rgba(21, 29, 48, 0.75); padding: 10px 20px; border-radius: 99px; border: 1px solid rgba(36, 50, 82, 0.6); backdrop-filter: blur(8px); z-index: 10002; pointer-events: none; align-items: center;">
-            </div>
+        <div id="modalVisualIndicators" style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; background: rgba(21, 29, 48, 0.85); padding: 10px 22px; border-radius: 99px; border: 1px solid rgba(36, 50, 82, 0.6); backdrop-filter: blur(8px); z-index: 10002; pointer-events: none; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+        </div>
 
-        <div class="modal-viewport" id="modalViewport" style="max-width: 100%; width: 100vw; height: 100vh; border: none; border-radius: 0; background: #060912;">
+        <div class="modal-viewport" id="modalViewport" style="width: 100vw; height: 100vh; background: #060912;">
             <div id="modalWheelContainer"></div>
         </div>
     </div>
@@ -276,7 +268,7 @@ const db = {
             "default": "Respirația 4-7: Inspiră lin pe nas timp de 4 secunde, apoi expiră lung și rar pe gură (ca și cum ai sufla printr-un pai) timp de 7 secunde pentru activare parasimpatică.",
             "Siguranță fizică": "Împământare proprioceptivă acută: Sprijină-ți spatele ferm de un perete rigid sau de spătarul scaunului. Apasă tălpile în podea și numește mental 3 obiecte grele și stabile din cameră (ex: dulapul, masa). Simte cum ești susținut(ă).",
             "Predictibilitate": "Ancorare în realitatea imediată și control micro: Oprește scenariile de viitor. Notează pe o foaie sau spune cu voce tare: 'Unde mă aflu exact acum? Ce este 100% sigur și real în acest minut?' Redu focusul doar pe următoarele 5 minute.",
-            "Limite clare": "Delimitare de mediu / Spațiu protejat: Dacă ești copleșit(ă) de stimuli sau de cerințele altora, retrage-te fizic într-un spațiu mai mic (o cameră goală, o mașină). Închide ochii sau privește în jos și folosește brațele încrucișate la piept ca un scut somatic protector."
+            "Limite clare": "Delimitare de mediu / Spațiu protejat: Dacă ești copleșit(ă) de stimuli sau de cerințele altora, retrage-te fizic într-un spațiu mai mic (o cameră goală, o mașină). Închide ochii sau privește în jos și folosește brațele încrucișate la pipe la piept ca un scut somatic protector."
         }, 
         subs: { "Anxietate": ["Îngrijorare", "Groază", "Hipervigilență", "Neliniște"], "Speriat": ["Panicat", "Șocat", "Terrorizat", "Groaznic"], "Nesigur": ["Neajutorat", "Vulnerabil", "Inferior", "Inadecvat"] } 
     },
@@ -329,7 +321,7 @@ const db = {
         avoid: ["Ignorarea semnalelor de alarmă (red flags) din spatele idealizării.", "Abandonarea completă a propriilor limite sau nevoi somatice.", "Graba de a securiza relația din frica de abandon."],
         ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea necondiționată." }, 
         coping: { 
-            "default": "Compasiune extinsă: Transmite mental un gând de bunătate profundă către tine și către cei din jur, observând sensação de deschidere caldă din zona pieptului.",
+            "default": "Compasiune extinsă: Transmite mental un gând de bunătate profundă către tine și către cei din jur, observând senzația de deschidere caldă din zona pieptului.",
             "Intimitate emoțională": "Auto-dezvăluire asumată și vulnerabilitate safe: Alege un moment liniștit pentru a exprima direct ceea ce prețuiești la cealaltă persoană. Folosește fraze simple: 'Mă simt în siguranță cu tine când...' sau 'Apreciez foarte mult la tine faptul că...'.",
             "Aparținere": "Ancorare în rețeaua socială/trib: Amintește-ți că ești parte dintr-un întreg. Fă un gest mic de conectare cu comunitatea ta: trimite un mesaj de mulțumire unui coleg, implică-te într-o activitate de grup sau petrece timp într-un spațiu public.",
             "Atingere securizantă": "Hrană tactilă (Co-reglare somatică): Dacă ești cu cineva drag, cere o îmbrățișare lungă și statică (minim 20 de secunde) pentru oxitocină. Dacă ești singur(ă), mângâie blând brațele sau oferă-ți un masaj ușor pe umeri și ceafă, simțind căldura."
@@ -341,7 +333,7 @@ const db = {
         somatic: ["Tăierea respirației", "Ochi larg deschiși", "Tresărire/Încremenire/Întoarcerea rapidă a capului sau privirii"], 
         needs: ["Claritate/înțelegerea contextului", "Procesarea evenimentului", "Actualizare/Adaptarea la situație"], 
         avoid: ["Forțarea unei reacții sau acțiuni imediate înainte de a înțelege contextul.", "Trecerea directă la concluzii pripite.", "Ignorarea stării de șoc sau uimire a corpului."],
-        ifs: { protector: "Oprește acțiunea curentă pentru a evalua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, 
+        ifs: { protector: "Oprește acțiunea curentă pentru a evaluua noul stimul.", child: "Capacitatea nativă de explorare fără preconcepții." }, 
         coping: { 
             "default": "Resetarea orientării prin expir: Resetează reflexul de alarmă cu 3-4 expirații lungi și eliberatoare pe gură, lăsând umerii și maxilarul să cadă complet moale.",
             "Claritate/înțelegerea contextului": "Scanare lentă și colectare de date facts-only: Oprește-te din acțiune. Privește în jur și numește 3 lucruri concrete, evidente, din mediul tău direct. Pune-ți întrebarea: Ce s-a schimbat de fapt în mod real în acest moment? Separă faptele brute de poveste.",
@@ -488,27 +480,6 @@ var isMobileDevice = false;
 document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetHybridState(); });
 document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
 
-document.getElementById('rotateLeftBtn').addEventListener('click', function() { rotations.modal -= 25; refreshModalTransformations(); });
-document.getElementById('rotateRightBtn').addEventListener('click', function() { rotations.modal += 25; refreshModalTransformations(); });
-document.getElementById('zoomInBtn').addEventListener('click', function() { scaleCurrent = Math.min(scaleCurrent + 0.4, 5); refreshModalTransformations(); });
-document.getElementById('zoomOutBtn').addEventListener('click', function() { scaleCurrent = Math.max(scaleCurrent - 0.4, 0.6); refreshModalTransformations(); });
-document.getElementById('resetModalBtn').addEventListener('click', resetHybridState);
-
-function resetHybridState() {
-    scaleCurrent = 1; txCurrent = 0; tyCurrent = 0; rotations.modal = 0; totalModalMovement = 0;
-    modalSvg = document.getElementById('modalSvg');
-    refreshModalTransformations();
-}
-
-function refreshModalTransformations() {
-    container.style.transform = "translate(" + txCurrent + "px, " + tyCurrent + "px) scale(" + scaleCurrent + ")";
-    if(modalSvg) { modalSvg.style.transform = "rotate(" + rotations.modal + "deg)"; }
-}
-
-// Eliminăm listenerii vechilor butoane care nu mai există în HTML
-document.getElementById('openModalBtn').addEventListener('click', function() { modal.classList.add('open'); resetHybridState(); });
-document.getElementById('closeModalBtn').addEventListener('click', function() { modal.classList.remove('open'); });
-
 function resetHybridState() {
     scaleCurrent = 1; txCurrent = 0; tyCurrent = 0; rotations.modal = 0; totalModalMovement = 0;
     modalSvg = document.getElementById('modalSvg');
@@ -525,21 +496,19 @@ function setupHybridModalEngine() {
     var indicatorContainer = document.getElementById('modalVisualIndicators');
     
     if(!isMobileDevice) {
-        // Desktop Indicators (Simboluri: Drag/Mută | Scroll/Lupă | Dublu-Click/Recentrare)
         indicatorContainer.innerHTML = `
-            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🖐️ Drag Roată</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🖐️ Drag: Rotire / Mutare</span>
             <span style="color:#243252;">|</span>
-            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🖱️ Scroll Zoom</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🔍 Scroll: Zoom Fluid</span>
             <span style="color:#243252;">|</span>
-            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🔄 Double-Click Centrare</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">🔄 Dublu-Click: Centrare</span>
         `;
         setupDesktopViewportEngine();
     } else {
-        // Mobile Indicators (Simboluri: 1 Deget Rotire | 2 Degete Zoom)
         indicatorContainer.innerHTML = `
-            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">☝️ 1 Deget: Învârte</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">☝️ 1 Deget: Învârte Roata</span>
             <span style="color:#243252;">|</span>
-            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">✌️ 2 Degete: Zoom / Pan</span>
+            <span style="display:flex; align-items:center; gap:6px; font-size:0.85rem; color:#9ca3af;">✌️ 2 Degete: Zoom & Pan</span>
         `;
         setupMobileViewportEngine();
     }
@@ -548,14 +517,12 @@ function setupHybridModalEngine() {
 function setupDesktopViewportEngine() {
     var isViewportDragging = false; var vStartX, vStartY;
     
-    // Zoom fluid prin scroll de mouse
     viewport.addEventListener('wheel', function(e) {
         e.preventDefault();
         if (e.deltaY < 0) { scaleCurrent = Math.min(scaleCurrent + 0.15, 5); } else { scaleCurrent = Math.max(scaleCurrent - 0.15, 0.6); }
         refreshModalTransformations();
     }, { passive: false });
 
-    // Mutarea imaginii pe ecran (Pan) când se dă drag pe fundal (nu pe SVG)
     viewport.addEventListener('mousedown', function(e) {
         if(e.target.closest('#modalSvg')) return; 
         isViewportDragging = true; vStartX = e.clientX - txCurrent; vStartY = e.clientY - tyCurrent;
@@ -565,7 +532,6 @@ function setupDesktopViewportEngine() {
     });
     window.addEventListener('mouseup', function() { isViewportDragging = false; });
     
-    // Recentrare automată la dublu click pe spațiul liber
     viewport.addEventListener('dblclick', function(e) {
         if(!e.target.closest('#modalSvg')) { resetHybridState(); }
     });
@@ -710,11 +676,9 @@ function triggerCopingEngine() {
     var html = "<div class='coping-card'>";
 
     if (currentSelection.need) {
-        // Căutăm exact strategia mapată pe textul nevoii selectate în obiectul coping al emoției respective
         var specificCoping = coreData.coping[currentSelection.need] || coreData.coping["default"];
         html += "<div class='coping-item'><span>🎯</span><div><strong>Intervenție specifică [" + currentSelection.need + "]:</strong><br>" + specificCoping + "</div></div>";
     } else {
-        // Dacă nu e selectată nicio nevoie (la click pe roată), afișăm automat strategia implicită (default)
         html += "<div class='coping-item'><span>🎯</span><div><strong>Strategie generală de reglare [" + currentSelection.emotion + "]:</strong><br>" + coreData.coping["default"] + "</div></div>";
     }
 
