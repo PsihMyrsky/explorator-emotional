@@ -153,7 +153,35 @@
             </div>
             
             <div class="data-zone">
-                <div class="hero" id="mainHero">
+                <div id="somaticWelcomeScreen" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; padding: 20px; transition: all 0.3s ease;">
+                    <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; color: #fff;">Scanează-ți Corpul</h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 400px; margin-top: 0; margin-bottom: 30px;">
+                        Emoțiile sunt în primul rând reacții fiziologice. Observă unde simți activare, presiune sau gol în acest moment, apoi selectează zona corespunzătoare de pe roată.
+                    </p>
+                    
+                    <svg viewBox="0 0 200 400" style="width: 100%; max-width: 210px; height: auto; pointer-events: none;">
+                        <defs>
+                            <linearGradient id="somaticActivation" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ef4444" stop-opacity="0.85"/>
+                                <stop offset="35%" stop-color="#ec4899" stop-opacity="0.9"/>
+                                <stop offset="65%" stop-color="#8b5cf6" stop-opacity="0.75"/>
+                                <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.5"/>
+                            </linearGradient>
+                            <filter id="somaticGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="6" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <path d="M100,30 C112,30 118,38 116,50 C114,60 108,66 105,68 L105,74 C115,76 135,84 145,105 C152,120 150,150 146,170 C143,182 138,185 135,175 C132,165 130,135 126,120 C124,115 122,118 122,124 L124,210 C125,225 125,245 122,255 L132,365 C133,375 126,380 120,380 C112,380 113,365 110,320 L104,260 L96,260 L90,320 C87,365 88,380 80,380 C74,380 67,375 68,365 L78,255 C75,245 75,225 76,210 L78,124 C78,118 76,115 74,120 C70,135 68,165 65,175 C62,185 57,182 54,170 C50,150 48,120 55,105 C65,84 85,76 95,74 L95,68 C92,66 86,60 84,50 C82,38 88,30 100,30 Z" fill="none" stroke="#243252" stroke-width="2.5" opacity="0.6"/>
+                        <path d="M100,75 L100,250" stroke="url(#somaticActivation)" stroke-width="8" stroke-linecap="round" filter="url(#somaticGlow)"/>
+                        <circle cx="100" cy="52" r="7" fill="#ef4444" opacity="0.4" filter="url(#somaticGlow)"/>
+                        <circle cx="100" cy="110" r="14" fill="#ec4899" opacity="0.3" filter="url(#somaticGlow)"/>
+                        <circle cx="100" cy="155" r="10" fill="#8b5cf6" opacity="0.3" filter="url(#somaticGlow)"/>
+                        <circle cx="100" cy="210" r="9" fill="#14b8a6" opacity="0.25" filter="url(#somaticGlow)"/>
+                    </svg>
+                </div>
+
+                <div class="hero" id="mainHero" style="display: none;">
                     <h1>Explorare Emoțională Ghidată</h1>
                     <p>Identifică emoția, înțelege nevoia și găsește o strategie pentru momentul prezent.</p>
                 </div>
@@ -247,7 +275,6 @@
     </div>
 
 <script>
-// Logică navigare tabs
 document.getElementById('btnTabNavigator').addEventListener('click', function() { executeTabSwitch('btnTabNavigator', 'modNavigator'); });
 document.getElementById('btnTabTeorie').addEventListener('click', function() { executeTabSwitch('btnTabTeorie', 'modTeorie'); });
 
@@ -257,7 +284,6 @@ function executeTabSwitch(btnId, tabId) {
     document.getElementById(btnId).classList.add('active'); document.getElementById(tabId).classList.add('active');
 }
 
-// BAZA DE DATE CLINICĂ STRUCTURATĂ CA UN CONTINUUM CROMATIC (8 EMOȚII MARI)
 const db = {
     "Bucurie": { 
         color: "#10b981", 
@@ -287,7 +313,7 @@ const db = {
             "default": "Resetarea orientării prin expir: Resetează reflexul de alarmă cu 3-4 expirații lungi și eliberatoare pe gură, lăsând umerii și maxilarul să cadă complet moale.",
             "Claritate/înțelegerea contextului": "Scanare lentă și colectare de date facts-only: Oprește-te din acțiune. Privește în jur și numește 3 lucruri concrete, evidente, din mediul tău direct. Pune-ți întrebarea: Ce s-a schimbat de fapt în mod real în acest moment? Separă faptele brute de poveste.",
             "Procesarea evenimentului": "Containment / Pauză biologică obligatorie: Sistemul tău nervos a primit un volum mare de informație dintr-odată. Nu te grăbi să reacționezi. Spune-ți: 'Am voie să iau o pauză de 2 minute ca să înțeleg ce s-a întâmplat'. Stai pe scaun și simte gravitația.",
-            "Actualizare/Adaptarea la situație": "Flexibilitate orientată pe micro-pași: Harta ta mentală a fost contrazisă. Acceptă noul parametru fără să te lute cu el: 'Ok, situația s-a schimbat în X. Care este primul pas extrem de mic și logic pe care îl pot face acum, în noua realitate?'"
+            "Actualizare/Adaptarea la situație": "Flexibilitate orientată pe micro-pași: Harta ta mentală a fost contrazisă. Acceptă noul parametru fără să te luți cu el: 'Ok, situația s-a schimbat în X. Care este primul pas extrem de mic și logic pe care îl pot face acum, în noua realitate?'"
         }, 
         subs: { 
             "Mirat": { color: "#269df1", items: ["Curios", "Stimulat", "Interesat", "Intrigat"] }, 
@@ -376,7 +402,7 @@ const db = {
         coping: { 
             "default": "Procesare somatică delimitată: Alocă un interval de 10-15 minute în care doar să stai cu tristețea în corp, observând-o cu blândețe, fără să încerci să o repari sau să o gândești.",
             "Consolare": "Autocompasiune fizică (Somatic self-soothing): Pune ambele palme calde pe centrul pieptului sau încrucișează brațele într-o auto-îmbrățișare strânsă. Inspiră blând și dă-ți voie să simți presiunea și căldura palmelor tale, oferindu-ți permisiunea de a simți durerea.",
-            "Spațiu sigur emoțional pentru exprimare": "Descărcare neurovegetativă (Plâns / Scris catartic): Permite-ți să plângi fără să te cenzurezi, lăsând corpul să tremure sau să ofteze dacă vrea. Dacă plânsul nu vine, scoate pe o foaie de hârtie fluxul brut al durerii, scriind tot ce simți, fără reguli.",
+            "Spațiu sigur emoțional pentru exprimare": "Descărcare neurovegetativă (Plâns / Scris catartic): Permite-ți să plângi fără să te cenzurezi, lăsând colpul să tremure sau să ofteze dacă vrea. Dacă plânsul nu vine, scoate pe o foaie de hârtie fluxul brut al durerii, scriind tot ce simți, fără reguli.",
             "Conectare sigură": "Co-reglare prin atașament: Identifică o persoană din viața ta care știi că poate fi un martor empatic. Trimite-i un mesaj simplu: 'Trec printr-un moment greu emoțional. Nu am nevoie de sfaturi sau soluții, aș vrea doar să știu că ești acolo.'"
         }, 
         subs: { 
@@ -416,7 +442,6 @@ function renderWheels() {
         var core = db[coreName]; var sAngleCore = i * aCore; var eAngleCore = (i + 1) * aCore;
         var subKeys = Object.keys(core.subs); var aSub = aCore / subKeys.length;
         
-        // Nivelul 1: Rădăcină (Core)
         htmlNormal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName);
         htmlModal += createSlice(250, 250, r0, r1, sAngleCore, eAngleCore, core.color, coreName, 'core', coreName);
         
@@ -425,14 +450,12 @@ function renderWheels() {
             var subObject = core.subs[secName];
             var tertList = subObject.items; var aTert = aSub / tertList.length;
             
-            // Nivelul 2: Sub-emoție Secundară (Folosește culoarea specifică din sub-obiect pentru amestec fluid)
             htmlNormal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, subObject.color, secName, 'sec', coreName);
             htmlModal += createSlice(250, 250, r1, r2, sAngleSec, eAngleSec, subObject.color, secName, 'sec', coreName);
             
             tertList.forEach(function(tertName, k) {
                 var sAngleTert = sAngleSec + (k * aTert); var eAngleTert = sAngleSec + ((k + 1) * aTert);
                 
-                // Nivelul 3: Terțiar (Aplică gradientul cromatic direct prin hex-ul de tranziție)
                 htmlNormal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, subObject.color, tertName, 'tert', coreName);
                 htmlModal += createSlice(250, 250, r2, r3, sAngleTert, eAngleTert, subObject.color, tertName, 'tert', coreName);
             });
@@ -458,7 +481,6 @@ function createSlice(cx, cy, rIn, rOut, sDeg, eDeg, fill, name, type, core) {
     
     var d = "M " + x1_out + " " + y1_out + " A " + rOut + " " + rOut + " 0 " + largeArc + " 1 " + x2_out + " " + y2_out + " L " + x1_in + " " + y1_in + " A " + rIn + " " + rIn + " 0 " + largeArc + " 0 " + x2_in + " " + y2_in + " Z";
     
-    // Pentru a simula profunzimea (straturile concentrice), aplicăm un ușor blend întunecat pe măsură ce ieșim spre exterior
     var blendOpacity = type === 'core' ? 1 : (type === 'sec' ? 0.85 : 0.7);
     var rMid = (rIn + rOut) / 2; var tx = cx + rMid * Math.cos(midRad); var ty = cy + rMid * Math.sin(midRad);
     
@@ -669,6 +691,9 @@ function handleGlobalClick(e) {
         document.getElementById('ifsProtectorText').innerText = coreData.ifs.protector;
         document.getElementById('ifsChildText').innerText = coreData.ifs.child;
         
+        document.getElementById('somaticWelcomeScreen').style.display = 'none';
+        document.getElementById('mainHero').style.display = 'block';
+        
         currentSelection.need = ""; 
         triggerCopingEngine(); 
         
@@ -725,7 +750,9 @@ function showSection(id) { document.getElementById(id).classList.add('active'); 
 document.getElementById('btnExport').addEventListener('click', function() {
     document.getElementById('printBlock1').innerText = document.getElementById('journalInput1').value || "(Nespecificat)";
     document.getElementById('printBlock2').innerText = document.getElementById('journalInput2').value || "(Nespecificat)";
+    var welcome = document.getElementById('somaticWelcomeScreen');
     var hero = document.getElementById('mainHero'); var visual = document.querySelector('.visual-zone'); var grids = document.querySelectorAll('.pill-grid'); 
+    if (welcome) welcome.style.display = 'none';
     if (visual) visual.style.display = 'none'; if (hero) hero.style.display = 'none'; 
     if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'none'; } } 
     window.print();
