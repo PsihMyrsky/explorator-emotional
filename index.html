@@ -167,13 +167,16 @@
                     <svg viewBox="0 0 200 400" style="width: 100%; max-width: 250px; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="somaticActivation" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#ff9999" />
-            <stop offset="35%" stop-color="#ffb3d9" />
-            <stop offset="65%" stop-color="#d9b3ff" />
-            <stop offset="100%" stop-color="#b3fff5" />
-        </linearGradient>
+            <stop offset="0%" stop-color="#ef4444" />   <stop offset="35%" stop-color="#ec4899" />  <stop offset="65%" stop-color="#8b5cf6" />  <stop offset="100%" stop-color="#14b8a6" /> </linearGradient>
         <filter id="somaticGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <filter id="contourGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
             <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -182,18 +185,15 @@
     </defs>
     
     <path d="M 100 25 C 114 25, 118 36, 116 52 C 114 65, 108 72, 105 76 L 107 85 L 132 94 C 146 100, 154 116, 150 144 C 146 166, 139 194, 137 198 C 135 202, 129 198, 129 192 C 129 184, 134 154, 131 138 C 129 128, 125 125, 125 132 L 125 220 C 125 235, 122 250, 120 262 L 130 365 C 132 376, 124 382, 117 382 C 110 382, 110 370, 107 325 L 102 268 L 98 262 L 98 268 L 93 325 C 90 370, 90 382, 83 382 C 76 382, 68 376, 70 365 L 80 262 C 78 250, 75 235, 75 220 L 75 132 C 75 125, 71 128, 69 138 C 66 154, 71 184, 71 192 C 71 198, 65 202, 63 198 C 61 194, 54 166, 50 144 C 46 116, 54 100, 68 94 L 93 85 L 95 76 C 92 72, 86 65, 84 52 C 82 36, 86 25, 100 25 Z" 
-          fill="none" stroke="#60a5fa" stroke-width="3.5" stroke-linejoin="round" opacity="1"/>
-                        
-                        <path d="M 100 25 C 114 25, 118 36, 116 52 C 114 65, 108 72, 105 76 L 107 85 L 132 94 C 146 100, 154 116, 150 144 C 146 166, 139 194, 137 198 C 135 202, 129 198, 129 192 C 129 184, 134 154, 131 138 C 129 128, 125 125, 125 132 L 125 220 C 125 235, 122 250, 120 262 L 130 365 C 132 376, 124 382, 117 382 C 110 382, 110 370, 107 325 L 102 268 L 98 262 L 98 268 L 93 325 C 90 370, 90 382, 83 382 C 76 382, 68 376, 70 365 L 80 262 C 78 250, 75 235, 75 220 L 75 132 C 75 125, 71 128, 69 138 C 66 154, 71 184, 71 192 C 71 198, 65 202, 63 198 C 61 194, 54 166, 50 144 C 46 116, 54 100, 68 94 L 93 85 L 95 76 C 92 72, 86 65, 84 52 C 82 36, 86 25, 100 25 Z" 
-                              fill="#111827" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round" opacity="0.85"/>
-                        
-                        <path d="M 100 85 L 100 255" stroke="url(#somaticActivation)" stroke-width="6" stroke-linecap="round" filter="url(#somaticGlow)"/>
-                        
-                        <circle cx="100" cy="50" r="8" fill="#ef4444" filter="url(#somaticGlow)" opacity="0.9"/>
-                        <circle cx="100" cy="115" r="14" fill="#ec4899" filter="url(#somaticGlow)" opacity="0.85"/>
-                        <circle cx="100" cy="165" r="11" fill="#8b5cf6" filter="url(#somaticGlow)" opacity="0.85"/>
-                        <circle cx="100" cy="215" r="9" fill="#14b8a6" filter="url(#somaticGlow)" opacity="0.85"/>
-                    </svg>
+          fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" filter="url(#contourGlow)" opacity="0.9"/>
+    
+    <path d="M 100 85 L 100 255" stroke="url(#somaticActivation)" stroke-width="6" stroke-linecap="round" filter="url(#somaticGlow)"/>
+    
+    <circle cx="100" cy="50" r="8" fill="#ef4444" filter="url(#somaticGlow)" opacity="1"/>
+    <circle cx="100" cy="115" r="14" fill="#ec4899" filter="url(#somaticGlow)" opacity="1"/>
+    <circle cx="100" cy="165" r="11" fill="#8b5cf6" filter="url(#somaticGlow)" opacity="1"/>
+    <circle cx="100" cy="215" r="9" fill="#14b8a6" filter="url(#somaticGlow)" opacity="1"/>
+</svg>
                 </div>
 
                 <div class="hero" id="mainHero" style="display: none;">
