@@ -137,7 +137,7 @@
 
     <nav class="app-nav">
         <button id="btnTabNavigator" class="nav-btn active">🧭 Explorator Emoțional</button>
-        <button id="btnTabTeorie" class="nav-btn">🧠 Dinamica Minții</button>
+        <button id="btnTabTeorie" class="nav-btn">🧠 Dinamica Minții (în lucru perpetuu..😉) </button>
     </nav>
 
     <div id="modNavigator" class="tab-content active">
@@ -329,13 +329,13 @@ const db = {
         }, 
         subs: { 
             "Mirat": { color: "#269df1", items: ["Curios", "Stimulat", "Interesat", "Intrigat"] }, 
-            "Uluit": { color: "#3b82f6", items: ["Perplex", "Impresionat", "Uimit", "Mut de uimire"] }, 
+            "Uluit": { color: "#3b82f6", items: ["Perplex", "Impresionat", "Bulversat", "Siderat"] }, 
             "Confuz": { color: "#5d74f6", items: ["Deziluzionat", "Tulburat", "Zăpăcit", "Zdruncinat"] } 
         } 
     },
     "Frică": { 
         color: "#8b5cf6", 
-        somatic: ["Constricție toracică", "Palpitații", "Tremurul corpului", "Respirație superficială/hiperventilație"], 
+        somatic: ["Apăsare în piept", "Palpitații", "Tremurul corpului", "Respirație superficială/hiperventilație"], 
         needs: ["Siguranță fizică", "Predictibilitate", "Limite clare"], 
         avoid: ["Consumul excesiv de știri sau ecrane.", "Luarea de decizii majore sub presiune.", "Cafeaua sau substanțele stimulante.", "Analiza mentală continuă a scenariilor (overthinking)."],
         ifs: { protector: "Rulează scenarii catastrofice pentru a preveni pericole neașteptate.", child: "Frica trăită a copilului care s-a simțit neajutorat." }, 
@@ -382,9 +382,9 @@ const db = {
             "Curățarea spațiului personal": "Rânduirea activă a mediului (Decluttering corectiv): Acționează asupra spațiului tău direct pentru a recăpăta controlul: aerisește larg camera, aruncă lucrurile inutile, organizează-ți biroul sau curăță o suprafață. Acest gest transmite creierului un semnal clar de purificare."
         }, 
         subs: { 
-            "Aversiune": { color: "#799f7d", items: ["Antipatie", "Retras", "Intolerant", "Ostil"] }, 
-            "Scârbit": { color: "#14b8a6", items: ["Dezgustat", "Repulsat", "Contaminat", "Blocat"] }, 
-            "Aprehensiv": { color: "#aaa965", items: ["Reticent", "Sceptic", "Distanțat", "Rezervat"] } 
+            "Aversiune": { color: "#799f7d", items: ["Antipatie", "Retras", "Intolerant", "Disprețuitor"] }, 
+            "Scârbit": { color: "#14b8a6", items: ["Oripilat", "Repulsie", "Contaminat", "Blocat"] }, 
+            "Reticent": { color: "#aaa965", items: ["Retras", "Sceptic", "Distant", "Reținut"] } 
         } 
     },
     "Rușine": { 
@@ -401,8 +401,8 @@ const db = {
         }, 
         subs: { 
             "Umilit": { color: "#dfa353", items: ["Disprețuit", "Micșorat", "Degradat", "Anulat"] }, 
-            "Rușinat": { color: "#f59e0b", items: ["Inadecvat", "Mortificat", "Inferior", "Expus"] }, 
-            "Vinovat": { color: "#bc8447", items: ["Regrete", "Remușcat", "Autocritic", "Penitent"] } 
+            "Rușinat": { color: "#f59e0b", items: ["Inadecvat", "Jenat", "Inferior", "Expus"] }, 
+            "Vinovat": { color: "#bc8447", items: ["Indezirabil", "Remușcare", "Împovărat", "Penitent"] } 
         } 
     },
     "Tristețe": { 
@@ -418,9 +418,9 @@ const db = {
             "Conectare sigură": "Co-reglare prin atașament: Identifică o persoană din viața ta care știi că poate fi un martor empatic. Trimite-i un mesaj simplu: 'Trec printr-un moment greu emoțional. Nu am nevoie de sfaturi sau soluții, aș vrea doar să știu că ești acolo.'"
         }, 
         subs: { 
-            "Disperat": { color: "#a5688a", items: ["Deprimat", "Lipsit de speranță", "Chinuit", "Jalnic"] }, 
+            "Disperat": { color: "#a5688a", items: ["Deprimat", "Resemnat", "Chinuit", "Amărât"] }, 
             "Rănit": { color: "#6b7280", items: ["Abandonat", "Trădat", "Dezamăgit", "Incomplet"] }, 
-            "Singuratic": { color: "#aa5e8a", items: ["Izolat", "Neglijat", "Apatic", "Neînțeles"] } 
+            "Singur": { color: "#aa5e8a", items: ["Izolat", "Neglijat", "Apatic", "Neînțeles"] } 
         } 
     },
     "Iubire": { 
@@ -436,9 +436,9 @@ const db = {
             "Atingere securizantă": "Hrană tactilă (Co-reglare somatică): Dacă ești cu cineva drag, cere o îmbrățișare lungă și statică (minim 20 de secunde) pentru oxitocină. Dacă ești singur(ă), mângâie blând brațele sau oferă-ți un masaj ușor pe umeri și ceafă, simțind căldura."
         }, 
         subs: { 
-            "Apropiat": { color: "#ac548e", items: ["Conectat", "Afectuos", "Tandru", "Generos"] }, 
+            "Apropiat": { color: "#ac548e", items: ["Conectat", "Afectuos", "Tandru", "Altruist"] }, 
             "Îndrăgostit": { color: "#ec4899", items: ["Pătimaș", "Fascinat", "Exaltat", "Sentimental"] }, 
-            "Compasiune": { color: "#77838e", items: ["Empatic", "Săritor", "Uman", "Ocrotitor"] } 
+            "Compasiune": { color: "#77838e", items: ["Empatic", "Săritor", "Binevoitor", "Ocrotitor"] } 
         } 
     }
 };
