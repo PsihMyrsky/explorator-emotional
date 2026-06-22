@@ -746,19 +746,23 @@ function triggerCopingEngine() {
     var coreData = db[currentSelection.parentCore]; 
     if (!coreData) return;
 
-    var html = "<div class='coping-card'>";
+    var html = "";
 
+    // 1. Cardul General (Apare ÎNTOTDEAUNA când e selectată o emoție)
+    html += "<div class='coping-card' style='border-left-color: var(--accent); margin-bottom: 12px;'>";
+    html += "<div class='coping-item'><span>🧘</span><div><strong>Reglare Generală [" + currentSelection.emotion + "]:</strong><br>" + coreData.coping["default"] + "</div></div>";
+    html += "</div>";
+
+    // 2. Cardul Specific pe Nevoie (Apare în PLUS, doar dacă s-a apăsat pe o nevoie)
     if (currentSelection.need) {
         var specificCoping = coreData.coping[currentSelection.need] || coreData.coping["default"];
-        html += "<div class='coping-item'><span>🎯</span><div><strong>Intervenție specifică [" + currentSelection.need + "]:</strong><br>" + specificCoping + "</div></div>";
-    } else {
-        html += "<div class='coping-item'><span>🎯</span><div><strong>Strategie generală de reglare [" + currentSelection.emotion + "]:</strong><br>" + coreData.coping["default"] + "</div></div>";
+        html += "<div class='coping-card' style='border-left-color: #10b981; background: #111c24;'>"; // Border verde pentru Nevoie
+        html += "<div class='coping-item'><span>🎯</span><div><strong>Acțiune Specifică pentru [" + currentSelection.need + "]:</strong><br>" + specificCoping + "</div></div>";
+        html += "</div>";
     }
 
-    html += "</div>";
     document.getElementById('copingOutput').innerHTML = html;
 }
-
 function showSection(id) { document.getElementById(id).classList.add('active'); }
 
 document.getElementById('btnExport').addEventListener('click', function() {
