@@ -298,6 +298,25 @@ function executeTabSwitch(btnId, tabId) {
     document.getElementById(btnId).classList.add('active'); document.getElementById(tabId).classList.add('active');
 }
 
+// Stocăm separat baza de date clinică dedicată strict Vinovăției pentru a nu interfera cu algoritmul de randare al roții principale
+const vinovatieDB = {
+    color: "#bc8447", 
+    somatic: ["Strânsoare în piept", "Greutate în stomac", "Nod în gât", "Agitație internă"],
+    needs: ["Reparare", "Reconciliere", "Iertare de sine", "Clarificare"],
+    avoid: ["Auto-pedepsirea obsesivă fără acțiuni corective.", "Izolarea de persoana afectată din teama de confruntare.", "Justificările defensive sau minimizarea impactului acțiunii tale."],
+    ifs: {
+        protector: "Critic interior de tip Judecător/Procuror, care încearcă să prevină respingerea socială prin auto-pedepsire anticipativă.",
+        child: "O parte vulnerabilă care se teme profund de excludere, abandon sau de a fi considerată 'rea' sau distructivă."
+    },
+    coping: {
+        "default": "Identifică acțiunea specifică. Notează: 'Ce comportament m-a adus aici?' Separă evaluarea faptei de evaluarea propriei persoane.",
+        "Reparare": "Analizează dacă poți face un gest concret de reparare față de persoana afectată. Dacă da, stabilește un micro-pas practic pentru asta.",
+        "Reconciliere": "Exprimă-ți regretul în mod direct și onest, fără justificări excesive sau defensivă. Asumă-ți doar partea ta de responsabilitate.",
+        "Iertare de sine": "Recunoaște că ai acționat pe baza resurselor și stării pe care le aveai în acel moment. Învață din eroare fără să te auto-pedepsești.",
+        "Clarificare": "Analizează dacă vinovăția îți aparține în totalitate sau dacă ai preluat proiecții ori așteptări nerealiste din exterior."
+    }
+};
+
 const db = {
     "Bucurie": { 
         color: "#10b981", 
@@ -407,24 +426,6 @@ const db = {
             "Vinovat": { color: "#bc8447", items: ["Indezirabil", "Remușcare", "Împovărat", "Penitent"] } 
         } 
     },
-    "Vinovăție": {
-        color: "#bc8447", 
-        somatic: ["Strânsoare în piept", "Greutate în stomac", "Nod în gât", "Agitație internă"],
-        needs: ["Reparare", "Reconciliere", "Iertare de sine", "Clarificare"],
-        avoid: ["Auto-pedepsirea obsesivă fără acțiuni corective.", "Izolarea de persoana afectată din teama de confruntare.", "Justificările defensive sau minimizarea impactului acțiunii tale."],
-        ifs: {
-            protector: "Critic interior de tip Judecător/Procuror, care încearcă să prevină respingerea socială prin auto-pedepsire anticipativă.",
-            child: "O parte vulnerabilă care se teme profund de excludere, abandon sau de a fi considerată 'rea' sau distructivă."
-        },
-        coping: {
-            "default": "Identifică acțiunea specifică. Notează: 'Ce comportament m-a adus aici?' Separă evaluarea faptei de evaluarea propriei persoane.",
-            "Reparare": "Analizează dacă poți face un gest concret de reparare față de persoana afectată. Dacă da, stabilește un micro-pas practic pentru asta.",
-            "Reconciliere": "Exprimă-ți regretul în mod direct și onest, fără justificări excesive sau defensivă. Asumă-ți doar partea ta de responsabilitate.",
-            "Iertare de sine": "Recunoaște că ai acționat pe baza resurselor și stării pe care le aveai în acel moment. Învață din eroare fără să te auto-pedepsești.",
-            "Clarificare": "Analizează dacă vinovăția îți aparține în totalitate sau dacă ai preluat proiecții ori așteptări nerealiste din exterior."
-        },
-        subs: {} // Lăsat gol special pentru ca algoritmul de desenare să ruleze corect fără erori de index
-    },
     "Tristețe": { 
         color: "#6b7280", 
         somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], 
@@ -447,11 +448,11 @@ const db = {
         color: "#ec4899", 
         somatic: ["Căldură toracică (în piept)", "Siguranță profundă", "Deschidere posturală"], 
         needs: ["Intimitate emoțională", "Aparținere", "Atingere securizantă"], 
-        avoid: ["Ignorarea semnalelor de alarmă (red flags) din spatele idealizării.", "Abandonarea completă a propriilor limite sau nevoi somatice.", "Graba de a securiza relația din frica de abandon."],
+        avoid: ["Ignorarea semnalelor de alarmă (red flags) din spatele idealizării.", "Abandonarea completă a propriilor limites sau nevoi somatice.", "Graba de a securiza relația din frica de abandon."],
         ifs: { protector: "Facilitează deschiderea barierelor verificând siguranța.", child: "Copilul integrat ce experimentează acceptarea necondiționată." }, 
         coping: { 
             "default": "Compasiune extinsă: Transmite mental un gând de bunătate profundă către tine și către cei din jur, observând senzația de deschidere caldă din zona pieptului.",
-            "Intimitate emoțională": "Auto-dezvăluire asumată și vulnerabilitate safe: Alege un moment liniștit pentru a exprima direct ceea ce prețuiești la cealaltă persoană. Folosește fraze simple: 'Mă simt în siguranță cu tine când...' sau 'Apreciez foarte mult la tine faptul că...'.",
+            "Intimitate emoțională": "Auto-dezvăluire asumed și vulnerabilitate safe: Alege un moment liniștit pentru a exprima direct ceea ce prețuiești la cealaltă persoană. Folosește fraze simple: 'Mă simt în siguranță cu tine când...' sau 'Apreciez foarte mult la tine faptul că...'.",
             "Aparținere": "Ancorare în rețeaua socială: Amintește-ți că ești parte dintr-un întreg. Fă un gest mic de conectare cu comunitatea ta: trimite un mesaj de mulțumire unui prieten/coleg, implică-te într-o activitate de grup sau petrece timp într-un spațiu public.",
             "Atingere securizantă": "Co-reglare somatică: Dacă ești cu cineva drag, cere o îmbrățișare lungă și statică (minim 20 de secunde). Dacă ești singur(ă), mângâie blând brațele sau oferă-ți un masaj ușor pe umeri și ceafă, simțind căldura."
         }, 
@@ -707,20 +708,23 @@ function handleGlobalClick(e) {
         currentSelection.emotion = name; 
         currentSelection.type = type; 
         
-        // Interceptăm nuanțele ce țin clinic de Vinovăție și le setăm parentCore dedicat
-        if (name === "Vinovat" || name === "Indezirabil" || name === "Remușcare" || name === "Împovărat" || name === "Penitent") {
+        var isVinovatie = (name === "Vinovat" || name === "Indezirabil" || name === "Remușcare" || name === "Împovărat" || name === "Penitent");
+        var coreData;
+
+        if (isVinovatie) {
             currentSelection.parentCore = "Vinovăție";
+            coreData = vinovatieDB;
         } else {
             currentSelection.parentCore = parentCore;
+            coreData = db[parentCore];
         }
         
         document.getElementById('sidePanel').style.display = 'block';
         var disp = document.getElementById('currentEmotionDisplay');
         disp.innerText = name; 
-        disp.style.color = db[currentSelection.parentCore].color;
+        disp.style.color = coreData.color;
         document.getElementById('currentTypeDisplay').innerText = type.toUpperCase() + " ➔ Rădăcină: " + currentSelection.parentCore;
         
-        var coreData = db[currentSelection.parentCore];
         document.getElementById('somaticGrid').innerHTML = coreData.somatic.map(function(s) { return "<div class='pill body-pill' data-value='" + s + "'>" + s + "</div>"; }).join('');
         document.getElementById('needsGrid').innerHTML = coreData.needs.map(function(n) { return "<div class='pill need-pill' data-value='" + n + "'>" + n + "</div>"; }).join('');
         
@@ -767,20 +771,20 @@ document.getElementById('needsGrid').addEventListener('click', function(e) {
 });
 
 function triggerCopingEngine() {
-    var coreData = db[currentSelection.parentCore]; 
+    var coreData = (currentSelection.parentCore === "Vinovăție") ? vinovatieDB : db[currentSelection.parentCore];
     if (!coreData) return;
 
     var html = "";
 
-    // 1. Cardul General (Apare ÎNTOTDEAUNA când e selectată o emoție)
+    // 1. Cardul General
     html += "<div class='coping-card' style='border-left-color: var(--accent); margin-bottom: 12px;'>";
     html += "<div class='coping-item'><span>🧘</span><div><strong>Reglare Generală [" + currentSelection.emotion + "]:</strong><br>" + coreData.coping["default"] + "</div></div>";
     html += "</div>";
 
-    // 2. Cardul Specific pe Nevoie (Apare în PLUS, doar dacă s-a apăsat pe o nevoie)
+    // 2. Cardul Specific pe Nevoie
     if (currentSelection.need) {
         var specificCoping = coreData.coping[currentSelection.need] || coreData.coping["default"];
-        html += "<div class='coping-card' style='border-left-color: #10b981; background: #111c24;'>"; // Border verde pentru Nevoie
+        html += "<div class='coping-card' style='border-left-color: #10b981; background: #111c24;'>"; 
         html += "<div class='coping-item'><span>🎯</span><div><strong>Acțiune Specifică pentru [" + currentSelection.need + "]:</strong><br>" + specificCoping + "</div></div>";
         html += "</div>";
     }
