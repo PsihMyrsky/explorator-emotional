@@ -407,6 +407,23 @@ const db = {
             "Vinovat": { color: "#bc8447", items: ["Indezirabil", "Remușcare", "Împovărat", "Penitent"] } 
         } 
     },
+
+    "Vinovăție": {
+        color: "#f59e0b", // O nuanță de chihlimbar/portocaliu stins
+        somatic: ["Strânsoare în piept", "Greutate în stomac", "Nod în gât", "Agitație internă"],
+        needs: ["Reparare", "Reconciliere", "Iertare de sine", "Clarificare"],
+        coping: {
+            "default": "Identifică acțiunea specifică. Notează: 'Ce comportament m-a adus aici?' Separă evaluarea faptei de evaluarea propriei persoane.",
+            "Reparare": "Analizează dacă poți face un gest concret de reparare față de persoana afectată. Dacă da, stabilește un micro-pas practic pentru asta.",
+            "Reconciliere": "Exprimă-ți regretul în mod direct și onest, fără justificări excesive sau defensivă. Asumă-ți doar partea ta de responsabilitate.",
+            "Iertare de sine": "Recunoaște că ai acționat pe baza resurselor și stării pe care le aveai în acel moment. Învață din eroare fără să te auto-pedepsești.",
+            "Clarificare": "Analizează dacă vinovăția îți aparține în totalitate sau dacă ai preluat proiecții ori așteptări nerealiste din exterior."
+        },
+        ifs: {
+            protector: "Critic interior de tip Judecător/Procuror, care încearcă să prevină respingerea socială prin auto-pedepsire anticipativă.",
+            exilat: "O parte vulnerabilă care se teme profund de excludere, abandon sau de a fi considerată 'rea' sau distructivă."
+        }
+    },
     "Tristețe": { 
         color: "#6b7280", 
         somatic: ["Greutate în piept", "Nod în gât", "Scădere de tonus muscular"], 
@@ -682,13 +699,19 @@ function handleGlobalClick(e) {
         if(svg && svg.id === 'modalSvg' && svg.getAttribute('data-moved') === 'true') { return; }
         if(svg && svg.id === 'modalSvg' && totalModalMovement > 12) { return; }
         
-        var name = group.getAttribute('data-name'); 
-        var type = group.getAttribute('data-type'); 
-        var parentCore = group.getAttribute('data-core');
-        
-        currentSelection.emotion = name; 
-        currentSelection.type = type; 
-        currentSelection.parentCore = parentCore;
+       var name = group.getAttribute('data-name'); 
+var type = group.getAttribute('data-type'); 
+var parentCore = group.getAttribute('data-core');
+
+currentSelection.emotion = name; 
+currentSelection.type = type; 
+
+// Prindem atât sub-axa "Vinovat", cât și termenii ei terțiari ficși din codul tău
+if (name === "Vinovat" || name === "Indezirabil" || name === "Remușcare" || name === "Împovărat" || name === "Penitent") {
+    currentSelection.parentCore = "Vinovăție";
+} else {
+    currentSelection.parentCore = parentCore;
+}
         
         document.getElementById('sidePanel').style.display = 'block';
         var disp = document.getElementById('currentEmotionDisplay');
