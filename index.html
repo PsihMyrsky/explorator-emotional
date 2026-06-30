@@ -324,24 +324,49 @@
                 </div>
             </div>
 
-       <h2><span>🔄</span> 3. Circuitul Interacțiunii: De la Corp la Gând și Acțiune</h2>
+      <h2><span>🔄</span> 3. Circuitul Interacțiunii: De la Corp la Gând și Acțiune</h2>
+            <p style="text-align: left !important; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; padding-left: 5px;">
+                * Apasă pe titlul oricărui pas de mai jos pentru a explora detaliile circuitului biologic.
+            </p>
+
             <div class="components-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important; gap: 20px !important; margin-bottom: 40px !important;">
-                <div class="comp-card">
-                    <h3 style="color: #6366f1; display: block !important; text-align: left !important;"><span>Pasul 1.</span> Nevoia (Dezechilibrul)</h3>
-                    <p style="text-align: left !important; line-height: 1.6 !important;">Totul pornește de la o nevoie fundamentală a organismului (fizică sau psihologică) care își pierde homeostazia. De exemplu, o amenințare directă în mediu activează nevoia de <em>Siguranță</em>, în timp ce o barieră apărută în calea unui scop blochează și activează nevoia de <em>Apărare</em>.</p>
+                
+                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
+                    <h3 style="color: #6366f1; display: block !important; text-align: left !important; margin-bottom: 0;">
+                        <span>Pasul 1.</span> Nevoia (Dezechilibrul) <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
+                    </h3>
+                    <p class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
+                        Totul pornește de la o nevoie fundamentală a organismului (fizică sau psihologică) care își pierde homeostazia. De exemplu, o amenințare directă în mediu activează nevoie de <em>Siguranță</em>, în timp ce o barieră apărută în calea unui scop blochează și activează nevoia de <em>Apărare</em>.
+                    </p>
                 </div>
-                <div class="comp-card">
-                    <h3 style="color: #3b82f6; display: block !important; text-align: left !important;"><span>Pasul 2.</span> Senzația (Semnalul Visceral)</h3>
-                    <p style="text-align: left !important; line-height: 1.6 !important;">Înainte ca mintea să conștientizeze ce se întâmplă, corpul reacționează neurovegetativ (Bottom-Up). Nevoia neîmplinită se traduce instantaneu în senzații fizice brute: inima își accelerează ritmul, stomacul se strânge, mușchii se tensionează sau respirația devine superficială. Corpul „știe” întotdeauna înaintea minții.</p>
+                
+                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
+                    <h3 style="color: #3b82f6; display: block !important; text-align: left !important; margin-bottom: 0;">
+                        <span>Pasul 2.</span> Senzația ➔ <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
+                    </h3>
+                    <p class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
+                        Înainte ca mintea să conștientizeze ce se întâmplă, corpul reacționează neurovegetativ (Bottom-Up). Nevoia neîmplinită se traduce instantaneu în senzații fizice brute: inima își accelerează ritmul, stomacul se strânge, mușchii se tensionează sau respirația devine superficială. Corpul „știe” întotdeauna înaintea minții.
+                    </p>
                 </div>
-                <div class="comp-card">
-                    <h3 style="color: #8b5cf6; display: block !important; text-align: left !important;"><span>Pasul 3.</span> Emoția (Interpretarea Afectivă)</h3>
-                    <p style="text-align: left !important; line-height: 1.6 !important;">Creierul traduce aceste modificări fisiologice interne și le oferă o etichetă afectivă unificată pentru a mobiliza rapid organismul. Senzația de strânsoare în piept devine <em>Frică</em>, iar tensiunea din maxilar devine <em>Furie</em>. Emoția reprezintă puntea psihologică ce dă un nume stării corporale.</p>
+                
+                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
+                    <h3 style="color: #8b5cf6; display: block !important; text-align: left !important; margin-bottom: 0;">
+                        <span>Pasul 3.</span> Emoția ➔ <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
+                    </h3>
+                    <p class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
+                        Creierul traduce aceste modificări fiziologice interne și le oferă o etichetă afectivă unificată pentru a mobiliza rapid organismul. Senzația de strânsoare în piept devine <em>Frică</em>, iar tensiunea din maxilar devine <em>Furie</em>. Emoția reprezintă puntea psihologică ce dă un nume stării corporale.
+                    </p>
                 </div>
-                <div class="comp-card">
-                    <h3 style="color: #ec4899; display: block !important; text-align: left !important;"><span>Pasul 4.</span> Gândul (Povestea și Planul)</h3>
-                    <p style="text-align: left !important; line-height: 1.6 !important;">Odată emoția activată, instanțele cognitive intră în funcțiune pentru a genera sens (Top-Down). Mintea construiește o „poveste” (interpretări, scenarii, convingeri) care justifică starea (<em>„Sunt în pericol”</em>) și încearcă să elaboreze o strategie mentală pentru a rezolva nevoia inițială.</p>
+                
+                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
+                    <h3 style="color: #ec4899; display: block !important; text-align: left !important; margin-bottom: 0;">
+                        <span>Pasul 4.</span> Gândul ➔ <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
+                    </h3>
+                    <p class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
+                        Odată emoția activată, instanțele cognitive intră în funcțiune pentru a genera sens (Top-Down). Mintea construiește o „poveste” (interpretări, scenarii, convingeri) care justifică starea (<em>„Sunt în pericol”</em>) și încearcă să elaboreze o strategie mentală pentru a rezolva nevoia inițială.
+                    </p>
                 </div>
+                
                 <div class="comp-card" style="grid-column: 1 / -1 !important; border-color: var(--accent) !important; background: linear-gradient(135deg, #151d30 0%, rgba(99, 102, 241, 0.03) 100%) !important;">
                     <h3 style="color: #f59e0b; display: block !important; text-align: left !important;"><span>Pasul 5.</span> Bucla de Feedback (Integrarea vs. Formula Infantilă)</h3>
                     <p style="text-align: left !important; line-height: 1.6 !important; margin-bottom: 12px !important;"><strong>A. Strategia Matură (Adaptativă):</strong> Persoana acționează conștient în acord cu realitatea prezentă. Nevoia este împlinită profund, emoția își îndeplinește rolul de semnalizare și se descarcă natural, iar corpul revine la starea de homeostazie și calm.</p>
@@ -871,6 +896,20 @@ document.getElementById('btnExport').addEventListener('click', function() {
 });
 
 window.onload = function() { renderWheels(); };
+    function toggleCardAccordion(cardElement) {
+    var content = cardElement.querySelector('.accordion-content');
+    var arrow = cardElement.querySelector('.accordion-arrow');
+    
+    if (content.style.display === "none" || content.style.display === "") {
+        content.style.display = "block";
+        if(arrow) arrow.innerText = "▲";
+        cardElement.style.borderColor = "var(--accent)";
+    } else {
+        content.style.display = "none";
+        if(arrow) arrow.innerText = "▼";
+        cardElement.style.borderColor = "var(--border)";
+    }
+}
 </script>
 </body>
 </html>
