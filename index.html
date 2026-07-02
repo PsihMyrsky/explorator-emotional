@@ -144,24 +144,29 @@
 .step-header h3 { color: var(--accent); margin: 0; font-size: 1.1rem; }
         /* --- ADAUGĂ ACESTE STILURI LA FINALUL SECȚIUNII <style> --- */
 
-/* Aliniere subtitlu superior */
+/* Aliniere forțată pentru titlu și descriere */
 .masterclass-container h2 {
-    margin-bottom: 10px;
-    padding-left: 5px; 
+    margin-bottom: 10px !important;
+    padding-left: 5px !important;
+    text-align: left !important;
 }
-
-/* Aliniere descriere */
 .masterclass-container p:first-of-type {
-    margin-bottom: 40px;
-    padding-left: 5px;
+    margin-bottom: 40px !important;
+    padding-left: 5px !important;
+    text-align: left !important;
 }
 
-/* Clase pentru culori individuale pe carduri */
-.step-card.c1 { border-left: 4px solid #ef4444; } /* Roșu */
-.step-card.c2 { border-left: 4px solid #ec4899; } /* Roz */
-.step-card.c3 { border-left: 4px solid #60a5fa; } /* Albastru */
-.step-card.c4 { border-left: 4px solid #8b5cf6; } /* Violet */
-.step-card.c5 { border-left: 4px solid #f59e0b; } /* Portocaliu */
+/* Culori forțate pe marginea stângă (border-left) */
+.step-card.c1 { border-left: 6px solid #ef4444 !important; } 
+.step-card.c2 { border-left: 6px solid #ec4899 !important; } 
+.step-card.c3 { border-left: 6px solid #60a5fa !important; } 
+.step-card.c4 { border-left: 6px solid #8b5cf6 !important; } 
+.step-card.c5 { border-left: 6px solid #f59e0b !important; } 
+
+/* Asigură-te că textul din h3 nu este suprascris */
+.step-card h3 {
+    color: var(--accent) !important;
+}
     </style>
 </head>
 <body>
