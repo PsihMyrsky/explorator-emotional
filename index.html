@@ -106,20 +106,68 @@
 
         /* Teorie */
         .theory-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .comp-card { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
-        .comp-card h3 { margin-top: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-        .comp-card p { font-size: 0.95rem; color: #d1d5db; margin: 0; text-align: justify; line-height: 1.6; }
+        /* 1. Grila: Forțăm 4 coloane pe desktop și aliniere sus */
+.components-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
+    margin-bottom: 40px; 
+    align-items: start; 
+}
 
-        @media (max-width: 1024px) {
-            .app-container { grid-template-columns: 1fr; }
-            .visual-zone { height: auto; position: relative; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); top: 0; }
-            .data-zone { height: auto; padding: 20px; }
-            svg { max-width: 360px; }
-            .ifs-container { grid-template-columns: 1fr; }
-            .components-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
-        
-        }
+/* 2. Cardul: Limităm înălțimea pentru a fi compact */
+.comp-card { 
+    background: var(--bg-card); 
+    border: 1px solid var(--border); 
+    padding: 25px; 
+    border-radius: 20px; 
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    max-height: 320px; /* Limită înălțime card */
+    overflow: hidden;
+}
+
+/* 3. Titlul: Rămâne fix sus */
+.comp-card h3 { 
+    margin-top: 0; 
+    font-size: 1.2rem; 
+    color: var(--accent); 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 8px; 
+    flex-shrink: 0; 
+}
+
+/* 4. Textul: Devine scrollabil pe desktop */
+.comp-card p { 
+    font-size: 0.95rem; 
+    color: #d1d5db; 
+    margin: 0; 
+    text-align: justify; 
+    line-height: 1.6;
+    overflow-y: auto; 
+    padding-right: 5px;
+    flex-grow: 1;
+}
+
+/* 5. Scrollbar discret */
+.comp-card p::-webkit-scrollbar { width: 4px; }
+.comp-card p::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* 6. Adaptare Mobil */
+@media (max-width: 1024px) {
+    .app-container { grid-template-columns: 1fr; }
+    .visual-zone { height: auto; position: relative; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); top: 0; }
+    .data-zone { height: auto; padding: 20px; }
+    svg { max-width: 360px; }
+    .ifs-container { grid-template-columns: 1fr; }
+    
+    /* Pe mobil, cardurile se desfac complet */
+    .components-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+    .comp-card { max-height: none !important; }
+    .comp-card p { overflow-y: visible !important; flex-grow: 0; }
+}
 
         @media print {
             .app-nav, .wheel-modal, .zoom-hint { display: none !important; }
