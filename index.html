@@ -879,6 +879,10 @@ function setupMobileViewportEngine() {
 var currentSelection = { emotion: "", type: "", parentCore: "", body: "", need: "" };
 
 function handleGlobalClick(e) {
+  document.getElementById('journalInput1').value = "";
+    document.getElementById('journalInput2').value = "";
+    document.getElementById('printBlock1').innerText = "";
+    document.getElementById('printBlock2').innerText = "";
     var group = e.target.closest('.wheel-group');
     if (group) {
         var svg = group.closest('svg');
@@ -923,6 +927,7 @@ function handleGlobalClick(e) {
         
         currentSelection.need = ""; 
         triggerCopingEngine(); 
+        
         
         showSection('secSomatic'); 
         showSection('secNeeds'); 
