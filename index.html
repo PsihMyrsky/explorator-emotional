@@ -106,34 +106,11 @@
 
         /* Teorie */
         .theory-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-/* 1. Grila: Coloane mai înguste pentru a forța textul să se "înălțe" mai puțin */
-.components-grid { 
-    display: grid; 
-    grid-template-columns: repeat(4, 250px); /* 4 coloane fixe de 250px */
-    justify-content: center; /* Centrate pe pagină */
-    gap: 15px; 
-    margin-bottom: 40px; 
-}
+  .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .comp-card { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
+        .comp-card h3 { margin-top: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .comp-card p { font-size: 0.95rem; color: #d1d5db; margin: 0; text-align: justify; line-height: 1.6; }
 
-/* 2. Cardul: Fără max-height, se adaptează natural la conținut */
-.comp-card { 
-    background: var(--bg-card); 
-    border: 1px solid var(--border); 
-    padding: 20px; /* Padding puțin mai mic */
-    border-radius: 15px; 
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 3. Textul: Font puțin mai mic pentru a economisi spațiu vertical */
-.comp-card p { 
-    font-size: 0.85rem; /* Redus ușor de la 0.95 */
-    color: #d1d5db; 
-    margin: 0; 
-    text-align: justify; 
-    line-height: 1.5; /* Spațiere puțin mai strânsă */
-}
         @media (max-width: 1024px) {
             .app-container { grid-template-columns: 1fr; }
             .visual-zone { height: auto; position: relative; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); top: 0; }
@@ -142,8 +119,8 @@
             .ifs-container { grid-template-columns: 1fr; }
             .components-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
         
- 
-}
+        }
+
 
 
         @media print {
