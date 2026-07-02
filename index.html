@@ -107,10 +107,34 @@
         /* Teorie */
         .theory-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
  .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .comp-card { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
-        .comp-card h3 { margin-top: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-        .comp-card p { font-size: 0.95rem; color: #d1d5db; margin: 0; text-align: justify; line-height: 1.6; }
+        /* Stilul implicit al cardului (când e "închis") */
+.comp-card { 
+    background: var(--bg-card); 
+    border: 1px solid var(--border); 
+    padding: 25px; 
+    border-radius: 20px; 
+    cursor: pointer;
+    
+    /* Aici limităm înălțimea pe desktop */
+    max-height: 250px; 
+    overflow: hidden; 
+    transition: max-height 0.3s ease; /* Animație fină la deschidere */
+    position: relative;
+}
 
+/* Când dai click, cardul se va deschide (presupunând că funcția toggle adaugă clasa .active) */
+.comp-card.active {
+    max-height: 1000px; /* Suficient de mare cât să încapă tot textul */
+}
+
+/* Asigură-te că paragrafele nu forțează înălțimea */
+.comp-card p { 
+    font-size: 0.95rem; 
+    color: #d1d5db; 
+    margin: 0; 
+    text-align: justify; 
+    line-height: 1.6;
+}
         @media (max-width: 1024px) {
             .app-container { grid-template-columns: 1fr; }
             .visual-zone { height: auto; position: relative; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); top: 0; }
@@ -120,7 +144,11 @@
             .components-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
         
         }
-
+@media (max-width: 1024px) {
+    .comp-card { 
+        max-height: none !important; /* Pe mobil, cardul se desface complet */
+    }
+}
 
 
         @media print {
