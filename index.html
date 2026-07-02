@@ -135,6 +135,13 @@
             .section { display: block !important; opacity: 1 !important; background: white !important; border: 1px solid #ccc !important; color: black !important; page-break-inside: avoid; }
             .ifs-box, .coping-card { background: #f3f4f6 !important; color: black !important; border: 1px solid #ccc !important; }
         }
+        .masterclass-container { max-width: 800px; margin: 40px auto; position: relative; padding: 20px; }
+.masterclass-container::before { content: ''; position: absolute; left: 40px; top: 30px; bottom: 30px; width: 2px; background: var(--border); }
+.step-card { margin-bottom: 30px; background: #0d1117; border: 1px solid var(--border); border-radius: 16px; padding: 20px; position: relative; transition: all 0.3s ease; }
+.step-header { display: flex; align-items: center; gap: 20px; cursor: pointer; }
+.icon { font-size: 24px; background: #1f2937; padding: 10px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+.step-body { padding-left: 70px; margin-top: 15px; color: #c9d1d9; line-height: 1.7; display: none; }
+.step-header h3 { color: var(--accent); margin: 0; font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -395,78 +402,83 @@
     </div>
 
     <!-- Pilonul 3: Containerul de Traumă a fost izolat acum corect și rulează independent -->
-    <div id="modTrauma" class="tab-content" style="margin-top: 30px;">
-        <div class="theory-container" style="max-width: 1100px; margin: 0 auto;">
-            
-            <h2><span>🩸</span> Trauma ca Dezechilibru în Relația Corp-Minte</h2>
-            <p style="text-align: left !important; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; padding-left: 5px;">
-                * Cadrul integrat: Modelul Somato-Relațional (Gabor Maté) și Neurobiologia Afectivă. Apasă pe titlurile pașilor pentru detalii.
-            </p>
-
-          <div class="components-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px;">
-                
-                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
-                    <h3 style="color: #ef4444; display: block !important; text-align: left !important; margin-bottom: 0;">
-                        Cum se instalează dezechilibrul? <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
-                    </h3>
-                    <div class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
-                        <p style="text-align: left !important; margin-bottom: 12px;"><strong>Corpul este copleșit:</strong> În momentul rănii (fie o traumă severă, fie nevoi fundamentale neîmplinite în copilărie), intensitatea trăirilor fizice depășește capacitatea minții de a le procesa. Sistemul trăiește această intensitate dureros, iar instinctele de apărare sunt blocate.</p>
-                        <p style="text-align: left !important; margin-bottom: 12px;"><strong>Amenințarea fragmentării:</strong> Deoarece corpul nu mai găsește calea înapoi spre calm, <strong>psihicul devine amenințat cu fragmentarea</strong>. Pentru a supraviețui acestei tensiuni greu de susținut, mintea se protejează și <strong>pierde parțial legătura cu corpul</strong>, alterînd percepția realității prin 5 deconectări majore:</p>
-                        <ul style="margin-left: 15px; padding-left: 5px; margin-top: 5px; list-style-type: disc !important;">
-                            <li><strong>Deconectarea de corp:</strong> Suprimarea emoțiilor brute și ignorarea semnalelor viscerale (baza stărilor de burnout sau tulburări somatice).</li>
-                            <li><strong>Pierderea flexibilității:</strong> Prăbușirea pauzei conștiente dintre stimul și reacție; rămânerea în apărări rigide și automate.</li>
-                            <li><strong>Viziunea bazată pe Rușine:</strong> Convingerea profundă că „există ceva fundamental în neregulă cu mine” sau „nu sunt suficient(ă)”.</li>
-                            <li><strong>Distorsionarea realității:</strong> Privirea lumii prin extreme (fie suspiciune și frică totală, fie o naivitate exagerată).</li>
-                            <li><strong>Înstrăinarea de prezent:</strong> Repetarea compulsivă a aceluiași tipar relațional dureros, dar familiar, din trecut.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
-                    <h3 style="color: #ec4899; display: block !important; text-align: left !important; margin-bottom: 0;">
-                        Fixarea Formulei Infantile <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
-                    </h3>
-                    <p class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
-                        Atunci când intensitatea stimulului depășește capacitatea de autoreglare a organismului, se produc modificări neurobiologice durabile. sistemul nervos se fixează în tipare rigide de supraviețuire, adică mintea preia strategia de urgență de atunci și o transformă într-o <strong>hartă rigidă de supraviețuire (Formula Infantilă)</strong>. Mintea tinde să recreeze în mod compulsiv scenarii similare cu cele din trecutul traumatic. Această repetiție nu este un defect structural, ci o încercare inconștientă a aparatului psihic de a prelua controlul activ asupra unei experiențe în care a fost complet neajutorat, căutând o rezolvare adaptativă a vechiului conflict prin tipare relaționale predictive, dar adesea disfuncționale în prezent. Mintea va prefera întotdeauna suferința cunoscută și predictibilă a unui tipar vechi (izolarea, conformismul, controlul), în locul riscului de a retrăi teroarea neajutorării primare. Acest compromis reduce temporar durerea, dar menține dezechilibrul profund și repornește automat circuitul suferinței în viața de adult.
-                    </p>
-                </div>
-
-                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
-        <h3 style="color: #60a5fa; display: block !important; text-align: left !important; margin-bottom: 0;">
-            Momentele de Activare <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
-        </h3>
-        <p class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
-            În momentele în care viața oglindește vechi răni, creierul recunoaște situația ca pe o amenințare familiară din trecut. Atunci „pui în scenă” tiparele vechi: nu ești cu adevărat în pericol, dar corpul tău (pulsul, tensiunea musculară) intră în modul de supraviețuire. Recunoașterea acestei activări este momentul în care poți întrerupe pilotul automat.
+ <div id="modTrauma" class="tab-content" style="margin-top: 30px;">
+    <div class="masterclass-container">
+        <h2 style="margin-bottom: 20px;">🩸 Trauma ca Dezechilibru în Relația Corp-Minte</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 40px;">
+            * Cadrul integrat: Modelul Somato-Relațional (Gabor Maté) și Neurobiologia Afectivă. Apasă pe titlurile pașilor pentru detalii.
         </p>
-    </div>
 
-                <div class="comp-card" onclick="toggleCardAccordion(this)" style="cursor: pointer; transition: all 0.2s ease;">
-                    <h3 style="color: #8b5cf6; display: block !important; text-align: left !important; margin-bottom: 0;">
-                        Flexibilitate și Integrare <span class="accordion-arrow" style="float: right; color: var(--text-muted); font-size: 0.8rem;">▼</span>
-                    </h3>
-                    <div class="accordion-content" style="display: none; text-align: left !important; line-height: 1.6 !important; margin-top: 15px !important;">
-                        <p style="text-align: left !important; margin-bottom: 12px;">Pentru a opri acest tipar cronicizat, procesul terapeutic acționează direct pe nodurile unde s-a produs ruptura:</p>
-                        <ul style="margin-left: 15px; padding-left: 5px; margin-top: 5px; list-style-type: disc !important;">
-                            <li><strong>Recunoașterea și depășirea „Soluțiilor Rapide” (Quick Fixes):</strong> Încetarea eforturilor disperate de a amorți senzațiile dureroase prin strategii imediate care doar evită reconectarea profundă și reîntăresc armura de apărare.</li>
-                            <li><strong>Recuperarea Autenticității:</strong> Renunțarea treptată la masca (Sinele Fals) pe care ai fost obligat să o porți în copilărie pentru a păstra atașamentul și protecția părinților, dând din nou voie minții să se conecteze la adevărul corpului.</li>
-                            <li><strong>Auto-reglarea și Semnalul de Siguranță:</strong> Prin modificarea relației cu mintea (ca proces psihic uneori inconfortabil, ca în auto-critică de exemplu) și raportarea diferită la propriile stări, un semnal distinct se transmite direct către zonele de alarmă din creierul. Disconfortul, emoțiile și gândurile așa-zis negative nu mai reprezintă un dușman, treptat creierul poate înțelege prin experiență, o diferență crucială: senzația din corp este o amintire din trecut, nu un pericol real în prezent. Această atenție blândă și deschisă, alături de un mediu securizant, îi oferă sistemului nervos siguranța de care are nevoie pentru a lăsa jos armele și apărările, făcând loc tranziției de la supraviețuire la refacere și echilibru. </li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- Pas 1 -->
+        <div class="step-card">
+            <div class="step-header" onclick="toggleMaster(this)">
+                <span class="icon">⚠️</span>
+                <h3>Cum se instalează dezechilibrul?</h3>
+            </div>
+            <div class="step-body">
+                <p><strong>Corpul este copleșit:</strong> În momentul rănirii (fie o traumă severă, fie nevoi fundamentale neîmplinite în copilărie), intensitatea trăirilor fizice depășește capacitatea minții de a le procesa. Sistemul trăiește această intensitate dureros, iar instinctele de apărare sunt blocate.</p>
+                <p><strong>Amenințarea fragmentării:</strong> Deoarece corpul nu mai găsește calea înapoi spre calm, <strong>psihicul devine amenințat cu fragmentarea</strong>. Pentru a supraviețui acestei tensiuni greu de susținut, mintea se protejează și <strong>pierde parțial legătura cu corpul</strong>, alterînd percepția realității prin 5 deconectări majore:</p>
+                <ul style="margin-left: 15px; padding-left: 5px; margin-top: 5px; list-style-type: disc !important;">
+                    <li><strong>Deconectarea de corp:</strong> Suprimarea emoțiilor brute și ignorarea semnalelor viscerale (baza stărilor de burnout sau tulburări somatice).</li>
+                    <li><strong>Pierderea flexibilității:</strong> Prăbușirea pauzei conștiente dintre stimul și reacție; rămânerea în apărări rigide și automate.</li>
+                    <li><strong>Viziunea bazată pe Rușine:</strong> Convingerea profundă că „există ceva fundamental în neregulă cu mine” sau „nu sunt suficient(ă)”.</li>
+                    <li><strong>Distorsionarea realității:</strong> Privirea lumii prin extreme (fie suspiciune și frică totală, fie o naivitate exagerată).</li>
+                    <li><strong>Înstrăinarea de prezent:</strong> Repetarea compulsivă a aceluiași tipar relațional dureros, dar familiar, din trecut.</li>
+                </ul>
+            </div>
+        </div>
 
-                <div class="comp-card" style="grid-column: 1 / -1 !important; border-color: var(--border) !important; background: linear-gradient(135deg, #151d30 0%, rgba(239, 68, 68, 0.03) 100%) !important;">
-                    <h3 style="color: #f59e0b; display: block !important; text-align: left !important;">Dinamica Transgenerațională: Lanțul se oprește la tine</h3>
-                    <p style="text-align: left !important; line-height: 1.6 !important; margin-bottom: 12px !important;">
-                        În cele mai multe cazuri, acest dezechilibru nu a început cu tine. El circulă de generații, fiind recreat involuntar în istoricul familial de la străbunici, bunici și părinți, amprentând inclusiv biologia noastră (epigenetică). În fața traumei, învinovățirea își pierde sensul, însă exprimarea liberă a emoțiilor și asumarea unei noi responsabilități își păstrează întreaga putere.
-                    </p>
-                    <p style="text-align: left !important; line-height: 1.6 !important; margin-top: 0 !important;">
-                        Chiar dacă nu a început cu tine, <strong>acest cerc vicios se poate termina cu ajutorul tău și pentru tine</strong>. Regăsirea de sine, reconectarea cu propriul corp și integrarea părților rănite sunt posibilități reale în momentul în care ești dispus să îți privești reacțiile automate nu ca pe un defect de identitate, ci ca pe un dezechilibru vechi care cere să fie ascultat, asumat și înțeles. 
-                    </p>
-                </div>
+        <!-- Pas 2 -->
+        <div class="step-card">
+            <div class="step-header" onclick="toggleMaster(this)">
+                <span class="icon">🧬</span>
+                <h3>Fixarea Formulei Infantile</h3>
+            </div>
+            <div class="step-body">
+                <p>Atunci când intensitatea stimulului depășește capacitatea de autoreglare a organismului, se produc modificări neurobiologice durabile. sistemul nervos se fixează în tipare rigide de supraviețuire, adică mintea preia strategia de urgență de atunci și o transformă într-o <strong>hartă rigidă de supraviețuire (Formula Infantilă)</strong>. Mintea tinde să recreeze în mod compulsiv scenarii similare cu cele din trecutul traumatic. Această repetiție nu este un defect structural, ci o încercare inconștientă a aparatului psihic de a prelua controlul activ asupra unei experiențe în care a fost complet neajutorat, căutând o rezolvare adaptativă a vechiului conflict prin tipare relaționale predictive, dar adesea disfuncționale în prezent. Mintea va prefera întotdeauna suferința cunoscută și predictibilă a unui tipar vechi (izolarea, conformismul, controlul), în locul riscului de a retrăi teroarea neajutorării primare. Acest compromis reduce temporar durerea, dar menține dezechilibrul profund și repornește automat circuitul suferinței în viața de adult.</p>
+            </div>
+        </div>
 
+        <!-- Pas 3 -->
+        <div class="step-card">
+            <div class="step-header" onclick="toggleMaster(this)">
+                <span class="icon">⚡</span>
+                <h3>Momentele de Activare</h3>
+            </div>
+            <div class="step-body">
+                <p>În momentele în care viața oglindește vechi răni, creierul recunoaște situația ca pe o amenințare familiară din trecut. Atunci „pui în scenă” tiparele vechi: nu ești cu adevărat în pericol, dar corpul tău (pulsul, tensiunea musculară) intră în modul de supraviețuire. Recunoașterea acestei activări este momentul în care poți întrerupe pilotul automat.</p>
+            </div>
+        </div>
+
+        <!-- Pas 4 -->
+        <div class="step-card">
+            <div class="step-header" onclick="toggleMaster(this)">
+                <span class="icon">🌱</span>
+                <h3>Flexibilitate și Integrare</h3>
+            </div>
+            <div class="step-body">
+                <p>Pentru a opri acest tipar cronicizat, procesul terapeutic acționează direct pe nodurile unde s-a produs ruptura:</p>
+                <ul style="margin-left: 15px; padding-left: 5px; margin-top: 5px; list-style-type: disc !important;">
+                    <li><strong>Recunoașterea și depășirea „Soluțiilor Rapide” (Quick Fixes):</strong> Încetarea eforturilor disperate de a amorți senzațiile dureroase prin strategii imediate care doar evită reconectarea profundă și reîntăresc armura de apărare.</li>
+                    <li><strong>Recuperarea Autenticității:</strong> Renunțarea treptată la masca (Sinele Fals) pe care ai fost obligat să o porți în copilărie pentru a păstra atașamentul și protecția părinților, dând din nou voie minții să se conecteze la adevărul corpului.</li>
+                    <li><strong>Auto-reglarea și Semnalul de Siguranță:</strong> Prin modificarea relației cu mintea (ca proces psihic uneori inconfortabil, ca în auto-critică de exemplu) și raportarea diferită la propriile stări, un semnal distinct se transmite direct către zonele de alarmă din creierul. Disconfortul, emoțiile și gândurile așa-zis negative nu mai reprezintă un dușman, treptat creierul poate înțelege prin experiență, o diferență crucială: senzația din corp este o amintire din trecut, nu un pericol real în prezent. Această atenție blândă și deschisă, alături de un mediu securizant, îi oferă sistemului nervos siguranța de care are nevoie pentru a lăsa jos armele și apărările, făcând loc tranziției de la supraviețuire la refacere și echilibru. </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pas 5 (Dinamica Transgenerațională) -->
+        <div class="step-card" style="border-color: var(--accent);">
+            <div class="step-header" onclick="toggleMaster(this)">
+                <span class="icon">🎯</span>
+                <h3>Dinamica Transgenerațională: Lanțul se oprește la tine</h3>
+            </div>
+            <div class="step-body">
+                <p>În cele mai multe cazuri, acest dezechilibru nu a început cu tine. El circulă de generații, fiind recreat involuntar în istoricul familial de la străbunici, bunici și părinți, amprentând inclusiv biologia noastră (epigenetică). În fața traumei, învinovățirea își pierde sensul, însă exprimarea liberă a emoțiilor și asumarea unei noi responsabilități își păstrează întreaga putere.</p>
+                <p>Chiar dacă nu a început cu tine, <strong>acest cerc vicios se poate termina cu ajutorul tău și pentru tine</strong>. Regăsirea de sine, reconectarea cu propriul corp și integrarea părților rănite sunt posibilități reale în momentul în care ești dispus să îți privești reacțiile automate nu ca pe un defect de identitate, ci ca pe un dezechilibru vechi care cere să fie ascultat, asumat și înțeles. </p>
             </div>
         </div>
     </div>
+</div>
 
 <script>
 // Cele 3 evenimente de click pentru butoanele din navigație
@@ -999,6 +1011,15 @@ document.getElementById('btnExport').addEventListener('click', function() {
         if (grids) { for(var i=0; i<grids.length; i++) { grids[i].style.display = 'flex'; } } 
     }, 1200);
 });
+
+    function toggleMaster(element) {
+    const body = element.nextElementSibling;
+    const isOpen = body.style.display === 'block';
+    // Închide toate celelalte
+    document.querySelectorAll('.step-body').forEach(b => b.style.display = 'none');
+    // Deschide pe cel selectat
+    if (!isOpen) body.style.display = 'block';
+}
 
 window.onload = function() { renderWheels(); };
     function toggleCardAccordion(cardElement) {
