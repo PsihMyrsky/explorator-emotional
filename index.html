@@ -142,6 +142,26 @@
 .icon { font-size: 24px; background: #1f2937; padding: 10px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
 .step-body { padding-left: 70px; margin-top: 15px; color: #c9d1d9; line-height: 1.7; display: none; }
 .step-header h3 { color: var(--accent); margin: 0; font-size: 1.1rem; }
+        /* --- ADAUGĂ ACESTE STILURI LA FINALUL SECȚIUNII <style> --- */
+
+/* Aliniere subtitlu superior */
+.masterclass-container h2 {
+    margin-bottom: 10px;
+    padding-left: 5px; 
+}
+
+/* Aliniere descriere */
+.masterclass-container p:first-of-type {
+    margin-bottom: 40px;
+    padding-left: 5px;
+}
+
+/* Clase pentru culori individuale pe carduri */
+.step-card.c1 { border-left: 4px solid #ef4444; } /* Roșu */
+.step-card.c2 { border-left: 4px solid #ec4899; } /* Roz */
+.step-card.c3 { border-left: 4px solid #60a5fa; } /* Albastru */
+.step-card.c4 { border-left: 4px solid #8b5cf6; } /* Violet */
+.step-card.c5 { border-left: 4px solid #f59e0b; } /* Portocaliu */
     </style>
 </head>
 <body>
@@ -411,7 +431,7 @@
 
         <!-- Pas 1 -->
         <div class="step-card">
-            <div class="step-header" onclick="toggleMaster(this)">
+            <div class="step-card c1" onclick="toggleMaster(this)">
                 <span class="icon">⚠️</span>
                 <h3>Cum se instalează dezechilibrul?</h3>
             </div>
@@ -429,10 +449,10 @@
         </div>
 
         <!-- Pas 2 -->
-        <div class="step-card">
-            <div class="step-header" onclick="toggleMaster(this)">
-                <span class="icon">🧬</span>
-                <h3>Fixarea Formulei Infantile</h3>
+       <div class="step-card c2" onclick="toggleMaster(this)"> 
+    <div class="step-header">
+        <span class="icon">🧬</span>
+        <h3>Fixarea Formulei Infantile</h3>
             </div>
             <div class="step-body">
                 <p>Atunci când intensitatea stimulului depășește capacitatea de autoreglare a organismului, se produc modificări neurobiologice durabile. sistemul nervos se fixează în tipare rigide de supraviețuire, adică mintea preia strategia de urgență de atunci și o transformă într-o <strong>hartă rigidă de supraviețuire (Formula Infantilă)</strong>. Mintea tinde să recreeze în mod compulsiv scenarii similare cu cele din trecutul traumatic. Această repetiție nu este un defect structural, ci o încercare inconștientă a aparatului psihic de a prelua controlul activ asupra unei experiențe în care a fost complet neajutorat, căutând o rezolvare adaptativă a vechiului conflict prin tipare relaționale predictive, dar adesea disfuncționale în prezent. Mintea va prefera întotdeauna suferința cunoscută și predictibilă a unui tipar vechi (izolarea, conformismul, controlul), în locul riscului de a retrăi teroarea neajutorării primare. Acest compromis reduce temporar durerea, dar menține dezechilibrul profund și repornește automat circuitul suferinței în viața de adult.</p>
@@ -440,10 +460,10 @@
         </div>
 
         <!-- Pas 3 -->
-        <div class="step-card">
-            <div class="step-header" onclick="toggleMaster(this)">
-                <span class="icon">⚡</span>
-                <h3>Momentele de Activare</h3>
+       <div class="step-card c3" onclick="toggleMaster(this)"> 
+    <div class="step-header">
+        <span class="icon">⚡</span>
+        <h3>Momentele de Activare</h3>
             </div>
             <div class="step-body">
                 <p>În momentele în care viața oglindește vechi răni, creierul recunoaște situația ca pe o amenințare familiară din trecut. Atunci „pui în scenă” tiparele vechi: nu ești cu adevărat în pericol, dar corpul tău (pulsul, tensiunea musculară) intră în modul de supraviețuire. Recunoașterea acestei activări este momentul în care poți întrerupe pilotul automat.</p>
@@ -451,10 +471,10 @@
         </div>
 
         <!-- Pas 4 -->
-        <div class="step-card">
-            <div class="step-header" onclick="toggleMaster(this)">
-                <span class="icon">🌱</span>
-                <h3>Flexibilitate și Integrare</h3>
+       <div class="step-card c4" onclick="toggleMaster(this)"> 
+    <div class="step-header">
+        <span class="icon">🌱</span>
+        <h3>Flexibilitate și Integrare</h3>
             </div>
             <div class="step-body">
                 <p>Pentru a opri acest tipar cronicizat, procesul terapeutic acționează direct pe nodurile unde s-a produs ruptura:</p>
@@ -467,10 +487,10 @@
         </div>
 
         <!-- Pas 5 (Dinamica Transgenerațională) -->
-        <div class="step-card" style="border-color: var(--accent);">
-            <div class="step-header" onclick="toggleMaster(this)">
-                <span class="icon">🎯</span>
-                <h3>Dinamica Transgenerațională: Lanțul se oprește la tine</h3>
+       <div class="step-card c5" onclick="toggleMaster(this)"> 
+    <div class="step-header">
+        <span class="icon">🎯</span>
+        <h3>Dinamica Transgenerațională: Lanțul se oprește la tine</h3>
             </div>
             <div class="step-body">
                 <p>În cele mai multe cazuri, acest dezechilibru nu a început cu tine. El circulă de generații, fiind recreat involuntar în istoricul familial de la străbunici, bunici și părinți, amprentând inclusiv biologia noastră (epigenetică). În fața traumei, învinovățirea își pierde sensul, însă exprimarea liberă a emoțiilor și asumarea unei noi responsabilități își păstrează întreaga putere.</p>
