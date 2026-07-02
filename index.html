@@ -106,50 +106,21 @@
 
         /* Teorie */
         .theory-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        /* 1. Grila: Forțăm 4 coloane pe desktop și aliniere sus */
-/* --- ÎNLOCUIEȘTE CU ACEST COD --- */
+ .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .comp-card { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
+        .comp-card h3 { margin-top: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .comp-card p { font-size: 0.95rem; color: #d1d5db; margin: 0; text-align: justify; line-height: 1.6; }
 
-.components-grid { 
-    column-count: 4;       /* 4 coloane pe desktop */
-    column-gap: 20px;      /* spațiul dintre ele */
-    margin-bottom: 40px; 
-}
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 1fr; }
+            .visual-zone { height: auto; position: relative; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); top: 0; }
+            .data-zone { height: auto; padding: 20px; }
+            svg { max-width: 360px; }
+            .ifs-container { grid-template-columns: 1fr; }
+            .components-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+        
+        }
 
-.comp-card { 
-    break-inside: avoid;   /* Cardul nu se va rupe la jumătate între coloane */
-    margin-bottom: 20px;   /* Spațiul dintre carduri */
-    background: var(--bg-card); 
-    border: 1px solid var(--border); 
-    padding: 25px; 
-    border-radius: 20px; 
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-}
-
-.comp-card h3 { 
-    margin-top: 0; 
-    font-size: 1.2rem; 
-    color: var(--accent); 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-}
-
-.comp-card p { 
-    font-size: 0.95rem; 
-    color: #d1d5db; 
-    margin: 0; 
-    text-align: justify; 
-    line-height: 1.6;
-}
-
-/* Adaptare pentru mobil */
-@media (max-width: 1024px) {
-    .components-grid { 
-        column-count: 1 !important; 
-    }
-}
 
 
         @media print {
