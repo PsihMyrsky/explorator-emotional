@@ -169,6 +169,24 @@
 .step-card.c4 h3 { color: #8b5cf6 !important; }
 .step-card.c5 h3 { color: #f59e0b !important; }
 
+        /* Ajustează linia verticală */
+.masterclass-container::before {
+    left: 20px !important; /* Mută linia mai la stânga */
+}
+
+/* Ajustează alinierea cardurilor pentru a face loc liniei */
+.step-card {
+    margin-left: 15px !important; /* Asigură distanța față de linie */
+    padding-left: 20px !important;
+}
+
+/* Forțează titlul și paragraful să stea perfect aliniate */
+.masterclass-container h2, 
+.masterclass-container p.intro-text {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    text-align: left !important;
+}
 
     </style>
 </head>
