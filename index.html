@@ -20,6 +20,26 @@
             -webkit-tap-highlight-color: transparent; -webkit-overflow-scrolling: touch;
             overflow-x: hidden;
         }
+        .overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(11, 15, 25, 0.98);
+    z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px;
+}
+.disclaimer-box {
+    max-width: 600px; background: #151d30; padding: 30px;
+    border-radius: 16px; border: 1px solid #243252; text-align: center;
+    max-height: 90vh; overflow-y: auto;
+}
+.btn-continue {
+    margin-top: 25px; padding: 12px 25px; background: #6366f1;
+    color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
+}
+/* Butonul de reafișare (pus fix în colțul de jos al site-ului) */
+.btn-info-fixed {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    background: #1e2942; border: 1px solid #374151; color: #9ca3af;
+    padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 0.8rem;
+}
 
         /* Navigare */
         .app-nav {
@@ -192,6 +212,31 @@
 </head>
 <body>
 
+    <div id="disclaimer-overlay" class="overlay">
+    <div class="disclaimer-box">
+        <h2>ℹ️ Notă importantă înainte de a începe</h2>
+        <p>Acest instrument te ajută să explorezi ce simți și de ce, folosind concepte din neuroștiința afectivă și psihoterapie. Nu este un tratament și nu înlocuiește o relație terapeutică. Este gândit ca o resursă de auto-reflecție între ședințe sau pentru cineva care nu este încă în terapie și vrea să înceapă să se cunoască.</p>
+        
+        <p><strong>Câteva lucruri importante:</strong></p>
+        <ul style="text-align: left;">
+            <li>Unele secțiuni ating teme legate de traumă, copilărie și părți vulnerabile. Pentru unii oameni, acest tip de explorare poate readuce amintiri sau stări intense. Este normal și nu înseamnă că faci ceva greșit.</li>
+            <li>Dacă în timpul exercițiului simți că te disociezi, că ești copleșit(ă) sau că nu te simți în siguranță — <strong>oprește-te</strong>.Nu este momentul pentru acest exercițiu.</li>
+            <li>Dacă ești în prezent într-o criză emoțională severă sau ai gânduri de a-ți face rău, acest instrument nu este adecvat. Te rog contactează resursele de mai jos.</li>
+        </ul>
+
+        <div class="emergency-resources" style="text-align: left; background: rgba(239, 68, 68, 0.1); padding: 15px; border-radius: 8px; margin-top: 15px;">
+            <p style="margin: 0 0 10px 0;"><strong>Resurse de ajutor:</strong></p>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li>📞 <strong>Urgențe:</strong> 112</li>
+                <li>📞 <strong>Victimele violenței domestice:</strong> 0800 500 333 (24/7)</li>
+                <li>📞 <strong>Linia Verde Antisuicid:</strong> 0800 801 200</li>
+                <li>💬 <strong>DepreHUB:</strong> 037 445 6420</li>
+            </ul>
+        </div>
+        
+        <button onclick="closeDisclaimer()" class="btn-continue">Am înțeles, doresc să continui</button>
+    </div>
+</div>
     <nav class="app-nav">
         <button id="btnTabNavigator" class="nav-btn active">🧭 Explorator Emoțional</button>
         <button id="btnTabTeorie" class="nav-btn">🧠 Dinamica Minții </button>
@@ -1075,6 +1120,21 @@ window.onload = function() { renderWheels(); };
         cardElement.style.borderColor = "var(--border)";
     }
 }
+    function closeDisclaimer() {
+        document.getElementById('disclaimer-overlay').style.display = 'none';
+    }
+
+    // 2. Deschide disclaimer-ul
+    function showDisclaimer() {
+        document.getElementById('disclaimer-overlay').style.display = 'flex';
+    }
+
+    // 3. Crearea automată a butonului de reafișare la finalul paginii
+    const btn = document.createElement('button');
+    btn.innerHTML = 'ℹ️ Informații & Resurse';
+    btn.className = 'btn-info-fixed';
+    btn.onclick = showDisclaimer;
+    document.body.appendChild(btn);
 </script>
 </body>
 </html>
