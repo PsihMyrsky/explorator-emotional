@@ -20,6 +20,31 @@
             -webkit-tap-highlight-color: transparent; -webkit-overflow-scrolling: touch;
             overflow-x: hidden;
         }
+
+        .anchoring-wrapper {
+    margin-top: 10px;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+}
+
+.anchoring-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #60a5fa;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.anchoring-content {
+    padding: 0 15px 15px 15px;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+}
         .overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(11, 15, 25, 0.98);
@@ -220,7 +245,22 @@
         <p><strong>Câteva lucruri importante:</strong></p>
         <ul style="text-align: left;">
             <li>Unele secțiuni ating teme legate de traumă, copilărie și părți vulnerabile. Pentru unii oameni, acest tip de explorare poate readuce amintiri sau stări intense. Este normal și nu înseamnă că faci ceva greșit.</li>
-            <li>Dacă în timpul exercițiului simți că te disociezi (te simți "departe", ca și cum nu ești în corpul tău, ca prin ceață), că ești copleșit(ă) sau că nu te simți în siguranță — <strong>oprește-te</strong>.Nu este momentul pentru acest exercițiu.</li>
+            <li>Dacă în timpul exercițiului simți că te disociezi (te simți "departe", ca și cum nu ești în corpul tău, ca prin ceață), că ești copleșit(ă) sau că nu te simți în siguranță — <strong>oprește-te aici </strong>.Nu este momentul pentru a continua exercițiul. 
+              <div class="anchoring-wrapper">
+        <button class="anchoring-trigger" onclick="toggleAnchoring()">
+            ▼ Încearcă acest scurt protocol de ancorare (Grounding)
+        </button>
+        <div id="anchoring-content" class="anchoring-content" style="display: none;">
+            <p><em>Acest protocol te ajută să revii în prezent:</em></p>
+            <ul>
+                <li><strong>Vizual:</strong> Numește 5 lucruri pe care le vezi acum în jurul tău.</li>
+                <li><strong>Fizic:</strong> Simte contactul tălpilor cu podeaua sau al corpului cu scaunul. Apasă ușor tălpile în podea de câteva ori.</li>
+                <li><strong>Cognitiv:</strong> Spune cu voce tare (sau în gând): numele tău, ziua de azi, orașul în care ești.</li>
+                <li><strong>Senzorial:</strong> Bea o gură de apă sau ține în mână un obiect cu textură și observă-i temperatura, greutatea și textura.</li>
+            </ul>
+        </div>
+    </div>
+</li>  
             <li>Dacă ești în prezent într-o criză emoțională severă sau ai gânduri de a-ți face rău, acest instrument nu este adecvat. Te rog contactează resursele de mai jos.</li>
         </ul>
 
@@ -1123,6 +1163,18 @@ window.onload = function() { renderWheels(); };
     
 </script>
         <script>
+
+            function toggleAnchoring() {
+        const content = document.getElementById('anchoring-content');
+        const trigger = document.querySelector('.anchoring-trigger');
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+            trigger.innerHTML = '▲ Închide protocolul';
+        } else {
+            content.style.display = 'none';
+            trigger.innerHTML = '▼ Încearcă acest scurt protocol de ancorare (Grounding)';
+        }
+    }
     // 1. Închide disclaimer-ul
     function closeDisclaimer() {
         document.getElementById('disclaimer-overlay').style.display = 'none';
